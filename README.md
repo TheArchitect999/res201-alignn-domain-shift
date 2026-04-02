@@ -1,20 +1,18 @@
-# RES201: Chemical-Family Domain Shift in ALIGNN
+# RES201 ALIGNN Domain Shift Repo Payload
 
-## Goal
-Compare oxide vs nitride transfer learning for formation energy prediction.
+This payload is only for **Stage 2: build the datasets correctly**.
 
-## Team
-- Faizan → Oxides
-- Ali → Nitrides 
+It adds:
+- a minimal **data-only** conda environment bootstrap
+- the dataset builder and validator
+- split manifest templates
+- a short playbook
 
-## Structure
-- scripts/dataset → dataset building
-- scripts/oxide → oxide experiments
-- scripts/nitride → nitride experiments
-- results → outputs
-- reports → writing
+## Expected repo layout after extraction
 
-## Status
-- [ ] dataset built
-- [ ] oxide zero-shot
-- [ ] nitride zero-shot
+- `env/` → environment bootstrap and verification
+- `scripts/dataset/` → Stage 2 dataset scripts
+- `manifests/` → optional official split manifest
+- `data_shared/` → outputs will be written here
+
+Do not use this for training yet. Training comes in a separate environment later.

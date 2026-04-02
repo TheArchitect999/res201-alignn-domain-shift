@@ -3,7 +3,7 @@ __pycache__/
 
 .env
 venv/
-env/
+env_local/
 
 .ipynb_checkpoints/
 
@@ -16,5 +16,4 @@ data_raw/
 *.pt
 *.pth
 *.ckpt
-
 *.log
