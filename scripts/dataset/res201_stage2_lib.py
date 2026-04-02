@@ -127,6 +127,99 @@ def get_target_value(record: Mapping[str, Any], target_key: str, target_aliases:
     return None, None
 
 
+def jid_from_record(record: Mapping[str, Any]) -> str:
+    return str(record.get("jid") or record.get("id") or record.get("material_id") or "").strip()
+
+
+def _non_null_top_level_count(record: Mapping[str, Any]) -> int:
+    count = 0
+    for value in record.values():
+        if value is None:
+            continue
+        if isinstance(value, str) and value.strip() == "":
+            continue
+        count += 1
+    return count
+
+
+def _record_quality(record: Mapping[str, Any], target_key: str, target_aliases: Sequence[str]) -> Tuple[int, int, int, int]:
+    target_val, _ = get_target_value(record, target_key=target_key, target_aliases=target_aliases)
+    try:
+        elements = extract_elements_from_record(record)
+        has_elements = 1 if elements else 0
+    except Exception:
+        has_elements = 0
+    has_atoms_mapping = 1 if isinstance(record.get("atoms"), Mapping) else 0
+    return (
+        1 if target_val is not None else 0,
+        has_elements,
+        has_atoms_mapping,
+        _non_null_top_level_count(record),
+    )
+
+
+def dedupe_records_by_jid(
+    records: Sequence[Mapping[str, Any]],
+    target_key: str,
+    target_aliases: Sequence[str],
+    max_examples: int = 20,
+) -> Tuple[List[Mapping[str, Any]], Dict[str, Any]]:
+    """Collapse duplicate JIDs deterministically.
+
+    JARVIS dft_3d_2021 can contain a small number of repeated JIDs. For Stage 2 we need a
+    single record per JID, so we keep the highest-quality record per JID using a deterministic
+    score: has target, has elements, has atoms mapping, then number of non-null top-level keys.
+    Ties keep the first-seen record.
+    """
+    chosen: Dict[str, Tuple[int, Tuple[int, int, int, int], Mapping[str, Any]]] = {}
+    order: List[str] = []
+    duplicate_counts: Counter[str] = Counter()
+    duplicate_examples: Dict[str, Any] = {}
+
+    for idx, rec in enumerate(records):
+        jid = jid_from_record(rec)
+        if not jid:
+            continue
+        score = _record_quality(rec, target_key=target_key, target_aliases=target_aliases)
+        if jid not in chosen:
+            chosen[jid] = (idx, score, rec)
+            order.append(jid)
+            continue
+
+        duplicate_counts[jid] += 1
+        prev_idx, prev_score, prev_rec = chosen[jid]
+        if score > prev_score:
+            chosen[jid] = (idx, score, rec)
+            kept_index = idx
+            kept_score = score
+        else:
+            kept_index = prev_idx
+            kept_score = prev_score
+
+        if len(duplicate_examples) < max_examples:
+            duplicate_examples.setdefault(
+                jid,
+                {
+                    "seen_indices": [prev_idx],
+                    "scores": [list(prev_score)],
+                },
+            )
+            duplicate_examples[jid]["seen_indices"].append(idx)
+            duplicate_examples[jid]["scores"].append(list(score))
+            duplicate_examples[jid]["kept_index"] = kept_index
+            duplicate_examples[jid]["kept_score"] = list(kept_score)
+
+    unique_records = [chosen[jid][2] for jid in order]
+    summary = {
+        "n_input_records": len(records),
+        "n_unique_jids": len(unique_records),
+        "n_duplicate_jids": len(duplicate_counts),
+        "duplicate_jid_total_extra_rows": int(sum(duplicate_counts.values())),
+        "duplicate_examples": duplicate_examples,
+    }
+    return unique_records, summary
+
+
 def infer_split_map_from_records(records: Sequence[Mapping[str, Any]]) -> Tuple[Optional[Dict[str, str]], Optional[str]]:
     for candidate in SPLIT_CANDIDATE_KEYS:
         mapping: Dict[str, str] = {}
@@ -286,17 +379,25 @@ class Stage2BuildResult:
 def schema_report(records: Sequence[Mapping[str, Any]]) -> Dict[str, Any]:
     key_counts: Counter[str] = Counter()
     candidate_split_key_counts: Dict[str, int] = {}
+    jid_counts: Counter[str] = Counter()
     for rec in records:
         for k in rec.keys():
             key_counts[str(k)] += 1
+        jid = jid_from_record(rec)
+        if jid:
+            jid_counts[jid] += 1
     for candidate in SPLIT_CANDIDATE_KEYS:
         candidate_split_key_counts[candidate] = sum(1 for rec in records if candidate in rec)
     bool_candidates = {
         key: sum(1 for rec in records if key in rec)
         for key in ("is_train", "is_val", "is_test", "train", "val", "test")
     }
+    duplicate_examples = {jid: count for jid, count in list(sorted((j, c) for j, c in jid_counts.items() if c > 1))[:20]}
     return {
         "n_records": len(records),
+        "n_unique_jids_detected": len(jid_counts),
+        "n_duplicate_jids_detected": len([1 for _jid, c in jid_counts.items() if c > 1]),
+        "duplicate_jid_examples": duplicate_examples,
         "top_level_keys_sorted": sorted(key_counts.keys()),
         "candidate_split_key_counts": candidate_split_key_counts,
         "candidate_boolean_split_key_counts": bool_candidates,
@@ -497,7 +598,7 @@ def materialize_alignn_root(
 def records_by_jid(records: Sequence[Mapping[str, Any]]) -> Dict[str, Mapping[str, Any]]:
     out: Dict[str, Mapping[str, Any]] = {}
     for rec in records:
-        jid = str(rec.get("jid") or rec.get("id") or rec.get("material_id") or "").strip()
-        if jid:
+        jid = jid_from_record(rec)
+        if jid and jid not in out:
             out[jid] = rec
     return out

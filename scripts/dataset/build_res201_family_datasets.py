@@ -10,6 +10,7 @@ from res201_stage2_lib import (
     TARGET_KEY_ALIASES,
     build_stage2_rows,
     canonicalize_split,
+    dedupe_records_by_jid,
     generate_split_map,
     infer_split_map_from_records,
     load_json,
@@ -177,36 +178,12 @@ def main() -> None:
     args = parse_args()
     args.outdir.mkdir(parents=True, exist_ok=True)
 
-    records = load_records(args)
-    diagnostics_dir = args.outdir / "diagnostics"
-    diagnostics_dir.mkdir(parents=True, exist_ok=True)
-
-    # Inspect mode should never fail just because the split mapping is missing.
-    # It exists precisely so you can look at the raw schema before deciding how
-    # to provide or recover the official split IDs.
-    if args.inspect_only:
-        report = build_stage2_rows(
-            records=records,
-            target_key=args.target_key,
-            target_aliases=args.target_aliases,
-            split_map={},
-            keep_oxynitrides_in_oxide=args.keep_oxynitrides_in_oxide,
-        )
-        inferred, source_key = infer_split_map_from_records(records)
-        write_json(report.schema_report, diagnostics_dir / "schema_report.json")
-        write_csv(report.global_rows, diagnostics_dir / "global_record_catalog.csv")
-        if inferred is not None and source_key is not None:
-            write_json({jid: split for jid, split in sorted(inferred.items())}, diagnostics_dir / "global_split_manifest.json")
-        print(json.dumps({
-            "message": "inspect-only complete",
-            "n_records": len(records),
-            "split_detected": inferred is not None,
-            "split_source": f"inferred_from_record_key:{source_key}" if inferred is not None and source_key is not None else None,
-            "schema_report": report.schema_report,
-            "diagnostics_dir": str(diagnostics_dir.resolve()),
-        }, indent=2))
-        return
-
+    raw_records = load_records(args)
+    records, duplicate_report = dedupe_records_by_jid(
+        raw_records,
+        target_key=args.target_key,
+        target_aliases=args.target_aliases,
+    )
     split_map, split_source = determine_split_map(args, records)
 
     build_result = build_stage2_rows(
@@ -218,10 +195,23 @@ def main() -> None:
     )
 
     build_result.split_source = split_source
+    build_result.schema_report["duplicate_resolution"] = duplicate_report
+    build_result.schema_report["n_records_after_dedup"] = len(records)
 
+    diagnostics_dir = args.outdir / "diagnostics"
     write_json(build_result.schema_report, diagnostics_dir / "schema_report.json")
     write_json({jid: split for jid, split in sorted(split_map.items())}, diagnostics_dir / "global_split_manifest.json")
     write_csv(build_result.global_rows, diagnostics_dir / "global_record_catalog.csv")
+
+    if args.inspect_only:
+        print(json.dumps({
+            "message": "inspect-only complete",
+            "n_raw_records": len(raw_records),
+            "n_records_after_dedup": len(records),
+            "split_source": split_source,
+            "schema_report": build_result.schema_report,
+        }, indent=2))
+        return
 
     record_lookup = records_by_jid(records)
 
