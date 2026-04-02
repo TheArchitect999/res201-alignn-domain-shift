@@ -17,3 +17,28 @@ data_raw/
 *.pth
 *.ckpt
 *.log
+
+# ===== RES201 STAGE 2 RULES =====
+
+# caches
+cache/
+
+# heavy generated structure data - do not push
+data_shared/oxide/structures/
+data_shared/oxide/alignn_ready/
+data_shared/nitride/structures/
+data_shared/nitride/alignn_ready/
+
+# optional diagnostics
+# data_shared/diagnostics/
+
+# model files (future stages)
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.npy
+*.npz
+
+# logs
+*.log
