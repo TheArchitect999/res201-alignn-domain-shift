@@ -1,0 +1,28 @@
+{
+  "top_level_counts": {
+    ".codex": 1,
+    ".gitignore": 1,
+    "Project_Task": 4,
+    "README.md": 1,
+    "cache": 3,
+    "configs": 7,
+    "data_shared": 34598,
+    "docs": 4,
+    "env": 4,
+    "id_prop.csvtest_data": 3,
+    "id_prop.csvtrain_data": 3,
+    "id_prop.csvval_data": 3,
+    "jv_formation_energy_peratom_alignn": 3,
+    "manifests": 5,
+    "notebooks": 1,
+    "reports": 4,
+    "requirements": 2,
+    "res201_stage2_data_shared.zip": 1,
+    "results": 1905,
+    "scripts": 24
+  },
+  "total_dirs": 55,
+  "total_file_bytes": 532996323,
+  "total_files": 36522,
+  "total_paths": 36577
+}

@@ -1,0 +1,28 @@
+{
+  "dataset": "./results/oxide/N50_seed0/dataset_root",
+  "filename": "id_prop.csv",
+  "target": "target",
+  "atom_features": "cgcnn",
+  "neighbor_strategy": "k-nearest",
+  "id_tag": "jid",
+  "random_seed": 0,
+  "keep_data_order": true,
+  "n_train": 45,
+  "n_val": 5,
+  "n_test": 1484,
+  "batch_size": 16,
+  "epochs": 50,
+  "learning_rate": 0.0001,
+  "cutoff": 8.0,
+  "max_neighbors": 12,
+  "num_workers": 0,
+  "pin_memory": false,
+  "classification_threshold": null,
+  "output_dir": "PLACEHOLDER_SET_BY_CLI",
+  "model": {
+    "name": "alignn",
+    "alignn_layers": 4,
+    "gcn_layers": 4,
+    "output_features": 1
+  }
+}

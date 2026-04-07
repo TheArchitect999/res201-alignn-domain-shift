@@ -1,0 +1,526 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible
+}
+
+\title{RES201 Week 1 Report\\Chemical-Family Domain Shift in Pretrained ALIGNN}
+\author{Prepared from workspace audit of \texttt{res201-alignn-domain-shift}}
+\date{April 7, 2026}
+
+\begin{document}
+\maketitle
+
+\section{Purpose}
+This report documents the complete Week 1 execution status for the RES201 project
+\textit{Chemical-Family Domain Shift in Pretrained ALIGNN Data Efficiency for Oxide vs. Nitride Formation Energy Prediction}.
+It is intended to serve two purposes:
+\begin{enumerate}
+  \item provide a reproducible record of how the Week 1 deliverables were executed and verified; and
+  \item provide reusable methods text and artifact references for the final research paper.
+\end{enumerate}
+
+The official Week 1 deliverables, taken from the project brief in
+\texttt{Project\_Task/RES201 Project.pdf}, were:
+\begin{itemize}
+  \item oxide subset filtered and confirmed;
+  \item nitride subset filtered and confirmed with oxynitrides excluded from the nitride arm;
+  \item original JARVIS split IDs applied before family filtering;
+  \item fixed oxide and nitride test sets;
+  \item pretrained checkpoint loaded;
+  \item oxide zero-shot MAE reported;
+  \item nitride zero-shot MAE reported;
+  \item one oxide fine-tuning run at $N=50$ completed;
+  \item one nitride fine-tuning run at $N=50$ completed.
+\end{itemize}
+
+\section{High-Level Outcome}
+Week 1 is complete in this workspace. Both family datasets exist and validate successfully, both zero-shot evaluations exist, and both $N=50$ fine-tuning runs exist with saved checkpoints, histories, test predictions, and summaries.
+
+The most important scientific result from Week 1 is that under the current setup the $N=50$ fine-tune runs performed worse than zero-shot for both families. This does \textbf{not} invalidate Week 1 completion; instead it becomes a key observation to investigate in Week 2 and later analysis.
+
+\section{Methodology}
+
+\subsection{Stage 2 Dataset Construction}
+The dataset source used in this workspace is \texttt{dft\_3d\_2021} from JARVIS.
+The project rule from the brief was followed exactly:
+\begin{enumerate}
+  \item recover or provide the original benchmark train/validation/test split IDs;
+  \item apply those split IDs first;
+  \item only then filter by chemical family.
+\end{enumerate}
+
+The Stage 2 pipeline is implemented in:
+\begin{itemize}
+  \item \texttt{scripts/dataset/build\_res201\_family\_datasets.py}
+  \item \texttt{scripts/dataset/res201\_stage2\_lib.py}
+  \item \texttt{scripts/dataset/validate\_res201\_stage2.py}
+\end{itemize}
+
+The split manifest used for formation energy is:
+\begin{itemize}
+  \item \texttt{manifests/dft\_3d\_formation\_energy\_peratom\_splits.csv}
+\end{itemize}
+and the explicitly conflicting IDs are recorded in:
+\begin{itemize}
+  \item \texttt{manifests/dft\_3d\_formation\_energy\_peratom\_splits\_conflicts.csv}
+\end{itemize}
+
+The family definitions implemented in the workspace are:
+\begin{itemize}
+  \item oxide arm: any material containing O;
+  \item nitride arm: materials containing N and not O;
+  \item oxynitrides: excluded from the nitride arm;
+  \item oxynitrides may still appear in the oxide arm because the brief defines oxides by O presence.
+\end{itemize}
+
+This choice is visible in the saved family summaries:
+\begin{itemize}
+  \item oxide summary reports \texttt{oxynitride\_count\_in\_family = 499};
+  \item nitride summary reports \texttt{oxynitride\_count\_in\_family = 0}.
+\end{itemize}
+
+\subsection{Stage 2 Validation}
+The validator was rerun directly on the current workspace:
+
+\begin{lstlisting}[language=bash]
+python scripts/dataset/validate_res201_stage2.py --root ./data_shared
+\end{lstlisting}
+
+It returned \texttt{status = ok}. The validated family counts are:
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+Family & All & Train & Val & Test & Pool \\
+\midrule
+Oxide   & 14991 & 11960 & 1547 & 1484 & 13507 \\
+Nitride &  2288 &  1837 &  209 &  242 &  2046 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These values match the saved summaries in \texttt{data\_shared/*/summaries/summary.json}.
+
+\subsection{Stage 3 Environment and Pretrained Checkpoint}
+The Week 1 training environment is documented by:
+\begin{itemize}
+  \item \texttt{env/bootstrap\_res201\_stage3\_train.sh}
+  \item \texttt{requirements/res201\_train\_frozen.txt}
+\end{itemize}
+
+The locally extracted pretrained formation-energy checkpoint used for Week 1 is:
+\begin{itemize}
+  \item \texttt{jv\_formation\_energy\_peratom\_alignn/checkpoint\_300.pt}
+  \item \texttt{jv\_formation\_energy\_peratom\_alignn/config.json}
+\end{itemize}
+
+During the audit it was confirmed that the installed ALIGNN version in the
+\texttt{res201\_train} environment differs in important ways from the assumptions in the earlier timeline notes and tutorial summary.
+Because of those API mismatches, the Week 1 fine-tuning path was repaired locally so that the current environment can reproducibly:
+\begin{itemize}
+  \item load user-provided \texttt{id\_prop.csv} plus POSCAR data from a local dataset root;
+  \item load the local pretrained ALIGNN checkpoint correctly;
+  \item freeze all parameters except the chosen final groups;
+  \item train on the fixed train/validation/test partition for the chosen $N$.
+\end{itemize}
+
+\subsection{Zero-Shot Evaluation Procedure}
+The zero-shot evaluation script is:
+\begin{itemize}
+  \item \texttt{scripts/shared/zero\_shot\_alignn.py}
+\end{itemize}
+
+This script:
+\begin{enumerate}
+  \item reads the fixed family test manifest;
+  \item loads each POSCAR structure from \texttt{data\_shared/<family>/structures};
+  \item runs \texttt{alignn.pretrained.get\_prediction};
+  \item coerces ALIGNN outputs to scalar floats;
+  \item computes test MAE in eV/atom;
+  \item writes both a predictions CSV and a summary JSON.
+\end{enumerate}
+
+Representative command form:
+\begin{lstlisting}[language=bash]
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate res201_train
+python scripts/shared/zero_shot_alignn.py --family oxide --repo-root .
+python scripts/shared/zero_shot_alignn.py --family nitride --repo-root .
+\end{lstlisting}
+
+\subsection{$N=50$ Fine-Tuning Dataset Preparation}
+The Week 1 fine-tuning dataset builder is:
+\begin{itemize}
+  \item \texttt{scripts/shared/prepare\_week1\_finetune\_dataset.py}
+\end{itemize}
+
+This script constructs a local \texttt{dataset\_root} for each family as follows:
+\begin{enumerate}
+  \item read the fixed family \texttt{pool.csv} and \texttt{test.csv};
+  \item sample $N=50$ points from the pool using NumPy RNG with \texttt{seed = 0};
+  \item allocate $45$ samples to train and $5$ samples to validation;
+  \item keep the family test set fixed and unchanged;
+  \item copy the corresponding POSCAR files into \texttt{results/<family>/N50\_seed0/dataset\_root};
+  \item write \texttt{id\_prop.csv} and \texttt{split\_manifest.json}.
+\end{enumerate}
+
+Representative commands used:
+\begin{lstlisting}[language=bash]
+python scripts/shared/prepare_week1_finetune_dataset.py \
+  --family oxide --N 50 --seed 0 --repo-root . --link-mode copy
+
+python scripts/shared/prepare_week1_finetune_dataset.py \
+  --family nitride --N 50 --seed 0 --repo-root . --link-mode copy
+\end{lstlisting}
+
+\subsection{$N=50$ Fine-Tuning Configuration}
+The config writer is:
+\begin{itemize}
+  \item \texttt{scripts/shared/write\_week1\_alignn\_config.py}
+\end{itemize}
+
+It writes a TrainingConfig-compatible JSON for the currently installed ALIGNN version with:
+\begin{itemize}
+  \item \texttt{dataset = user\_data};
+  \item \texttt{target = target};
+  \item \texttt{filename = id\_prop.csv};
+  \item \texttt{epochs = 50};
+  \item \texttt{batch\_size = 16};
+  \item \texttt{learning\_rate = 1e-4};
+  \item fixed \texttt{n\_train}, \texttt{n\_val}, and \texttt{n\_test};
+  \item the pretrained ALIGNN model architecture copied from the local checkpoint config.
+\end{itemize}
+
+The generated Week 1 configs are:
+\begin{itemize}
+  \item \texttt{configs/oxide\_week1\_N50\_seed0.finetune\_last2.json}
+  \item \texttt{configs/nitride\_week1\_N50\_seed0.finetune\_last2.json}
+\end{itemize}
+
+\subsection{$N=50$ Fine-Tuning Training Procedure}
+The training wrapper used for Week 1 is:
+\begin{itemize}
+  \item \texttt{scripts/shared/finetune\_last2\_alignn.py}
+\end{itemize}
+
+This wrapper was used because the installed ALIGNN CLI and lower-level APIs did not directly support the desired pretrained user-data fine-tuning path for this checkpoint version.
+The Week 1 wrapper performs the following:
+\begin{enumerate}
+  \item load the local pretrained checkpoint from \texttt{checkpoint\_300.pt};
+  \item rebuild the ALIGNN model from the saved checkpoint config;
+  \item freeze all model parameters;
+  \item unfreeze only the final two parameter groups used in this workspace:
+        \texttt{gcn\_layers.3} and \texttt{fc};
+  \item build LMDB-backed train/validation/test graph datasets from the local \texttt{dataset\_root};
+  \item train for $50$ epochs using AdamW and one-cycle LR scheduling;
+  \item save checkpoint, history, and test prediction artifacts.
+\end{enumerate}
+
+Representative commands used:
+\begin{lstlisting}[language=bash]
+python scripts/shared/finetune_last2_alignn.py \
+  --config configs/oxide_week1_N50_seed0.finetune_last2.json \
+  --output-dir results/oxide/N50_seed0/finetune_last2 \
+  --dataset-root results/oxide/N50_seed0/dataset_root \
+  --pretrained-checkpoint jv_formation_energy_peratom_alignn/checkpoint_300.pt \
+  --pretrained-config jv_formation_energy_peratom_alignn/config.json \
+  --device cpu
+
+python scripts/shared/finetune_last2_alignn.py \
+  --config configs/nitride_week1_N50_seed0.finetune_last2.json \
+  --output-dir results/nitride/N50_seed0/finetune_last2 \
+  --dataset-root results/nitride/N50_seed0/dataset_root \
+  --pretrained-checkpoint jv_formation_energy_peratom_alignn/checkpoint_300.pt \
+  --pretrained-config jv_formation_energy_peratom_alignn/config.json \
+  --device cpu
+\end{lstlisting}
+
+\section{Week 1 Results}
+
+\subsection{Zero-Shot Results}
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Family & Test size & Zero-shot MAE (eV/atom) \\
+\midrule
+Oxide   & 1484 & 0.0341836068 \\
+Nitride &  242 & 0.0695420150 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{$N=50$ Fine-Tuning Results}
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Family & Train & Val & Test & Test MAE (eV/atom) \\
+\midrule
+Oxide   & 45 & 5 & 1484 & 0.0700507342 \\
+Nitride & 45 & 5 &  242 & 0.1617631432 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Interpretation}
+For this first Week 1 pass, both zero-shot baselines outperform the corresponding $N=50$ fine-tuning runs.
+That means Week 1 succeeded as an experimental milestone, but the numerical outcome suggests that:
+\begin{itemize}
+  \item the present fine-tuning protocol is not yet data-efficient at $N=50$;
+  \item additional seeds, larger $N$, and from-scratch baselines remain essential;
+  \item the current result should be reported honestly rather than hidden.
+\end{itemize}
+
+\section{Week 1 Deliverable Checklist}
+\begin{longtable}{p{0.34\linewidth}p{0.10\linewidth}p{0.48\linewidth}}
+\toprule
+Deliverable & Status & Evidence \\
+\midrule
+Oxide subset filtered and confirmed & Done & \texttt{data\_shared/oxide/manifests/*.csv}, \texttt{data\_shared/oxide/summaries/summary.json} \\
+Nitride subset filtered and confirmed & Done & \texttt{data\_shared/nitride/manifests/*.csv}, \texttt{data\_shared/nitride/summaries/summary.json} \\
+Oxynitrides excluded from nitride arm & Done & nitride summary reports \texttt{oxynitride\_count\_in\_family = 0} \\
+Original split IDs applied first & Done & split source in summaries points to \texttt{manifests/dft\_3d\_formation\_energy\_peratom\_splits.csv} \\
+Fixed oxide test set & Done & \texttt{data\_shared/oxide/manifests/test.csv} \\
+Fixed nitride test set & Done & \texttt{data\_shared/nitride/manifests/test.csv} \\
+Pretrained checkpoint loaded & Done & \texttt{jv\_formation\_energy\_peratom\_alignn/checkpoint\_300.pt} \\
+Oxide zero-shot MAE reported & Done & \texttt{results/oxide/zero\_shot/summary.json} \\
+Nitride zero-shot MAE reported & Done & \texttt{results/nitride/zero\_shot/summary.json} \\
+One oxide fine-tune at $N=50$ completed & Done & \texttt{results/oxide/N50\_seed0/finetune\_last2/summary.json} \\
+One nitride fine-tune at $N=50$ completed & Done & \texttt{results/nitride/N50\_seed0/finetune\_last2/summary.json} \\
+\bottomrule
+\end{longtable}
+
+\section{Verification Commands}
+The simplest verification command is now:
+\begin{lstlisting}[language=bash]
+scripts/shared/check_week1_status.sh .
+\end{lstlisting}
+
+Additional direct checks:
+\begin{lstlisting}[language=bash]
+python scripts/dataset/validate_res201_stage2.py --root ./data_shared
+
+python -m json.tool results/oxide/zero_shot/summary.json
+python -m json.tool results/nitride/zero_shot/summary.json
+python -m json.tool results/oxide/N50_seed0/finetune_last2/summary.json
+python -m json.tool results/nitride/N50_seed0/finetune_last2/summary.json
+
+python - <<'PY'
+import json
+for p in [
+    "results/oxide/N50_seed0/finetune_last2/history_val.json",
+    "results/nitride/N50_seed0/finetune_last2/history_val.json",
+]:
+    h = json.load(open(p))
+    print(p, len(h), h[-1])
+PY
+\end{lstlisting}
+
+\section{Workspace Inventory}
+
+\subsection{Top-Level Files and Folders}
+\begin{longtable}{p{0.28\linewidth}p{0.64\linewidth}}
+\toprule
+Path & Description \\
+\midrule
+\texttt{.codex} & Local Codex marker file in this workspace. \\
+\texttt{.git} & Git metadata for the local repository clone. \\
+\texttt{.gitignore} & Ignore rules controlling which generated artifacts should stay local. \\
+\texttt{Project\_Task/} & Course and project reference PDFs: project brief, ALIGNN tutorial, and timeline notes. \\
+\texttt{README.md} & Original Stage 2 payload README. \\
+\texttt{cache/} & Local JARVIS download/cache area. \\
+\texttt{configs/} & Saved Week 1 configuration JSON files, including historical failed attempts and final working fine-tune configs. \\
+\texttt{data\_shared/} & Canonical Stage 2 family datasets, manifests, summaries, diagnostics, structures, and ALIGNN-ready exports. \\
+\texttt{docs/} & Stage 2 and Stage 3 playbooks plus frozen dataset notes. \\
+\texttt{env/} & Environment bootstrap and validation scripts for the data and training environments. \\
+\texttt{id\_prop.csvtrain\_data/}, \texttt{id\_prop.csvval\_data/}, \texttt{id\_prop.csvtest\_data/} & Root-level LMDB caches created by ALIGNN training utilities. These are local/generated artifacts, not canonical research outputs. \\
+\texttt{jv\_formation\_energy\_peratom\_alignn/} & Local pretrained checkpoint directory containing the extracted formation-energy checkpoint and its config. \\
+\texttt{manifests/} & Official split manifest, conflict list, and split manifest templates. \\
+\texttt{notebooks/} & Currently empty notebook area reserved for later analysis. \\
+\texttt{reports/} & Reporting area. This report and generated inventory files belong here. \\
+\texttt{requirements/} & Frozen dependency record for the training environment. \\
+\texttt{res201\_stage2\_data\_shared.zip} & Local archive copy of the Stage 2 shared dataset payload. \\
+\texttt{results/} & Week 1 outputs, including zero-shot predictions and $N=50$ oxide/nitride experiment folders. \\
+\texttt{scripts/} & Dataset pipeline scripts and shared Week 1 experiment scripts. \\
+\bottomrule
+\end{longtable}
+
+\subsection{Key Directory Contents}
+\paragraph{Project\_Task}
+\begin{itemize}
+  \item \texttt{RES201 Project.pdf}: official project brief and weekly deliverables.
+  \item \texttt{ALIGNN\_Tutorial.pdf}: usage-oriented tutorial/reference for ALIGNN.
+  \item \texttt{Project\_Timeline\_So\_Far.pdf}: human-written status summary from before this audit.
+\end{itemize}
+
+\paragraph{configs}
+\begin{itemize}
+  \item \texttt{oxide\_week1\_N50\_seed0.json}: earlier experimental config draft.
+  \item \texttt{oxide\_week1\_N50\_seed0.fixed.json}: schema-compatible config produced during earlier debugging.
+  \item \texttt{oxide\_week1\_N50\_seed0.run.json}: another historical run config.
+  \item \texttt{oxide\_week1\_N50\_seed0.finetune\_last2.json}: final working oxide Week 1 config.
+  \item \texttt{nitride\_week1\_N50\_seed0.finetune\_last2.json}: final working nitride Week 1 config.
+\end{itemize}
+
+\paragraph{docs}
+\begin{itemize}
+  \item \texttt{STAGE2\_PLAYBOOK.md}: Stage 2 instructions.
+  \item \texttt{STAGE2\_FROZEN\_DATASET.md}: frozen dataset note file.
+  \item \texttt{STAGE3\_PLAYBOOK.md}: Week 1 training output expectations.
+\end{itemize}
+
+\paragraph{env}
+\begin{itemize}
+  \item \texttt{bootstrap\_res201\_stage2\_data.sh}: create the Stage 2 data environment.
+  \item \texttt{verify\_res201\_stage2\_data.py}: verify Stage 2 environment readiness.
+  \item \texttt{bootstrap\_res201\_stage3\_train.sh}: create the Stage 3 training environment.
+\end{itemize}
+
+\paragraph{manifests}
+\begin{itemize}
+  \item \texttt{dft\_3d\_formation\_energy\_peratom\_splits.csv}: official split mapping used for this project.
+  \item \texttt{dft\_3d\_formation\_energy\_peratom\_splits\_conflicts.csv}: ambiguous IDs excluded conservatively.
+  \item \texttt{original\_split\_manifest\_template.csv}: template for user-supplied split manifests.
+  \item \texttt{original\_split\_manifest\_template.json}: JSON split template.
+\end{itemize}
+
+\paragraph{scripts/dataset}
+\begin{itemize}
+  \item \texttt{build\_res201\_family\_datasets.py}: main Stage 2 dataset builder.
+  \item \texttt{make\_split\_manifest\_from\_benchmark.py}: helper for constructing split manifests.
+  \item \texttt{materialize\_alignn\_root.py}: materialize ALIGNN-ready directories.
+  \item \texttt{res201\_stage2\_lib.py}: shared Stage 2 library logic.
+  \item \texttt{validate\_res201\_stage2.py}: Stage 2 validator.
+\end{itemize}
+
+\paragraph{scripts/shared}
+\begin{itemize}
+  \item \texttt{zero\_shot\_alignn.py}: zero-shot evaluator.
+  \item \texttt{prepare\_week1\_finetune\_dataset.py}: construct local $N=50$ experiment roots.
+  \item \texttt{write\_week1\_alignn\_config.py}: write TrainingConfig-compatible JSONs.
+  \item \texttt{finetune\_last2\_alignn.py}: repaired fine-tuning wrapper for this ALIGNN environment.
+  \item \texttt{save\_pretrained\_state\_dict.py}: helper for extracting pretrained model weights.
+  \item \texttt{check\_week1\_status.sh}: end-to-end Week 1 verification script.
+  \item \texttt{generate\_workspace\_inventory.py}: generate the machine-readable full workspace inventory.
+\end{itemize}
+
+\paragraph{data\_shared}
+\begin{itemize}
+  \item \texttt{diagnostics/}: global split manifest, schema report, and catalog diagnostics.
+  \item \texttt{oxide/manifests/}: \texttt{all.csv}, \texttt{train.csv}, \texttt{val.csv}, \texttt{test.csv}, \texttt{pool.csv}.
+  \item \texttt{oxide/summaries/summary.json}: saved oxide Stage 2 summary.
+  \item \texttt{oxide/structures/}: one POSCAR file per oxide-family record.
+  \item \texttt{oxide/alignn\_ready/}: pool and test exports for ALIGNN consumption.
+  \item \texttt{nitride/manifests/}: \texttt{all.csv}, \texttt{train.csv}, \texttt{val.csv}, \texttt{test.csv}, \texttt{pool.csv}.
+  \item \texttt{nitride/summaries/summary.json}: saved nitride Stage 2 summary.
+  \item \texttt{nitride/structures/}: one POSCAR file per nitride-family record.
+  \item \texttt{nitride/alignn\_ready/}: pool and test exports for ALIGNN consumption.
+\end{itemize}
+
+\paragraph{results}
+\begin{itemize}
+  \item \texttt{results/oxide/zero\_shot/}: oxide predictions CSV and summary JSON.
+  \item \texttt{results/nitride/zero\_shot/}: nitride predictions CSV and summary JSON.
+  \item \texttt{results/oxide/N50\_seed0/dataset\_root/}: local oxide Week 1 POSCAR subset, \texttt{id\_prop.csv}, and split manifest.
+  \item \texttt{results/nitride/N50\_seed0/dataset\_root/}: local nitride Week 1 POSCAR subset, \texttt{id\_prop.csv}, and split manifest.
+  \item \texttt{results/oxide/N50\_seed0/finetune\_last2/}: completed oxide Week 1 fine-tune outputs.
+  \item \texttt{results/nitride/N50\_seed0/finetune\_last2/}: completed nitride Week 1 fine-tune outputs.
+  \item \texttt{results/oxide/N50\_seed0/train\_alignn\_restart/}: older partial attempt from the original debugging path.
+\end{itemize}
+
+\subsection{Full Inventory File}
+Because the workspace contains thousands of generated POSCAR files and many derived artifacts, a full machine-generated inventory should accompany this report rather than being expanded inline.
+The generated inventory artifacts for this audit are:
+\begin{itemize}
+  \item \texttt{reports/workspace\_inventory.csv}
+  \item \texttt{reports/workspace\_inventory\_summary.json}
+\end{itemize}
+They record every non-\texttt{.git} path in the workspace.
+At the time of generation, the inventory contained:
+\begin{itemize}
+  \item \texttt{19,298} total paths;
+  \item \texttt{19,243} files; and
+  \item \texttt{55} directories.
+\end{itemize}
+The CSV provides one row per path with a path string, item kind, and short description so that the full workspace can be audited without manually expanding thousands of structure files in the PDF itself.
+
+\section{Git and GitHub Recommendation}
+The repository remote is:
+\begin{itemize}
+  \item \url{https://github.com/TheArchitect999/res201-alignn-domain-shift}
+\end{itemize}
+
+Yes, the repository should be updated, but \textbf{not by pushing everything blindly}.
+The correct policy is:
+\begin{itemize}
+  \item \textbf{Push:} scripts, configs, manifests, docs, summaries, lightweight prediction CSVs, report sources, and verification scripts.
+  \item \textbf{Do not push:} heavy structure dumps, LMDB caches, model checkpoints, cached downloads, zipped local payloads, and large generated POSCAR collections inside experiment roots.
+\end{itemize}
+
+To make this safer, the local \texttt{.gitignore} was tightened during this audit to exclude:
+\begin{itemize}
+  \item root-level LMDB caches;
+  \item pretrained checkpoint binary;
+  \item heavy result checkpoints and LMDB caches;
+  \item local Stage 2 zip archive;
+  \item copied POSCARs inside \texttt{results/*/dataset\_root}.
+\end{itemize}
+
+Recommended push workflow:
+\begin{lstlisting}[language=bash]
+git status
+git add .gitignore
+git add scripts/shared/check_week1_status.sh
+git add scripts/shared/finetune_last2_alignn.py
+git add scripts/shared/write_week1_alignn_config.py
+git add configs/oxide_week1_N50_seed0.finetune_last2.json
+git add configs/nitride_week1_N50_seed0.finetune_last2.json
+git add results/oxide/zero_shot/summary.json
+git add results/oxide/zero_shot/predictions.csv
+git add results/nitride/zero_shot/summary.json
+git add results/nitride/zero_shot/predictions.csv
+git add results/oxide/N50_seed0/finetune_last2/*.json
+git add results/oxide/N50_seed0/finetune_last2/*.csv
+git add results/nitride/N50_seed0/finetune_last2/*.json
+git add results/nitride/N50_seed0/finetune_last2/*.csv
+git add reports/week1_report.tex
+git add reports/workspace_inventory_summary.json
+git add reports/workspace_inventory.csv
+git commit -m "Complete RES201 week 1 oxide and nitride experiments"
+git push origin main
+\end{lstlisting}
+
+Before pushing, run \texttt{git status} and verify that no huge \texttt{.pt}, \texttt{.vasp}, LMDB cache, or archive files are staged.
+
+\section{Conclusion}
+The workspace now satisfies the Week 1 requirements for both the oxide and nitride arms.
+The work completed in this repository is sufficient to claim Week 1 completion, provided the team reports the outcomes honestly:
+\begin{itemize}
+  \item Stage 2 family datasets are valid and frozen;
+  \item zero-shot results are recorded for both families;
+  \item one $N=50$ fine-tuning run has been completed for each family;
+  \item all required evidence files exist and can be verified from the terminal.
+\end{itemize}
+
+The next scientific priority is not Week 1 completion, which is already done, but explaining why the current $N=50$ fine-tunes underperform zero-shot and extending the study across additional $N$ values and seeds.
+
+\end{document}
