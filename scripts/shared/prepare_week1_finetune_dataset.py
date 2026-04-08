@@ -1,5 +1,5 @@
 from __future__ import annotations
-import argparse, csv, json, shutil
+import argparse, csv, json, os, shutil
 from pathlib import Path
 import pandas as pd
 import numpy as np
@@ -11,6 +11,12 @@ def copy_or_link(src: Path, dst: Path, mode: str='copy'):
     dst.parent.mkdir(parents=True, exist_ok=True)
     if dst.exists():
         dst.unlink()
+    if mode == 'hardlink':
+        try:
+            os.link(src, dst)
+            return
+        except Exception:
+            pass
     if mode == 'symlink':
         try:
             dst.symlink_to(src.resolve())
@@ -25,7 +31,7 @@ def main():
     ap.add_argument('--N', type=int, required=True)
     ap.add_argument('--seed', type=int, default=0)
     ap.add_argument('--repo-root', default='.')
-    ap.add_argument('--link-mode', choices=['copy','symlink'], default='copy')
+    ap.add_argument('--link-mode', choices=['copy','hardlink','symlink'], default='copy')
     args = ap.parse_args()
     repo = Path(args.repo_root).resolve()
     family_dir = repo / 'data_shared' / args.family

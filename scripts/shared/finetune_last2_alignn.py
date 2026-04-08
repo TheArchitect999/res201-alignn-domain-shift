@@ -5,6 +5,7 @@ import csv
 import json
 import os
 import random
+import time
 from pathlib import Path
 
 import numpy as np
@@ -168,7 +169,7 @@ def build_loaders(
     )
     test_loader = GraphDataLoader(
         test_data,
-        batch_size=1,
+        batch_size=cfg.batch_size,
         shuffle=False,
         collate_fn=collate_fn,
         drop_last=False,
@@ -249,11 +250,8 @@ def evaluate_loader(
     predictions: list[float] = []
 
     model.eval()
+    cursor = 0
     with torch.no_grad():
-        if loader.batch_size == 1:
-            id_iter = iter(loader.dataset.ids)
-        else:
-            id_iter = None
         for batch in loader:
             prediction, target = forward_graph_batch(model, batch, device, use_line_graph)
             loss = criterion(prediction, target)
@@ -264,8 +262,10 @@ def evaluate_loader(
             flat_target = target.detach().cpu().numpy().reshape(-1).tolist()
             predictions.extend(float(x) for x in flat_pred)
             targets.extend(float(x) for x in flat_target)
-            if id_iter is not None:
-                ids.extend(next(id_iter) for _ in range(len(flat_pred)))
+            batch_size = len(flat_pred)
+            if hasattr(loader.dataset, "ids"):
+                ids.extend(loader.dataset.ids[cursor : cursor + batch_size])
+            cursor += batch_size
 
     mean_loss = total_loss / max(count, 1)
     return mean_loss, targets, predictions, ids
@@ -313,6 +313,7 @@ def main() -> None:
 
     set_random_seed(int(cfg.random_seed))
     device = torch.device(args.device)
+    started_at = time.time()
 
     rows = load_dataset_rows(dataset_root)
     train_rows, val_rows, test_rows = split_dataset(rows, cfg)
@@ -419,6 +420,7 @@ def main() -> None:
     summary = {
         "dataset_root": str(dataset_root),
         "output_dir": str(output_dir),
+        "device": str(device),
         "n_train": len(train_rows),
         "n_val": len(val_rows),
         "n_test": len(test_rows),
@@ -431,6 +433,7 @@ def main() -> None:
         "test_l1": test_loss,
         "test_mae_eV_per_atom": test_mae,
         "prediction_csv": str((output_dir / "prediction_results_test_set.csv").resolve()),
+        "elapsed_seconds": time.time() - started_at,
     }
     (output_dir / "summary.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary, indent=2))

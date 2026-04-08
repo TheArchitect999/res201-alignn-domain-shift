@@ -1,0 +1,3 @@
+family,zero_shot_mae_eV_per_atom,summary_path
+oxide,0.03418360680813096,/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/zero_shot/summary.json
+nitride,0.06954201496284854,/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/zero_shot/summary.json

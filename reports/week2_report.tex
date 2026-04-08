@@ -1,0 +1,459 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue
+}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible
+}
+
+\title{RES201 Week 2 Report\\Multi-Seed Fine-Tuning Learning Curves for Oxides and Nitrides}
+\author{Prepared from workspace execution in \texttt{res201-alignn-domain-shift}}
+\date{April 8, 2026}
+
+\begin{document}
+\maketitle
+
+\section{Abstract}
+This report documents the complete Week 2 execution for the RES201 project
+\textit{Chemical-Family Domain Shift in Pretrained ALIGNN Data Efficiency for Oxide vs. Nitride Formation Energy Prediction}.
+The Week 2 goal was to complete the fine-tuning learning-curve study for oxide and nitride subsets using the pretrained ALIGNN formation-energy model, then report the corresponding error tables and plots.
+Following the broader project requirements, the final workspace state now includes three random seeds for each family and each training size.
+
+The completed Week 2 study therefore contains 36 fine-tuning runs in total:
+two chemical families, six training sizes, and three seeds.
+All aggregate tables and learning-curve plots have been generated.
+The main scientific outcome is that oxide adaptation is smoother and less variable than nitride adaptation, but under the current partial-fine-tuning protocol neither family outperforms its zero-shot baseline by $N=1000$.
+
+\section{Week 2 Objective and Deliverables}
+According to the RES201 project brief, Week 2 required:
+\begin{itemize}
+  \item all oxide fine-tuning runs completed;
+  \item an oxide MAE table;
+  \item an oxide learning-curve plot;
+  \item all nitride fine-tuning runs completed;
+  \item a nitride MAE table; and
+  \item a nitride learning-curve plot.
+\end{itemize}
+
+The same brief also states that the overall project should use multiple random seeds, with three as a minimum target and five as a preferred target.
+For that reason, this Week 2 report documents the final three-seed study rather than only a single seed.
+
+\section{Project Context}
+\subsection{Scientific Question}
+The project investigates whether a pretrained ALIGNN model transfers differently to oxide and nitride subsets of the JARVIS \texttt{dft\_3d\_2021} formation-energy dataset.
+The motivating hypothesis is that nitride materials are more out-of-domain relative to the chemistry emphasized during pretraining, and therefore may require more in-family data or more flexible adaptation to achieve the same performance as oxides.
+
+\subsection{Family Definitions}
+The family definitions inherited from the Week 1 stage-2 dataset pipeline are:
+\begin{itemize}
+  \item oxide arm: materials containing oxygen;
+  \item nitride arm: materials containing nitrogen and not oxygen;
+  \item oxynitrides: excluded from the nitride arm;
+  \item original benchmark split IDs applied before family filtering.
+\end{itemize}
+
+The resulting frozen family dataset counts used throughout Week 2 are:
+\begin{center}
+\begin{tabular}{lrrrrr}
+\toprule
+Family & All & Train & Val & Test & Pool \\
+\midrule
+Oxide   & 14991 & 11960 & 1547 & 1484 & 13507 \\
+Nitride &  2288 &  1837 &  209 &  242 &  2046 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+These counts match the validated family summaries in the workspace and confirm that the test sets remained fixed while Week 2 varied only the fine-tuning subset size and seed.
+
+\section{Methodology}
+\subsection{Pretrained ALIGNN Starting Point}
+All Week 2 runs start from the same pretrained formation-energy checkpoint:
+\begin{itemize}
+  \item \texttt{jv\_formation\_energy\_peratom\_alignn/checkpoint\_300.pt}
+  \item \texttt{jv\_formation\_energy\_peratom\_alignn/config.json}
+\end{itemize}
+
+The workspace uses ALIGNN as a graph neural network for crystalline materials, with atom-bond structure and angle-sensitive message passing inherited from the pretrained model configuration.
+Week 2 does not alter the underlying architecture between oxide and nitride runs; only the fine-tuning subsets differ.
+
+\subsection{Fine-Tuning Protocol}
+The fine-tuning strategy used in this workspace is deliberately controlled and conservative:
+\begin{enumerate}
+  \item initialize the model from the local pretrained checkpoint;
+  \item freeze all parameters at the start of fine-tuning;
+  \item unfreeze only the final two parameter groups, \texttt{gcn\_layers.3} and \texttt{fc};
+  \item fine-tune for 50 epochs with learning rate $10^{-4}$ and batch size 16;
+  \item select the best validation checkpoint and evaluate on the fixed test set.
+\end{enumerate}
+
+This is the same transfer setting introduced in Week 1, which means the Week 2 comparison isolates the effect of increasing training-set size rather than simultaneously changing multiple training choices.
+
+\subsection{Training Sizes and Seeds}
+For each family, the following training sizes were evaluated:
+\[
+N \in \{10, 50, 100, 200, 500, 1000\}.
+\]
+
+For each of those $N$ values, the study uses seeds 0, 1, and 2.
+That yields:
+\[
+2 \text{ families} \times 6 \text{ sizes} \times 3 \text{ seeds} = 36 \text{ runs}.
+\]
+
+The per-run train and validation sizes follow the same rule used in Week 1:
+\begin{itemize}
+  \item $N=10 \Rightarrow 5$ train and $5$ validation;
+  \item $N=50 \Rightarrow 45$ train and $5$ validation;
+  \item $N=100 \Rightarrow 90$ train and $10$ validation;
+  \item $N=200 \Rightarrow 180$ train and $20$ validation;
+  \item $N=500 \Rightarrow 450$ train and $50$ validation;
+  \item $N=1000 \Rightarrow 900$ train and $100$ validation.
+\end{itemize}
+
+\subsection{Dataset Materialization}
+Each individual run has its own local dataset root under:
+\begin{itemize}
+  \item \texttt{results/oxide/N...\_seed.../dataset\_root/}
+  \item \texttt{results/nitride/N...\_seed.../dataset\_root/}
+\end{itemize}
+
+Each dataset root contains:
+\begin{itemize}
+  \item \texttt{id\_prop.csv} with the structure IDs and target values;
+  \item \texttt{split\_manifest.json} with the exact train, validation, and test membership for that run;
+  \item POSCAR files for the selected structures.
+\end{itemize}
+
+This design makes every run reproducible and auditable after the fact.
+
+\subsection{Execution Scripts}
+The Week 2 workflow in this workspace is built around the following scripts:
+\begin{itemize}
+  \item \texttt{scripts/shared/run\_week2\_finetune\_suite.py}
+  \item \texttt{scripts/shared/summarize\_week2\_finetune.py}
+  \item \texttt{scripts/shared/check\_week2\_status.sh}
+  \item \texttt{scripts/shared/finetune\_last2\_alignn.py}
+  \item \texttt{scripts/shared/prepare\_week1\_finetune\_dataset.py}
+\end{itemize}
+
+Together these scripts:
+\begin{enumerate}
+  \item prepare the correct dataset root for each family, size, and seed;
+  \item write the run-specific ALIGNN config JSON;
+  \item launch the 50-epoch fine-tuning job;
+  \item save histories, prediction CSVs, checkpoints, and summary JSON files;
+  \item aggregate the full study into summary CSV tables and learning-curve plots;
+  \item verify final completion through a single checker command.
+\end{enumerate}
+
+\subsection{Compute Environment}
+The Week 2 runs were executed in the local project environment rather than a cloud GPU setup.
+In this workspace the fine-tuning commands were run on CPU.
+This matters for interpretation because absolute runtime is longer than it would be on a GPU, but it does not affect the logic of the Week 2 deliverables.
+
+The measured runtime metadata recorded in the run summaries total approximately:
+\begin{itemize}
+  \item 3.65 CPU-hours for oxide runs with recorded timing;
+  \item 1.55 CPU-hours for nitride runs with recorded timing;
+  \item 5.20 CPU-hours combined.
+\end{itemize}
+
+Two early seed-0 $N=50$ summaries were created before elapsed-time logging was added to the fine-tuning wrapper, so those two completed runs do not include runtime fields even though their result artifacts are present.
+
+\section{Execution Procedure}
+\subsection{Representative Commands}
+The additional seed sweep for Week 2 was executed using commands of the following form:
+
+\begin{lstlisting}[language=bash]
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate res201_train
+python -u scripts/shared/run_week2_finetune_suite.py \
+  --repo-root . \
+  --families oxide nitride \
+  --Ns 10 50 100 200 500 1000 \
+  --seeds 1 2 \
+  --device cpu \
+  --continue-on-error
+\end{lstlisting}
+
+Aggregation into CSV summaries and plots was done with:
+
+\begin{lstlisting}[language=bash]
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate res201_train
+python -u scripts/shared/summarize_week2_finetune.py \
+  --repo-root . \
+  --families oxide nitride \
+  --Ns 10 50 100 200 500 1000 \
+  --seeds 0 1 2 \
+  --out-dir reports/week2
+\end{lstlisting}
+
+Final verification is:
+
+\begin{lstlisting}[language=bash]
+scripts/shared/check_week2_status.sh .
+\end{lstlisting}
+
+The run-suite summary file reports that the seed-1 and seed-2 completion batch requested 24 runs, completed 24 runs, and had 0 failures.
+
+\section{Results}
+\subsection{Zero-Shot Baselines}
+The fixed zero-shot reference MAEs used for comparison are:
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+Family & Test set size & Zero-shot MAE (eV/atom) \\
+\midrule
+Oxide   & 1484 & 0.03418 \\
+Nitride &  242 & 0.06954 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Aggregate Multi-Seed Results}
+The summary table below reports the mean and standard deviation of test MAE across seeds 0, 1, and 2 for each family and each training size.
+
+\begin{center}
+\small
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+Family & $N$ & Runs & Train & Val & Test & Mean MAE & Std & Zero-shot & Gain \\
+\midrule
+Nitride & 10   & 3 &   5 &   5 &  242 & 0.09875 & 0.01763 & 0.06954 & -0.02921 \\
+Nitride & 50   & 3 &  45 &   5 &  242 & 0.14816 & 0.02210 & 0.06954 & -0.07862 \\
+Nitride & 100  & 3 &  90 &  10 &  242 & 0.23754 & 0.06205 & 0.06954 & -0.16800 \\
+Nitride & 200  & 3 & 180 &  20 &  242 & 0.17524 & 0.06549 & 0.06954 & -0.10570 \\
+Nitride & 500  & 3 & 450 &  50 &  242 & 0.11054 & 0.00372 & 0.06954 & -0.04100 \\
+Nitride & 1000 & 3 & 900 & 100 &  242 & 0.10040 & 0.00262 & 0.06954 & -0.03086 \\
+Oxide   & 10   & 3 &   5 &   5 & 1484 & 0.04618 & 0.01313 & 0.03418 & -0.01200 \\
+Oxide   & 50   & 3 &  45 &   5 & 1484 & 0.06174 & 0.00997 & 0.03418 & -0.02756 \\
+Oxide   & 100  & 3 &  90 &  10 & 1484 & 0.05272 & 0.00166 & 0.03418 & -0.01854 \\
+Oxide   & 200  & 3 & 180 &  20 & 1484 & 0.05174 & 0.00337 & 0.03418 & -0.01756 \\
+Oxide   & 500  & 3 & 450 &  50 & 1484 & 0.04748 & 0.00107 & 0.03418 & -0.01330 \\
+Oxide   & 1000 & 3 & 900 & 100 & 1484 & 0.04556 & 0.00086 & 0.03418 & -0.01138 \\
+\bottomrule
+\end{tabular}
+\normalsize
+\end{center}
+
+The final column reports transfer gain relative to zero-shot, defined here as:
+\[
+\text{gain} = \text{zero-shot MAE} - \text{mean fine-tuned test MAE}.
+\]
+Every gain value is negative in Week 2, which means that under the current protocol the fine-tuned mean remains worse than zero-shot for every family and every $N$.
+
+\subsection{Best Observed Outcomes}
+The most favorable outcomes observed in Week 2 are:
+\begin{itemize}
+  \item oxide best mean fine-tuned MAE: $0.04556 \pm 0.00086$ at $N=1000$;
+  \item nitride best mean fine-tuned MAE: $0.09875 \pm 0.01763$ at $N=10$;
+  \item oxide best single run: 0.03604 at $N=10$, seed 2;
+  \item nitride best single run: 0.08263 at $N=10$, seed 1.
+\end{itemize}
+
+Even the best single oxide run is still slightly worse than the oxide zero-shot baseline of 0.03418, and the best nitride run is still worse than the nitride zero-shot baseline of 0.06954.
+
+\subsection{Interpretation of the Learning Curves}
+Several important patterns emerge from the Week 2 results:
+\begin{enumerate}
+  \item \textbf{Oxide improves steadily with more data.} Although oxide does not beat zero-shot, its mean MAE drops from 0.06174 at $N=50$ to 0.04556 at $N=1000$.
+  \item \textbf{Oxide variance shrinks strongly at larger $N$.} The oxide standard deviation falls to 0.00086 at $N=1000$, indicating a stable response to additional in-family data.
+  \item \textbf{Nitride is substantially noisier.} Nitride shows large seed-to-seed variation at intermediate data sizes, especially at $N=100$ and $N=200$.
+  \item \textbf{Nitride remains harder to adapt.} Even when nitride variance becomes smaller at $N=500$ and $N=1000$, the absolute MAE still remains far above the nitride zero-shot baseline.
+  \item \textbf{The domain-shift hypothesis remains plausible.} The oxide arm responds more smoothly to increasing fine-tuning data, whereas the nitride arm behaves more erratically, which is consistent with stronger chemistry mismatch relative to pretraining.
+  \item \textbf{The current transfer setting may be too restrictive.} Because only the final two parameter groups are trainable, the model may not have enough flexibility to adapt effectively to the family-restricted distributions.
+\end{enumerate}
+
+One noteworthy nitride result is that the best mean appears at $N=10$ rather than $N=1000$.
+This should not be interpreted as evidence that less nitride data is inherently preferable.
+It is more likely a sign that the present transfer configuration is unstable or under-parameterized for this family.
+
+\section{Plots}
+The final Week 2 report should include the oxide and nitride learning curves.
+This LaTeX file is intentionally written so it still compiles even if the plot files are not present in the Overleaf project yet.
+If the files are present, they are inserted below.
+
+\begin{figure}[htbp]
+\centering
+\IfFileExists{reports/week2/oxide_learning_curve.pdf}{
+  \includegraphics[width=0.82\linewidth]{reports/week2/oxide_learning_curve.pdf}
+}{
+  \IfFileExists{week2/oxide_learning_curve.pdf}{
+    \includegraphics[width=0.82\linewidth]{week2/oxide_learning_curve.pdf}
+  }{
+    \fbox{\parbox{0.82\linewidth}{\centering
+      Oxide learning-curve figure placeholder.\\
+      Upload \texttt{reports/week2/oxide\_learning\_curve.pdf} or\\
+      \texttt{week2/oxide\_learning\_curve.pdf} to display the plot here.}}
+  }
+}
+\caption{Oxide learning curve across $N=\{10,50,100,200,500,1000\}$ using three seeds.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\IfFileExists{reports/week2/nitride_learning_curve.pdf}{
+  \includegraphics[width=0.82\linewidth]{reports/week2/nitride_learning_curve.pdf}
+}{
+  \IfFileExists{week2/nitride_learning_curve.pdf}{
+    \includegraphics[width=0.82\linewidth]{week2/nitride_learning_curve.pdf}
+  }{
+    \fbox{\parbox{0.82\linewidth}{\centering
+      Nitride learning-curve figure placeholder.\\
+      Upload \texttt{reports/week2/nitride\_learning\_curve.pdf} or\\
+      \texttt{week2/nitride\_learning\_curve.pdf} to display the plot here.}}
+  }
+}
+\caption{Nitride learning curve across $N=\{10,50,100,200,500,1000\}$ using three seeds.}
+\end{figure}
+
+\section{Week 2 Deliverable Checklist}
+\begin{longtable}{p{0.43\linewidth}p{0.10\linewidth}p{0.35\linewidth}}
+\toprule
+Deliverable & Status & Evidence \\
+\midrule
+All oxide fine-tuning runs completed & Done & \texttt{results/oxide/N10\_seed0} through \texttt{results/oxide/N1000\_seed2} \\
+All nitride fine-tuning runs completed & Done & \texttt{results/nitride/N10\_seed0} through \texttt{results/nitride/N1000\_seed2} \\
+Oxide MAE table & Done & embedded in this report and saved in \texttt{reports/week2/finetune\_summary\_by\_N.csv} \\
+Nitride MAE table & Done & embedded in this report and saved in \texttt{reports/week2/finetune\_summary\_by\_N.csv} \\
+Oxide learning-curve plot & Done & \texttt{reports/week2/oxide\_learning\_curve.pdf} and \texttt{.png} \\
+Nitride learning-curve plot & Done & \texttt{reports/week2/nitride\_learning\_curve.pdf} and \texttt{.png} \\
+Three-seed reporting & Done & every family and $N$ entry in the aggregate CSV has \texttt{runs = 3} \\
+\bottomrule
+\end{longtable}
+
+\section{Artifact Map}
+The most important Week 2 files and folders in the workspace are:
+\begin{itemize}
+  \item \texttt{configs/oxide\_week2\_N...\_seed....finetune\_last2.json}: oxide run-specific ALIGNN configs.
+  \item \texttt{configs/nitride\_week2\_N...\_seed....finetune\_last2.json}: nitride run-specific ALIGNN configs.
+  \item \texttt{results/oxide/N...\_seed.../dataset\_root/}: oxide dataset materialization for each run.
+  \item \texttt{results/nitride/N...\_seed.../dataset\_root/}: nitride dataset materialization for each run.
+  \item \texttt{results/.../finetune\_last2/summary.json}: primary run summary files.
+  \item \texttt{results/.../finetune\_last2/history\_train.json}: training history for each run.
+  \item \texttt{results/.../finetune\_last2/history\_val.json}: validation history for each run.
+  \item \texttt{results/.../finetune\_last2/prediction\_results\_test\_set.csv}: per-structure test predictions.
+  \item \texttt{reports/week2/finetune\_runs.csv}: one row per Week 2 run.
+  \item \texttt{reports/week2/finetune\_summary\_by\_N.csv}: aggregate mean and standard deviation table.
+  \item \texttt{reports/week2/finetune\_summary\_wide.csv}: wide-format comparison table across families and training sizes.
+  \item \texttt{reports/week2/zero\_shot\_summary.csv}: zero-shot comparison table.
+  \item \texttt{reports/week2/run\_suite\_summary.json}: summary of the additional seed batch execution.
+\end{itemize}
+
+\section{Verification and Reproducibility}
+The Week 2 checker script is:
+
+\begin{lstlisting}[language=bash]
+scripts/shared/check_week2_status.sh .
+\end{lstlisting}
+
+This checker confirms:
+\begin{itemize}
+  \item all 36 expected \texttt{summary.json} files exist;
+  \item all expected aggregate CSV and plot artifacts exist;
+  \item every aggregate row reports exactly three seeds.
+\end{itemize}
+
+This makes the final Week 2 state independently auditable from the command line.
+
+\section{Limitations and Next Steps}
+The Week 2 study is complete, but the findings point naturally to the next project phase:
+\begin{itemize}
+  \item compare against from-scratch training to determine whether transfer is helping at all in this family-restricted regime;
+  \item test whether deeper unfreezing improves transfer, especially for the nitride arm;
+  \item continue with later-week embedding and representation analysis to study how oxide and nitride internal states differ after adaptation;
+  \item if time permits, expand from three seeds to five seeds for tighter uncertainty estimates.
+\end{itemize}
+
+\section{Conclusion}
+Week 2 is fully completed in this workspace at the level expected for a serious experimental record.
+The repository now contains the completed oxide and nitride fine-tuning sweeps over all required training sizes, the corresponding three-seed summary tables, and the final learning-curve plots.
+
+The key scientific message of Week 2 is clear:
+oxide adaptation is smoother and more stable than nitride adaptation, but the current partial-fine-tuning setup does not yet outperform zero-shot for either family.
+That result is still valuable because it narrows the likely bottlenecks and provides a strong motivation for the Week 3 from-scratch comparison.
+
+\appendix
+\section{Appendix: Per-Seed Week 2 Results}
+The table below records the individual test MAE and best validation loss for every Week 2 run.
+Including this appendix makes the report self-contained even without the CSV files.
+
+\small
+\begin{longtable}{lrrrrrr}
+\toprule
+Family & $N$ & Seed & Train & Val & Test MAE & Best val L1 \\
+\midrule
+\endhead
+Oxide & 10 & 0 & 5 & 5 & 0.06102 & 0.04938 \\
+Oxide & 10 & 1 & 5 & 5 & 0.04149 & 0.02279 \\
+Oxide & 10 & 2 & 5 & 5 & 0.03604 & 0.00957 \\
+Oxide & 50 & 0 & 45 & 5 & 0.07005 & 0.03863 \\
+Oxide & 50 & 1 & 45 & 5 & 0.06449 & 0.05149 \\
+Oxide & 50 & 2 & 45 & 5 & 0.05069 & 0.03481 \\
+Oxide & 100 & 0 & 90 & 10 & 0.05258 & 0.02885 \\
+Oxide & 100 & 1 & 90 & 10 & 0.05445 & 0.04228 \\
+Oxide & 100 & 2 & 90 & 10 & 0.05114 & 0.05514 \\
+Oxide & 200 & 0 & 180 & 20 & 0.05364 & 0.03136 \\
+Oxide & 200 & 1 & 180 & 20 & 0.05373 & 0.03322 \\
+Oxide & 200 & 2 & 180 & 20 & 0.04785 & 0.02908 \\
+Oxide & 500 & 0 & 450 & 50 & 0.04711 & 0.02146 \\
+Oxide & 500 & 1 & 450 & 50 & 0.04869 & 0.03870 \\
+Oxide & 500 & 2 & 450 & 50 & 0.04665 & 0.02520 \\
+Oxide & 1000 & 0 & 900 & 100 & 0.04637 & 0.02585 \\
+Oxide & 1000 & 1 & 900 & 100 & 0.04565 & 0.03382 \\
+Oxide & 1000 & 2 & 900 & 100 & 0.04466 & 0.02773 \\
+Nitride & 10 & 0 & 5 & 5 & 0.11757 & 0.09397 \\
+Nitride & 10 & 1 & 5 & 5 & 0.08263 & 0.03392 \\
+Nitride & 10 & 2 & 5 & 5 & 0.09605 & 0.06398 \\
+Nitride & 50 & 0 & 45 & 5 & 0.16176 & 0.15772 \\
+Nitride & 50 & 1 & 45 & 5 & 0.16006 & 0.12946 \\
+Nitride & 50 & 2 & 45 & 5 & 0.12267 & 0.10150 \\
+Nitride & 100 & 0 & 90 & 10 & 0.25599 & 0.27827 \\
+Nitride & 100 & 1 & 90 & 10 & 0.28827 & 0.18875 \\
+Nitride & 100 & 2 & 90 & 10 & 0.16836 & 0.14364 \\
+Nitride & 200 & 0 & 180 & 20 & 0.14084 & 0.14585 \\
+Nitride & 200 & 1 & 180 & 20 & 0.25077 & 0.08844 \\
+Nitride & 200 & 2 & 180 & 20 & 0.13412 & 0.08733 \\
+Nitride & 500 & 0 & 450 & 50 & 0.11103 & 0.06797 \\
+Nitride & 500 & 1 & 450 & 50 & 0.11399 & 0.06323 \\
+Nitride & 500 & 2 & 450 & 50 & 0.10659 & 0.06509 \\
+Nitride & 1000 & 0 & 900 & 100 & 0.09962 & 0.05783 \\
+Nitride & 1000 & 1 & 900 & 100 & 0.09825 & 0.06330 \\
+Nitride & 1000 & 2 & 900 & 100 & 0.10333 & 0.06613 \\
+\bottomrule
+\end{longtable}
+\normalsize
+
+\section{Appendix: Source Documents Used}
+The Week 2 report was written from the executed workspace artifacts together with the project materials stored locally in the repository, especially:
+\begin{itemize}
+  \item the RES201 project brief in \texttt{Project\_Task/RES201 Project.pdf};
+  \item the ALIGNN tutorial and project timeline notes in \texttt{Project\_Task/};
+  \item the saved Week 2 result summaries in \texttt{reports/week2/};
+  \item the per-run outputs in \texttt{results/oxide/} and \texttt{results/nitride/}.
+\end{itemize}
+
+\end{document}
