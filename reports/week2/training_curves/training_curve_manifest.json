@@ -1,0 +1,17 @@
+{
+  "per_run_manifest_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/training_curves/training_curve_manifest.csv",
+  "readme": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/training_curves/README.md",
+  "n_runs": 36,
+  "family_grids": [
+    {
+      "family": "oxide",
+      "png_path": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/training_curves/oxide_training_curve_grid.png",
+      "pdf_path": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/training_curves/oxide_training_curve_grid.pdf"
+    },
+    {
+      "family": "nitride",
+      "png_path": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/training_curves/nitride_training_curve_grid.png",
+      "pdf_path": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/training_curves/nitride_training_curve_grid.pdf"
+    }
+  ]
+}
