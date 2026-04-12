@@ -195,6 +195,25 @@ def module_group(name: str) -> str:
     return parts[0]
 
 
+def parameter_in_group(name: str, group: str) -> bool:
+    return name == group or name.startswith(f"{group}.")
+
+
+def set_trainable_groups(model: torch.nn.Module, groups: list[str]) -> list[str]:
+    for parameter in model.parameters():
+        parameter.requires_grad = False
+
+    matched_groups: list[str] = []
+    for name, parameter in model.named_parameters():
+        for group in groups:
+            if parameter_in_group(name, group):
+                parameter.requires_grad = True
+                if group not in matched_groups:
+                    matched_groups.append(group)
+                break
+    return matched_groups
+
+
 def unfreeze_last_n_groups(model: torch.nn.Module, n_groups: int) -> list[str]:
     for parameter in model.parameters():
         parameter.requires_grad = False
@@ -210,6 +229,42 @@ def unfreeze_last_n_groups(model: torch.nn.Module, n_groups: int) -> list[str]:
         if module_group(name) in chosen:
             parameter.requires_grad = True
     return chosen
+
+
+def set_partial_train_modes(model: torch.nn.Module, trainable_groups: list[str]) -> None:
+    model.eval()
+    for group in trainable_groups:
+        if group == "fc":
+            model.fc.train()
+            continue
+        if group.startswith("gcn_layers."):
+            idx = int(group.split(".")[1])
+            model.gcn_layers[idx].train()
+
+
+def epoch_mode_report(
+    model: torch.nn.Module,
+    epoch: int,
+    trainable_groups: list[str],
+) -> dict:
+    trainable_params = sum(param.numel() for param in model.parameters() if param.requires_grad)
+    frozen_examples = {
+        "atom_embedding": model.atom_embedding.training,
+        "alignn_layers.0": model.alignn_layers[0].training if len(model.alignn_layers) > 0 else None,
+        "gcn_layers.0": model.gcn_layers[0].training if len(model.gcn_layers) > 0 else None,
+    }
+    report = {
+        "epoch": epoch,
+        "trainable_groups": trainable_groups,
+        "module_training_flags": {
+            "model": model.training,
+            "fc": model.fc.training,
+            "gcn_layers.3": model.gcn_layers[3].training if len(model.gcn_layers) > 3 else None,
+            **frozen_examples,
+        },
+        "n_trainable_params": trainable_params,
+    }
+    return report
 
 
 def set_random_seed(seed: int) -> None:
@@ -321,7 +376,8 @@ def main() -> None:
     train_loader, val_loader, test_loader = build_loaders(train_rows, val_rows, test_rows, cfg, output_dir)
 
     model = load_pretrained_model(checkpoint_path, pretrained_config_path)
-    chosen_groups = unfreeze_last_n_groups(model, args.n_unfrozen_groups)
+    requested_groups = ["gcn_layers.3", "fc"]
+    chosen_groups = set_trainable_groups(model, requested_groups)
     model.to(device)
 
     trainable = sum(param.numel() for param in model.parameters() if param.requires_grad)
@@ -354,10 +410,15 @@ def main() -> None:
 
     history_train: list[list[float]] = []
     history_val: list[list[float]] = []
+    mode_history: list[dict] = []
     best_val = float("inf")
 
     for epoch in range(cfg.epochs):
-        model.train()
+        set_partial_train_modes(model, chosen_groups)
+        mode_report = epoch_mode_report(model, epoch + 1, chosen_groups)
+        mode_history.append(mode_report)
+        (output_dir / "mode_debug_history.json").write_text(json.dumps(mode_history, indent=2))
+        print(json.dumps({"event": "mode_debug", **mode_report}))
         running_loss = 0.0
         batch_count = 0
         for batch, _jid in zip(train_loader, train_loader.dataset.ids):
