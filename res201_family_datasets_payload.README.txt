@@ -1,0 +1,22 @@
+RES201 Family Datasets Payload
+
+File: res201_family_datasets_payload.zip
+
+This archive is a portable copy of the canonical oxide/nitride family-dataset
+payload used in this repository. It exists as a convenience handoff artifact for
+cases where a collaborator needs the dataset bundle directly, outside a Git clone.
+
+What it is for:
+- moving the frozen family datasets between laptops
+- keeping a simple backup of the shared dataset payload
+- giving a collaborator one obvious archive file instead of asking them to infer
+  which dataset folders matter
+
+What it is not:
+- not the full repository
+- not a substitute for the Git-tracked experiment outputs in `results/`
+- not the pretrained ALIGNN checkpoint bundle in `jv_formation_energy_peratom_alignn/`
+
+For a fuller explanation of the workspace layout, see:
+- README.md
+- docs/WORKSPACE_ARTIFACT_GUIDE.md
