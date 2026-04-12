@@ -1,0 +1,21 @@
+{
+  "dataset_root": "/workspace/res201-alignn-domain-shift/results/nitride/N500_seed0/dataset_root",
+  "output_dir": "/workspace/res201-alignn-domain-shift/results_recommended/nitride/N500_seed0/finetune_last2",
+  "device": "cpu",
+  "n_train": 450,
+  "n_val": 50,
+  "n_test": 242,
+  "epochs": 1,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "unfrozen_groups": [
+    "gcn_layers.3",
+    "fc"
+  ],
+  "train_mae_eV_per_atom": 0.15792256691216608,
+  "val_best_l1": 0.18581470847129822,
+  "test_l1": 0.1873716413974762,
+  "test_mae_eV_per_atom": 0.1857055854129274,
+  "prediction_csv": "/workspace/res201-alignn-domain-shift/results_recommended/nitride/N500_seed0/finetune_last2/prediction_results_test_set.csv",
+  "elapsed_seconds": 202.53230500221252
+}

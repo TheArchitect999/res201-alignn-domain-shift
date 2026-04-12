@@ -1,0 +1,21 @@
+{
+  "dataset_root": "/workspace/res201-alignn-domain-shift/results/oxide/N1000_seed0/dataset_root",
+  "output_dir": "/workspace/res201-alignn-domain-shift/results_recommended/oxide/N1000_seed0/finetune_last2",
+  "device": "cpu",
+  "n_train": 900,
+  "n_val": 100,
+  "n_test": 1484,
+  "epochs": 1,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "unfrozen_groups": [
+    "gcn_layers.3",
+    "fc"
+  ],
+  "train_mae_eV_per_atom": 0.06852612743619829,
+  "val_best_l1": 0.06576696410775185,
+  "test_l1": 0.08289244367430608,
+  "test_mae_eV_per_atom": 0.08228324003868442,
+  "prediction_csv": "/workspace/res201-alignn-domain-shift/results_recommended/oxide/N1000_seed0/finetune_last2/prediction_results_test_set.csv",
+  "elapsed_seconds": 860.7558283805847
+}

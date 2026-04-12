@@ -1,0 +1,11 @@
+{
+  "dataset_root": "/workspace/res201-alignn-domain-shift/results/oxide/N1000_seed0/dataset_root",
+  "pretrained_checkpoint": "/workspace/res201-alignn-domain-shift/jv_formation_energy_peratom_alignn/checkpoint_300.pt",
+  "pretrained_config": "/workspace/res201-alignn-domain-shift/jv_formation_energy_peratom_alignn/config.json",
+  "unfrozen_groups": [
+    "gcn_layers.3",
+    "fc"
+  ],
+  "n_trainable_params": 330241,
+  "n_total_params": 4026753
+}

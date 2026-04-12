@@ -15,7 +15,7 @@
   "val_ratio": 0.1,
   "test_ratio": 0.1,
   "target_multiplication_factor": null,
-  "epochs": 300,
+  "epochs": 1,
   "batch_size": 64,
   "weight_decay": 0.0,
   "learning_rate": 0.001,
