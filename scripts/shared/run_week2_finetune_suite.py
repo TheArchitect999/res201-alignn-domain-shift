@@ -50,6 +50,9 @@ def load_json(path: Path) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--results-root", default="results")
+    parser.add_argument("--configs-dir", default="configs")
+    parser.add_argument("--reports-dir", default="reports/week2")
     parser.add_argument("--families", nargs="+", default=["oxide", "nitride"])
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
     parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
@@ -82,12 +85,12 @@ def main() -> int:
             for seed in args.seeds:
                 started_at = time.time()
                 run_name = f"{family}:N{n_value}:seed{seed}"
-                run_root = repo / "results" / family / f"N{n_value}_seed{seed}"
+                run_root = repo / args.results_root / family / f"N{n_value}_seed{seed}"
                 dataset_root = run_root / "dataset_root"
                 split_manifest_path = dataset_root / "split_manifest.json"
                 output_dir = run_root / "finetune_last2"
                 summary_path = output_dir / "summary.json"
-                config_path = repo / "configs" / f"{family}_week2_N{n_value}_seed{seed}.finetune_last2.json"
+                config_path = repo / args.configs_dir / f"{family}_week2_N{n_value}_seed{seed}.finetune_last2.json"
                 log_path = output_dir / "run.log"
 
                 print(json.dumps({"event": "start", "run": run_name, "output_dir": str(output_dir)}))
@@ -105,6 +108,8 @@ def main() -> int:
                             str(seed),
                             "--repo-root",
                             ".",
+                            "--results-root",
+                            args.results_root,
                             "--link-mode",
                             args.link_mode,
                         ]
@@ -215,7 +220,7 @@ def main() -> int:
         "skipped_existing_runs": skipped,
         "failed_runs": failures,
     }
-    summary_out = repo / "reports" / "week2" / "run_suite_summary.json"
+    summary_out = repo / args.reports_dir / "run_suite_summary.json"
     summary_out.parent.mkdir(parents=True, exist_ok=True)
     summary_out.write_text(json.dumps(aggregate, indent=2), encoding="utf-8")
     print(json.dumps({"event": "suite_finished", **aggregate}))

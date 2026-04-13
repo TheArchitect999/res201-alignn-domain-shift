@@ -36,12 +36,14 @@ def relative_reduction(losses: np.ndarray) -> np.ndarray:
     return 100.0 * (1.0 - losses / baseline)
 
 
-def discover_runs(repo_root: Path, families: list[str], ns: list[int], seeds: list[int]) -> list[dict]:
+def discover_runs(
+    repo_root: Path, results_root: str, families: list[str], ns: list[int], seeds: list[int]
+) -> list[dict]:
     runs: list[dict] = []
     for family in families:
         for n in ns:
             for seed in seeds:
-                run_dir = repo_root / "results" / family / f"N{n}_seed{seed}" / "finetune_last2"
+                run_dir = repo_root / results_root / family / f"N{n}_seed{seed}" / "finetune_last2"
                 summary_path = run_dir / "summary.json"
                 train_path = run_dir / "history_train.json"
                 val_path = run_dir / "history_val.json"
@@ -270,6 +272,7 @@ def write_manifest(out_dir: Path, rows: list[dict], grid_rows: list[dict]) -> No
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--results-root", default="results")
     parser.add_argument("--families", nargs="+", default=["oxide", "nitride"])
     parser.add_argument("--Ns", nargs="+", type=int, default=[10, 50, 100, 200, 500, 1000])
     parser.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
@@ -280,7 +283,7 @@ def main() -> None:
     out_dir = (repo_root / args.out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    runs = discover_runs(repo_root, args.families, args.Ns, args.seeds)
+    runs = discover_runs(repo_root, args.results_root, args.families, args.Ns, args.seeds)
     if not runs:
         raise SystemExit("No completed fine-tuning runs with history files were found.")
 

@@ -1,0 +1,242 @@
+[
+  {
+    "epoch": 1,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 2,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 3,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 4,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 5,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 6,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 7,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 8,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 9,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 10,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 11,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 12,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 13,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 14,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  },
+  {
+    "epoch": 15,
+    "trainable_groups": [
+      "gcn_layers.3",
+      "fc"
+    ],
+    "module_training_flags": {
+      "model": false,
+      "fc": true,
+      "gcn_layers.3": true,
+      "atom_embedding": false,
+      "alignn_layers.0": false,
+      "gcn_layers.0": false
+    },
+    "n_trainable_params": 330241
+  }
+]

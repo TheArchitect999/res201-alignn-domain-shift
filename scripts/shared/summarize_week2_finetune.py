@@ -24,12 +24,16 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def collect_finetune_rows(repo: Path, families: list[str], ns: list[int], seeds: list[int]) -> list[dict]:
+def collect_finetune_rows(
+    repo: Path, results_root: str, families: list[str], ns: list[int], seeds: list[int]
+) -> list[dict]:
     rows: list[dict] = []
     for family in families:
         for n_value in ns:
             for seed in seeds:
-                summary_path = repo / "results" / family / f"N{n_value}_seed{seed}" / "finetune_last2" / "summary.json"
+                summary_path = (
+                    repo / results_root / family / f"N{n_value}_seed{seed}" / "finetune_last2" / "summary.json"
+                )
                 if not summary_path.exists():
                     continue
                 summary = load_json(summary_path)
@@ -55,10 +59,10 @@ def collect_finetune_rows(repo: Path, families: list[str], ns: list[int], seeds:
     return rows
 
 
-def collect_zero_shot_rows(repo: Path, families: list[str]) -> list[dict]:
+def collect_zero_shot_rows(repo: Path, zero_shot_root: str, families: list[str]) -> list[dict]:
     rows: list[dict] = []
     for family in families:
-        summary_path = repo / "results" / family / "zero_shot" / "summary.json"
+        summary_path = repo / zero_shot_root / family / "zero_shot" / "summary.json"
         if not summary_path.exists():
             continue
         summary = load_json(summary_path)
@@ -132,6 +136,8 @@ def plot_family_curve(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--results-root", default="results")
+    parser.add_argument("--zero-shot-root", default="results")
     parser.add_argument("--families", nargs="+", default=["oxide", "nitride"])
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
     parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
@@ -142,8 +148,8 @@ def main() -> int:
     out_dir = (repo / args.out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    finetune_rows = collect_finetune_rows(repo, args.families, args.Ns, args.seeds)
-    zero_shot_rows = collect_zero_shot_rows(repo, args.families)
+    finetune_rows = collect_finetune_rows(repo, args.results_root, args.families, args.Ns, args.seeds)
+    zero_shot_rows = collect_zero_shot_rows(repo, args.zero_shot_root, args.families)
 
     runs_df = pd.DataFrame(finetune_rows)
     zero_df = pd.DataFrame(zero_shot_rows)

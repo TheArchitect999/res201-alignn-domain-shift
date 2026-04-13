@@ -31,6 +31,7 @@ def main():
     ap.add_argument('--N', type=int, required=True)
     ap.add_argument('--seed', type=int, default=0)
     ap.add_argument('--repo-root', default='.')
+    ap.add_argument('--results-root', default='results')
     ap.add_argument('--link-mode', choices=['copy','hardlink','symlink'], default='copy')
     args = ap.parse_args()
     repo = Path(args.repo_root).resolve()
@@ -47,7 +48,7 @@ def main():
         n_val = max(1, args.N // 5)
     val = subset.iloc[:n_val].copy().reset_index(drop=True)
     train = subset.iloc[n_val:].copy().reset_index(drop=True)
-    root = repo / 'results' / args.family / f'N{args.N}_seed{args.seed}' / 'dataset_root'
+    root = repo / args.results_root / args.family / f'N{args.N}_seed{args.seed}' / 'dataset_root'
     root.mkdir(parents=True, exist_ok=True)
     structures_src = family_dir / 'structures'
     # exact order matters because keep_data_order=True and n_train/n_val/n_test are used

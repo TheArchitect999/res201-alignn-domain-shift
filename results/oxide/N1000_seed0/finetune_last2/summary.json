@@ -12,10 +12,10 @@
     "gcn_layers.3",
     "fc"
   ],
-  "train_mae_eV_per_atom": 0.027300261870130068,
-  "val_best_l1": 0.025852453229682788,
-  "test_l1": 0.04641574386867785,
-  "test_mae_eV_per_atom": 0.04637412279150813,
+  "train_mae_eV_per_atom": 0.007583706063839297,
+  "val_best_l1": 0.012454801904303687,
+  "test_l1": 0.036174910283216864,
+  "test_mae_eV_per_atom": 0.036058731536058375,
   "prediction_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/N1000_seed0/finetune_last2/prediction_results_test_set.csv",
-  "elapsed_seconds": 1946.9683768749237
+  "elapsed_seconds": 1921.1961035728455
 }
