@@ -1,0 +1,18 @@
+{
+  "dataset_root": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N50_seed0/dataset_root",
+  "output_dir": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N50_seed0/train_alignn_fromscratch",
+  "device": "cuda",
+  "n_train": 45,
+  "n_val": 5,
+  "n_test": 242,
+  "epochs": 300,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "train_protocol": "from_scratch",
+  "train_mae_eV_per_atom": 0.20945282619860436,
+  "val_best_l1": 0.32256823778152466,
+  "test_l1": 0.5918489843606949,
+  "test_mae_eV_per_atom": 0.5869562744340004,
+  "prediction_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N50_seed0/train_alignn_fromscratch/prediction_results_test_set.csv",
+  "elapsed_seconds": 357.9683954715729
+}

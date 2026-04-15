@@ -1,0 +1,5 @@
+family,N,seed,n_train,n_val,n_test,epochs,batch_size,learning_rate,test_mae_eV_per_atom,train_mae_eV_per_atom,val_best_l1,summary_path
+nitride,50,0,45,5,242,300,64,0.001,0.5869562744340004,0.20945282619860436,0.32256823778152466,/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N50_seed0/train_alignn_fromscratch/summary.json
+nitride,500,0,450,50,242,300,32,0.001,0.2599375531277504,0.05124099076795068,0.3465663343667984,/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N500_seed0/train_alignn_fromscratch/summary.json
+oxide,50,0,45,5,1484,300,64,0.001,0.5039579562547571,0.119954733716117,0.891509473323822,/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/N50_seed0/train_alignn_fromscratch/summary.json
+oxide,500,0,450,50,1484,300,16,0.001,0.18889811140848475,0.04457454300485551,0.18881726451218128,/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/N500_seed0/train_alignn_fromscratch/summary.json

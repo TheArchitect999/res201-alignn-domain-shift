@@ -1,0 +1,18 @@
+{
+  "dataset_root": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/N50_seed0/dataset_root",
+  "output_dir": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/N50_seed0/train_alignn_fromscratch",
+  "device": "cuda",
+  "n_train": 45,
+  "n_val": 5,
+  "n_test": 1484,
+  "epochs": 300,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "train_protocol": "from_scratch",
+  "train_mae_eV_per_atom": 0.119954733716117,
+  "val_best_l1": 0.891509473323822,
+  "test_l1": 0.5234528332948685,
+  "test_mae_eV_per_atom": 0.5039579562547571,
+  "prediction_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/N50_seed0/train_alignn_fromscratch/prediction_results_test_set.csv",
+  "elapsed_seconds": 288.56695199012756
+}

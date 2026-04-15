@@ -1,0 +1,15 @@
+{
+  "run_subdir": "train_alignn_fromscratch",
+  "runs_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week3_fromscratch_baseline/fromscratch_runs.csv",
+  "summary_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week3_fromscratch_baseline/fromscratch_summary.csv",
+  "plots": {
+    "oxide": {
+      "png": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week3_fromscratch_baseline/oxide_fromscratch_comparison.png",
+      "pdf": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week3_fromscratch_baseline/oxide_fromscratch_comparison.pdf"
+    },
+    "nitride": {
+      "png": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week3_fromscratch_baseline/nitride_fromscratch_comparison.png",
+      "pdf": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week3_fromscratch_baseline/nitride_fromscratch_comparison.pdf"
+    }
+  }
+}
