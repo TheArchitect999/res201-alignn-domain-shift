@@ -199,7 +199,10 @@ def main() -> int:
     zero_shot_rows = collect_zero_shot_rows(repo, args.families)
 
     runs_df = pd.DataFrame(finetune_rows)
-    zero_df = pd.DataFrame(zero_shot_rows)
+    zero_df = pd.DataFrame(
+        zero_shot_rows,
+        columns=["family", "zero_shot_mae_eV_per_atom", "summary_path"],
+    )
 
     if runs_df.empty:
         raise SystemExit("No tagged Week 2 fine-tuning summaries were found.")

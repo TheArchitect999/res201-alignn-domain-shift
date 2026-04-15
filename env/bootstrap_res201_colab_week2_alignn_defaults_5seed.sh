@@ -84,6 +84,7 @@ cat > .git/info/sparse-checkout <<EOF
 /results/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/summary.json
 /results/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/history_train.json
 /results/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/history_val.json
+/results/oxide/zero_shot/summary.json
 /results/nitride/
 !/results/nitride/*
 /results/nitride/N*_seed*/
@@ -95,6 +96,7 @@ cat > .git/info/sparse-checkout <<EOF
 /results/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/summary.json
 /results/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/history_train.json
 /results/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/history_val.json
+/results/nitride/zero_shot/summary.json
 EOF
 git read-tree -mu HEAD
 
