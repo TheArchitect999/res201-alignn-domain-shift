@@ -18,6 +18,9 @@ from alignn.config import TrainingConfig
 from alignn.lmdb_dataset import get_torch_dataset
 from alignn.models.alignn import ALIGNN, ALIGNNConfig
 
+TRAINABLE_GROUPS = ["fc", "gcn_layers.3"]
+TRAINABLE_PREFIXES = ("fc.", "gcn_layers.3.")
+
 
 def coerce_target_shape(
     prediction: torch.Tensor, target: torch.Tensor
@@ -69,7 +72,9 @@ def load_dataset_rows(dataset_root: Path) -> list[dict]:
     return rows
 
 
-def split_dataset(rows: list[dict], cfg: TrainingConfig) -> tuple[list[dict], list[dict], list[dict]]:
+def split_dataset(
+    rows: list[dict], cfg: TrainingConfig
+) -> tuple[list[dict], list[dict], list[dict]]:
     expected = int(cfg.n_train) + int(cfg.n_val) + int(cfg.n_test)
     if len(rows) != expected:
         raise ValueError(
@@ -97,7 +102,9 @@ def write_split_metadata(
     }
     (output_dir / "ids_train_val_test.json").write_text(json.dumps(ids, indent=2))
 
-    all_targets = np.array([row["target"] for row in train_rows + val_rows + test_rows], dtype=float)
+    all_targets = np.array(
+        [row["target"] for row in train_rows + val_rows + test_rows], dtype=float
+    )
     mad = np.mean(np.abs(all_targets - np.mean(all_targets)))
     mad_text = "\n".join(
         [
@@ -188,28 +195,160 @@ def load_pretrained_model(checkpoint_path: Path, pretrained_config_path: Path) -
     return model
 
 
-def module_group(name: str) -> str:
-    parts = name.split(".")
-    if parts[0] in {"alignn_layers", "gcn_layers"} and len(parts) >= 2:
-        return ".".join(parts[:2])
-    return parts[0]
-
-
-def unfreeze_last_n_groups(model: torch.nn.Module, n_groups: int) -> list[str]:
+def freeze_all_parameters(model: torch.nn.Module) -> None:
     for parameter in model.parameters():
         parameter.requires_grad = False
 
-    ordered_groups: list[str] = []
-    for name, _ in model.named_parameters():
-        group = module_group(name)
-        if group not in ordered_groups:
-            ordered_groups.append(group)
 
-    chosen = ordered_groups[-n_groups:]
+def configure_explicit_last2_finetune(model: torch.nn.Module) -> list[str]:
+    freeze_all_parameters(model)
+    trainable_parameter_names: list[str] = []
+
     for name, parameter in model.named_parameters():
-        if module_group(name) in chosen:
+        if any(name.startswith(prefix) for prefix in TRAINABLE_PREFIXES):
             parameter.requires_grad = True
-    return chosen
+            trainable_parameter_names.append(name)
+
+    missing_groups = [
+        group for group in TRAINABLE_GROUPS if not any(name.startswith(f"{group}.") for name in trainable_parameter_names)
+    ]
+    if missing_groups:
+        raise RuntimeError(f"Expected trainable groups were not found: {missing_groups}")
+
+    assert_only_expected_trainables(model, trainable_parameter_names)
+    return trainable_parameter_names
+
+
+def assert_only_expected_trainables(
+    model: torch.nn.Module, trainable_parameter_names: list[str] | None = None
+) -> list[str]:
+    actual = [
+        name
+        for name, parameter in model.named_parameters()
+        if parameter.requires_grad
+    ]
+    unexpected = [
+        name for name in actual if not any(name.startswith(prefix) for prefix in TRAINABLE_PREFIXES)
+    ]
+    if unexpected:
+        raise RuntimeError(f"Unexpected trainable parameters found: {unexpected}")
+    if trainable_parameter_names is not None and sorted(actual) != sorted(trainable_parameter_names):
+        raise RuntimeError(
+            "Trainable parameter mismatch between configured and observed names."
+        )
+    return actual
+
+
+def group_decay_trainables(model: torch.nn.Module) -> list[dict]:
+    decay: list[torch.nn.Parameter] = []
+    no_decay: list[torch.nn.Parameter] = []
+    for name, parameter in model.named_parameters():
+        if not parameter.requires_grad:
+            continue
+        if "bias" in name or "bn" in name or "norm" in name:
+            no_decay.append(parameter)
+        else:
+            decay.append(parameter)
+    return [
+        {"params": decay},
+        {"params": no_decay, "weight_decay": 0.0},
+    ]
+
+
+def apply_partial_finetune_train_mode(model: ALIGNN) -> dict[str, bool]:
+    model.eval()
+    model.fc.train()
+    model.gcn_layers[3].train()
+
+    batchnorm_modes: dict[str, bool] = {}
+    for name, module in model.named_modules():
+        if isinstance(module, torch.nn.modules.batchnorm._BatchNorm):
+            batchnorm_modes[name] = module.training
+
+    wrong_train = [
+        name for name, is_training in batchnorm_modes.items()
+        if is_training and not name.startswith("gcn_layers.3.")
+    ]
+    wrong_eval = [
+        name for name, is_training in batchnorm_modes.items()
+        if not is_training and name.startswith("gcn_layers.3.")
+    ]
+    if wrong_train or wrong_eval:
+        raise RuntimeError(
+            "BatchNorm train/eval invariant violated. "
+            f"wrong_train={wrong_train}, wrong_eval={wrong_eval}"
+        )
+
+    return batchnorm_modes
+
+
+def snapshot_batchnorm_buffers(model: torch.nn.Module) -> dict[str, dict[str, torch.Tensor | None]]:
+    snapshot: dict[str, dict[str, torch.Tensor | None]] = {}
+    for name, module in model.named_modules():
+        if not isinstance(module, torch.nn.modules.batchnorm._BatchNorm):
+            continue
+        snapshot[name] = {
+            "running_mean": None if module.running_mean is None else module.running_mean.detach().clone(),
+            "running_var": None if module.running_var is None else module.running_var.detach().clone(),
+            "num_batches_tracked": None
+            if getattr(module, "num_batches_tracked", None) is None
+            else module.num_batches_tracked.detach().clone(),
+        }
+    return snapshot
+
+
+def assert_frozen_gradients_absent(model: torch.nn.Module) -> None:
+    leaked = [
+        name
+        for name, parameter in model.named_parameters()
+        if not parameter.requires_grad and parameter.grad is not None
+    ]
+    if leaked:
+        raise RuntimeError(f"Frozen parameters received gradients: {leaked}")
+
+
+def assert_batchnorm_buffer_behavior(
+    model: torch.nn.Module,
+    snapshot_before: dict[str, dict[str, torch.Tensor | None]],
+) -> dict[str, list[str]]:
+    frozen_updates: list[str] = []
+    train_updates: list[str] = []
+
+    for name, module in model.named_modules():
+        if not isinstance(module, torch.nn.modules.batchnorm._BatchNorm):
+            continue
+        before = snapshot_before.get(name)
+        if before is None:
+            continue
+
+        before_batches = before["num_batches_tracked"]
+        after_batches = getattr(module, "num_batches_tracked", None)
+        if before_batches is None or after_batches is None:
+            continue
+
+        changed = bool((after_batches.detach() != before_batches).item())
+        if name.startswith("gcn_layers.3."):
+            if not changed:
+                raise RuntimeError(
+                    f"BatchNorm inside gcn_layers.3 did not update running state: {name}"
+                )
+            train_updates.append(name)
+        elif changed:
+            frozen_updates.append(name)
+
+    if frozen_updates:
+        raise RuntimeError(
+            "Frozen BatchNorm buffers updated outside gcn_layers.3: "
+            f"{frozen_updates}"
+        )
+    if not train_updates:
+        raise RuntimeError("No BatchNorm buffers inside gcn_layers.3 updated during training.")
+    return {
+        "frozen_batchnorms_unchanged": [
+            name for name in snapshot_before if not name.startswith("gcn_layers.3.")
+        ],
+        "train_batchnorms_updated": train_updates,
+    }
 
 
 def set_random_seed(seed: int) -> None:
@@ -271,7 +410,12 @@ def evaluate_loader(
     return mean_loss, targets, predictions, ids
 
 
-def write_prediction_csv(path: Path, ids: list[str], targets: list[float], predictions: list[float]) -> float:
+def write_prediction_csv(
+    path: Path,
+    ids: list[str],
+    targets: list[float],
+    predictions: list[float],
+) -> float:
     if len(ids) != len(targets):
         ids = [str(i) for i in range(len(targets))]
     with path.open("w", encoding="utf-8", newline="") as handle:
@@ -295,7 +439,6 @@ def main() -> None:
         "--pretrained-config",
         default="jv_formation_energy_peratom_alignn/config.json",
     )
-    parser.add_argument("--n-unfrozen-groups", type=int, default=2)
     parser.add_argument("--device", default="cpu")
     args = parser.parse_args()
 
@@ -313,16 +456,21 @@ def main() -> None:
 
     set_random_seed(int(cfg.random_seed))
     device = torch.device(args.device)
+    if device.type == "cuda" and not torch.cuda.is_available():
+        raise SystemExit("CUDA device requested but torch.cuda.is_available() is False.")
     started_at = time.time()
 
     rows = load_dataset_rows(dataset_root)
     train_rows, val_rows, test_rows = split_dataset(rows, cfg)
     write_split_metadata(output_dir, train_rows, val_rows, test_rows)
-    train_loader, val_loader, test_loader = build_loaders(train_rows, val_rows, test_rows, cfg, output_dir)
+    train_loader, val_loader, test_loader = build_loaders(
+        train_rows, val_rows, test_rows, cfg, output_dir
+    )
 
     model = load_pretrained_model(checkpoint_path, pretrained_config_path)
-    chosen_groups = unfreeze_last_n_groups(model, args.n_unfrozen_groups)
+    trainable_parameter_names = configure_explicit_last2_finetune(model)
     model.to(device)
+    batchnorm_modes = apply_partial_finetune_train_mode(model)
 
     trainable = sum(param.numel() for param in model.parameters() if param.requires_grad)
     total = sum(param.numel() for param in model.parameters())
@@ -330,14 +478,17 @@ def main() -> None:
         "dataset_root": str(dataset_root),
         "pretrained_checkpoint": str(checkpoint_path),
         "pretrained_config": str(pretrained_config_path),
-        "unfrozen_groups": chosen_groups,
+        "unfrozen_groups": TRAINABLE_GROUPS,
+        "trainable_parameter_names": trainable_parameter_names,
         "n_trainable_params": trainable,
         "n_total_params": total,
+        "batchnorm_modes_after_setup": batchnorm_modes,
+        "final_batch_size": cfg.batch_size,
     }
     (output_dir / "partial_finetune_meta.json").write_text(json.dumps(meta, indent=2))
 
     optimizer = torch.optim.AdamW(
-        [param for param in model.parameters() if param.requires_grad],
+        group_decay_trainables(model),
         lr=cfg.learning_rate,
         weight_decay=cfg.weight_decay,
     )
@@ -355,16 +506,26 @@ def main() -> None:
     history_train: list[list[float]] = []
     history_val: list[list[float]] = []
     best_val = float("inf")
+    best_epoch = 0
+    invariant_report: dict[str, list[str]] | None = None
 
     for epoch in range(cfg.epochs):
-        model.train()
+        apply_partial_finetune_train_mode(model)
+        assert_only_expected_trainables(model, trainable_parameter_names)
+
         running_loss = 0.0
         batch_count = 0
-        for batch, _jid in zip(train_loader, train_loader.dataset.ids):
+        for batch_idx, batch in enumerate(train_loader):
             optimizer.zero_grad()
+            bn_snapshot = None
+            if epoch == 0 and batch_idx == 0:
+                bn_snapshot = snapshot_batchnorm_buffers(model)
             prediction, target = forward_graph_batch(model, batch, device, use_line_graph)
             loss = criterion(prediction, target)
             loss.backward()
+            if bn_snapshot is not None:
+                assert_frozen_gradients_absent(model)
+                invariant_report = assert_batchnorm_buffer_behavior(model, bn_snapshot)
             optimizer.step()
             scheduler.step()
             running_loss += float(loss.item())
@@ -378,8 +539,9 @@ def main() -> None:
         (output_dir / "history_train.json").write_text(json.dumps(history_train, indent=2))
         (output_dir / "history_val.json").write_text(json.dumps(history_val, indent=2))
         torch.save(model.state_dict(), output_dir / "current_model.pt")
-        if val_loss <= best_val:
+        if val_loss < best_val:
             best_val = val_loss
+            best_epoch = epoch + 1
             torch.save(model.state_dict(), output_dir / "best_model.pt")
         print(json.dumps({"epoch": epoch + 1, "train_loss": train_loss, "val_loss": val_loss}))
 
@@ -407,7 +569,7 @@ def main() -> None:
         test_predictions,
     )
 
-    train_eval_loss, train_targets, train_predictions, train_ids = evaluate_loader(
+    _, train_targets, train_predictions, train_ids = evaluate_loader(
         best_model, train_loader, device, use_line_graph
     )
     train_mae = write_prediction_csv(
@@ -426,8 +588,11 @@ def main() -> None:
         "n_test": len(test_rows),
         "epochs": cfg.epochs,
         "batch_size": cfg.batch_size,
+        "final_batch_size": cfg.batch_size,
         "learning_rate": cfg.learning_rate,
-        "unfrozen_groups": chosen_groups,
+        "unfrozen_groups": TRAINABLE_GROUPS,
+        "trainable_parameter_names": trainable_parameter_names,
+        "best_epoch": best_epoch,
         "train_mae_eV_per_atom": train_mae,
         "val_best_l1": best_val,
         "test_l1": test_loss,
@@ -435,11 +600,12 @@ def main() -> None:
         "prediction_csv": str((output_dir / "prediction_results_test_set.csv").resolve()),
         "elapsed_seconds": time.time() - started_at,
     }
+    if invariant_report is not None:
+        summary["batchnorm_invariant_report"] = invariant_report
     (output_dir / "summary.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary, indent=2))
 
 
 if __name__ == "__main__":
-    os.environ.setdefault("CUDA_VISIBLE_DEVICES", "")
     os.environ.setdefault("DGLBACKEND", "pytorch")
     main()

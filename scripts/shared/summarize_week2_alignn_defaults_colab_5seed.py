@@ -1,0 +1,284 @@
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import tempfile
+from pathlib import Path
+
+DEFAULT_TAG = "week2_alignn_defaults_colab_5seed"
+DEFAULT_NS = [10, 50, 100, 200, 500, 1000]
+DEFAULT_SEEDS = [0, 1, 2, 3, 4]
+REPORTING_HINT = (
+    "Week 2 tagged summarization requires pandas and matplotlib. "
+    "Bootstrap the Colab environment with "
+    "`env/bootstrap_res201_colab_week2_alignn_defaults_5seed.sh`."
+)
+
+
+def configure_reporting_env() -> None:
+    temp_root = Path(tempfile.gettempdir())
+    os.environ.setdefault("MPLCONFIGDIR", str(temp_root / "matplotlib"))
+    os.environ.setdefault("XDG_CACHE_HOME", str(temp_root / "xdg-cache"))
+    os.environ.setdefault("FC_CACHEDIR", str(temp_root / "fontconfig"))
+    Path(os.environ["MPLCONFIGDIR"]).mkdir(parents=True, exist_ok=True)
+    Path(os.environ["XDG_CACHE_HOME"]).mkdir(parents=True, exist_ok=True)
+    Path(os.environ["FC_CACHEDIR"]).mkdir(parents=True, exist_ok=True)
+
+
+def load_reporting_modules():
+    configure_reporting_env()
+    missing: list[str] = []
+    try:
+        import pandas as pd  # pylint: disable=import-error
+    except Exception:
+        missing.append("pandas")
+        pd = None
+    try:
+        import matplotlib.pyplot as plt  # pylint: disable=import-error
+    except Exception:
+        missing.append("matplotlib")
+        plt = None
+    if missing:
+        missing_text = ", ".join(missing)
+        raise SystemExit(f"Missing reporting dependencies: {missing_text}. {REPORTING_HINT}")
+    return pd, plt
+
+
+def load_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def collect_finetune_rows(
+    repo: Path,
+    families: list[str],
+    ns: list[int],
+    seeds: list[int],
+    run_subdir: str,
+) -> list[dict]:
+    rows: list[dict] = []
+    for family in families:
+        for n_value in ns:
+            for seed in seeds:
+                summary_path = repo / "results" / family / f"N{n_value}_seed{seed}" / run_subdir / "summary.json"
+                if not summary_path.exists():
+                    continue
+                summary = load_json(summary_path)
+                rows.append(
+                    {
+                        "family": family,
+                        "N": n_value,
+                        "seed": seed,
+                        "n_train": summary["n_train"],
+                        "n_val": summary["n_val"],
+                        "n_test": summary["n_test"],
+                        "epochs": summary["epochs"],
+                        "batch_size": summary["batch_size"],
+                        "final_batch_size": summary.get("final_batch_size", summary["batch_size"]),
+                        "best_epoch": summary.get("best_epoch"),
+                        "learning_rate": summary["learning_rate"],
+                        "test_mae_eV_per_atom": summary["test_mae_eV_per_atom"],
+                        "train_mae_eV_per_atom": summary["train_mae_eV_per_atom"],
+                        "val_best_l1": summary["val_best_l1"],
+                        "device": summary.get("device", "unknown"),
+                        "elapsed_seconds": summary.get("elapsed_seconds"),
+                        "summary_path": str(summary_path.resolve()),
+                    }
+                )
+    return rows
+
+
+def collect_zero_shot_rows(repo: Path, families: list[str]) -> list[dict]:
+    rows: list[dict] = []
+    for family in families:
+        summary_path = repo / "results" / family / "zero_shot" / "summary.json"
+        if not summary_path.exists():
+            continue
+        summary = load_json(summary_path)
+        rows.append(
+            {
+                "family": family,
+                "zero_shot_mae_eV_per_atom": summary["mae_eV_per_atom"],
+                "summary_path": str(summary_path.resolve()),
+            }
+        )
+    return rows
+
+
+def write_latex_table(path: Path, frame) -> None:
+    lines = [
+        r"\begin{tabular}{lrrrrrr}",
+        r"\toprule",
+        r"Family & N & Runs & Train & Val & Mean test MAE & Std \\",
+        r"\midrule",
+    ]
+    for row in frame.itertuples(index=False):
+        lines.append(
+            f"{row.family.capitalize()} & {row.N} & {row.runs} & {row.n_train} & {row.n_val} & "
+            f"{row.mean_test_mae_eV_per_atom:.6f} & {row.std_test_mae_eV_per_atom:.6f} \\\\"
+        )
+    lines.extend([r"\bottomrule", r"\end{tabular}"])
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def plot_family_curve(
+    plt,
+    family: str,
+    summary_df,
+    zero_shot_mae: float | None,
+    out_png: Path,
+    out_pdf: Path,
+    seed_count: int,
+    experiment_tag: str,
+) -> None:
+    family_df = summary_df[summary_df["family"] == family].sort_values("N")
+    if family_df.empty:
+        return
+
+    plt.figure(figsize=(7, 4.5))
+    plt.plot(
+        family_df["N"],
+        family_df["mean_test_mae_eV_per_atom"],
+        marker="o",
+        linewidth=2,
+        label="Fine-tune mean",
+        color="#1f77b4",
+    )
+    if (family_df["runs"] > 1).any():
+        lower = family_df["mean_test_mae_eV_per_atom"] - family_df["std_test_mae_eV_per_atom"].fillna(0.0)
+        upper = family_df["mean_test_mae_eV_per_atom"] + family_df["std_test_mae_eV_per_atom"].fillna(0.0)
+        plt.fill_between(
+            family_df["N"],
+            lower,
+            upper,
+            alpha=0.2,
+            color="#1f77b4",
+            label="+/- 1 std",
+        )
+    if zero_shot_mae is not None:
+        plt.axhline(
+            zero_shot_mae,
+            linestyle="--",
+            color="#d62728",
+            label=f"Zero-shot ({zero_shot_mae:.4f})",
+        )
+
+    plt.xscale("log")
+    plt.xticks(family_df["N"], [str(n) for n in family_df["N"]])
+    plt.xlabel("Fine-tuning size N")
+    plt.ylabel("Test MAE (eV/atom)")
+    plt.title(f"{family.capitalize()} learning curve ({seed_count} seeds, {experiment_tag})")
+    plt.grid(True, alpha=0.3)
+    plt.legend()
+    plt.tight_layout()
+    out_png.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(out_png, dpi=200)
+    plt.savefig(out_pdf)
+    plt.close()
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--experiment-tag", default=DEFAULT_TAG)
+    parser.add_argument("--run-subdir", default=None)
+    parser.add_argument("--families", nargs="+", default=["oxide", "nitride"])
+    parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
+    parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
+    parser.add_argument("--out-dir", default=None)
+    args = parser.parse_args()
+
+    pd, plt = load_reporting_modules()
+
+    repo = Path(args.repo_root).resolve()
+    run_subdir = args.run_subdir or f"finetune_last2_{args.experiment_tag}"
+    out_dir = (repo / (args.out_dir or f"reports/{args.experiment_tag}")).resolve()
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    finetune_rows = collect_finetune_rows(repo, args.families, args.Ns, args.seeds, run_subdir)
+    zero_shot_rows = collect_zero_shot_rows(repo, args.families)
+
+    runs_df = pd.DataFrame(finetune_rows)
+    zero_df = pd.DataFrame(zero_shot_rows)
+
+    if runs_df.empty:
+        raise SystemExit("No tagged Week 2 fine-tuning summaries were found.")
+
+    runs_df = runs_df.sort_values(["family", "N", "seed"]).reset_index(drop=True)
+    summary_df = (
+        runs_df.groupby(["family", "N"], as_index=False)
+        .agg(
+            runs=("test_mae_eV_per_atom", "size"),
+            n_train=("n_train", "first"),
+            n_val=("n_val", "first"),
+            n_test=("n_test", "first"),
+            mean_test_mae_eV_per_atom=("test_mae_eV_per_atom", "mean"),
+            std_test_mae_eV_per_atom=("test_mae_eV_per_atom", "std"),
+            mean_train_mae_eV_per_atom=("train_mae_eV_per_atom", "mean"),
+            mean_val_best_l1=("val_best_l1", "mean"),
+            mean_best_epoch=("best_epoch", "mean"),
+            mean_final_batch_size=("final_batch_size", "mean"),
+        )
+        .sort_values(["family", "N"])
+        .reset_index(drop=True)
+    )
+    wide_df = runs_df.pivot_table(index=["family", "N"], columns="seed", values="test_mae_eV_per_atom")
+    wide_df = wide_df.reset_index()
+    wide_df.columns = [
+        "family" if col == "family" else "N" if col == "N" else f"seed_{col}"
+        for col in wide_df.columns
+    ]
+    summary_with_zero = summary_df.merge(zero_df, on="family", how="left")
+    summary_with_zero["transfer_gain_vs_zero_shot"] = (
+        summary_with_zero["zero_shot_mae_eV_per_atom"] - summary_with_zero["mean_test_mae_eV_per_atom"]
+    )
+
+    runs_csv = out_dir / "finetune_runs.csv"
+    summary_csv = out_dir / "finetune_summary_by_N.csv"
+    wide_csv = out_dir / "finetune_summary_wide.csv"
+    zero_csv = out_dir / "zero_shot_summary.csv"
+    latex_table = out_dir / "finetune_summary_table.tex"
+    manifest_json = out_dir / "week2_summary_manifest.json"
+
+    runs_df.to_csv(runs_csv, index=False)
+    summary_with_zero.to_csv(summary_csv, index=False)
+    wide_df.to_csv(wide_csv, index=False)
+    zero_df.to_csv(zero_csv, index=False)
+    write_latex_table(latex_table, summary_df)
+
+    zero_lookup = {row["family"]: row["zero_shot_mae_eV_per_atom"] for row in zero_shot_rows}
+    for family in args.families:
+        plot_family_curve(
+            plt,
+            family,
+            summary_df,
+            zero_lookup.get(family),
+            out_dir / f"{family}_learning_curve.png",
+            out_dir / f"{family}_learning_curve.pdf",
+            seed_count=len(args.seeds),
+            experiment_tag=args.experiment_tag,
+        )
+
+    manifest = {
+        "experiment_tag": args.experiment_tag,
+        "run_subdir": run_subdir,
+        "runs_csv": str(runs_csv),
+        "summary_csv": str(summary_csv),
+        "wide_csv": str(wide_csv),
+        "zero_csv": str(zero_csv),
+        "latex_table": str(latex_table),
+        "plots": {
+            family: {
+                "png": str((out_dir / f"{family}_learning_curve.png").resolve()),
+                "pdf": str((out_dir / f"{family}_learning_curve.pdf").resolve()),
+            }
+            for family in args.families
+        },
+    }
+    manifest_json.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    print(json.dumps(manifest, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
