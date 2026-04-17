@@ -1,0 +1,22 @@
+{
+  "run_subdir": "train_alignn_fromscratch_epochs50_bs16_lr1e4",
+  "runs_csv": "/content/res201-alignn-domain-shift/reports/week3_fromscratch_epochs50_bs16_lr1e4/fromscratch_runs.csv",
+  "summary_csv": "/content/res201-alignn-domain-shift/reports/week3_fromscratch_epochs50_bs16_lr1e4/fromscratch_summary.csv",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "plots": {
+    "oxide": {
+      "png": "/content/res201-alignn-domain-shift/reports/week3_fromscratch_epochs50_bs16_lr1e4/oxide_fromscratch_comparison.png",
+      "pdf": "/content/res201-alignn-domain-shift/reports/week3_fromscratch_epochs50_bs16_lr1e4/oxide_fromscratch_comparison.pdf"
+    },
+    "nitride": {
+      "png": "/content/res201-alignn-domain-shift/reports/week3_fromscratch_epochs50_bs16_lr1e4/nitride_fromscratch_comparison.png",
+      "pdf": "/content/res201-alignn-domain-shift/reports/week3_fromscratch_epochs50_bs16_lr1e4/nitride_fromscratch_comparison.pdf"
+    }
+  }
+}

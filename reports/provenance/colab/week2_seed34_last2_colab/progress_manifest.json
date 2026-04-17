@@ -1,0 +1,201 @@
+{
+  "experiment_tag": "week2_seed34_last2_colab",
+  "report_dir": "/content/res201-alignn-domain-shift/reports/week2_seed34_last2_colab",
+  "run_subdir": "finetune_last2",
+  "config_dir": "configs",
+  "completed_runs": [
+    {
+      "family": "nitride",
+      "N": 10,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.07029903026620958,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N10_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 10,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.0705313472816151,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N10_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 50,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.07079923387678448,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N50_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 50,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.07116951574071133,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N50_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 100,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.07359627905986772,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N100_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 100,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.07499829198672506,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N100_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 200,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.08527792489140733,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N200_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 200,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.08495875193221757,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N200_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 500,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.07792982184289654,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N500_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 500,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.07873929706825451,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N500_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 1000,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.07628011868974148,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N1000_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "nitride",
+      "N": 1000,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.07577396422039626,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N1000_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 10,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.035633052163161184,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N10_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 10,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.03447181468743535,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N10_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 50,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.036241260656711675,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N50_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 50,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.04002822036217933,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N50_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 100,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.03604405455249224,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N100_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 100,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.038285568407504515,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N100_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 200,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.0361465084100722,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N200_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 200,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.03713763155111531,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N200_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 500,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.03617321007594471,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N500_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 500,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.036199952702438386,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N500_seed4/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 1000,
+      "seed": 3,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.035967013940015544,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N1000_seed3/finetune_last2/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 1000,
+      "seed": 4,
+      "final_batch_size": 16,
+      "test_mae_eV_per_atom": 0.03581004907678928,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N1000_seed4/finetune_last2/summary.json"
+    }
+  ],
+  "updated_at_epoch_seconds": 1776355614.3206112
+}

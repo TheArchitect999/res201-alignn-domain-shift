@@ -1,0 +1,28 @@
+{
+  "results_root": "results_prof_advice_alignn_recommended",
+  "zero_shot_root": "results",
+  "run_subdir": "finetune_last2",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "runs_csv": "reports/week2_prof_advice_alignn_recommended/finetune_runs.csv",
+  "summary_csv": "reports/week2_prof_advice_alignn_recommended/finetune_summary_by_N.csv",
+  "wide_csv": "reports/week2_prof_advice_alignn_recommended/finetune_summary_wide.csv",
+  "zero_csv": "reports/week2_prof_advice_alignn_recommended/zero_shot_summary.csv",
+  "latex_table": "reports/week2_prof_advice_alignn_recommended/finetune_summary_table.tex",
+  "progress_manifest": "reports/week2_prof_advice_alignn_recommended/progress_manifest.json",
+  "plots": {
+    "oxide": {
+      "png": "reports/week2_prof_advice_alignn_recommended/oxide_learning_curve.png",
+      "pdf": "reports/week2_prof_advice_alignn_recommended/oxide_learning_curve.pdf"
+    },
+    "nitride": {
+      "png": "reports/week2_prof_advice_alignn_recommended/nitride_learning_curve.png",
+      "pdf": "reports/week2_prof_advice_alignn_recommended/nitride_learning_curve.pdf"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "per_run_manifest_csv": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/training_curves/training_curve_manifest.csv",
+  "readme": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/training_curves/README.md",
+  "n_runs": 60,
+  "family_grids": [
+    {
+      "family": "oxide",
+      "png_path": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/training_curves/oxide_training_curve_grid.png",
+      "pdf_path": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/training_curves/oxide_training_curve_grid.pdf"
+    },
+    {
+      "family": "nitride",
+      "png_path": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/training_curves/nitride_training_curve_grid.png",
+      "pdf_path": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/training_curves/nitride_training_curve_grid.pdf"
+    }
+  ]
+}

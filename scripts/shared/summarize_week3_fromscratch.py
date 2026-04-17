@@ -8,6 +8,7 @@ from pathlib import Path
 
 DEFAULT_FAMILIES = ["oxide", "nitride"]
 DEFAULT_NS = [50, 500]
+DEFAULT_SEEDS = [0]
 REPORTING_DEPENDENCY_HINT = (
     "Week 3 summarization requires pandas and matplotlib. "
     "Install the pinned environment from `requirements/res201_train_frozen.txt` "
@@ -50,39 +51,58 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def collect_fromscratch_rows(repo: Path, families: list[str], ns: list[int], run_subdir: str) -> list[dict]:
+def repo_relative(repo: Path, path: Path) -> str:
+    return os.path.relpath(path.resolve(), repo.resolve())
+
+
+def collect_fromscratch_rows(
+    repo: Path,
+    results_root: str,
+    families: list[str],
+    ns: list[int],
+    seeds: list[int],
+    run_subdir: str,
+) -> list[dict]:
     rows: list[dict] = []
     for family in families:
         for n_value in ns:
-            summary_path = repo / "results" / family / f"N{n_value}_seed0" / run_subdir / "summary.json"
-            if not summary_path.exists():
-                continue
-            summary = load_json(summary_path)
-            rows.append(
-                {
-                    "family": family,
-                    "N": n_value,
-                    "seed": 0,
-                    "n_train": summary["n_train"],
-                    "n_val": summary["n_val"],
-                    "n_test": summary["n_test"],
-                    "epochs": summary["epochs"],
-                    "batch_size": summary["batch_size"],
-                    "learning_rate": summary["learning_rate"],
-                    "test_mae_eV_per_atom": summary["test_mae_eV_per_atom"],
-                    "train_mae_eV_per_atom": summary["train_mae_eV_per_atom"],
-                    "val_best_l1": summary["val_best_l1"],
-                    "summary_path": str(summary_path.resolve()),
-                }
-            )
+            for seed in seeds:
+                summary_path = repo / results_root / family / f"N{n_value}_seed{seed}" / run_subdir / "summary.json"
+                if not summary_path.exists():
+                    continue
+                summary = load_json(summary_path)
+                rows.append(
+                    {
+                        "family": family,
+                        "N": n_value,
+                        "seed": seed,
+                        "n_train": summary["n_train"],
+                        "n_val": summary["n_val"],
+                        "n_test": summary["n_test"],
+                        "epochs": summary["epochs"],
+                        "batch_size": summary["batch_size"],
+                        "learning_rate": summary["learning_rate"],
+                        "test_mae_eV_per_atom": summary["test_mae_eV_per_atom"],
+                        "train_mae_eV_per_atom": summary["train_mae_eV_per_atom"],
+                        "val_best_l1": summary["val_best_l1"],
+                        "summary_path": repo_relative(repo, summary_path),
+                    }
+                )
     return rows
 
 
-def collect_finetune_seed0(repo: Path, families: list[str], ns: list[int], pd) -> "pd.DataFrame":
+def collect_finetune_seed0(
+    repo: Path,
+    finetune_results_root: str,
+    families: list[str],
+    ns: list[int],
+    run_subdir: str,
+    pd,
+) -> "pd.DataFrame":
     rows: list[dict] = []
     for family in families:
         for n_value in ns:
-            summary_path = repo / "results" / family / f"N{n_value}_seed0" / "finetune_last2" / "summary.json"
+            summary_path = repo / finetune_results_root / family / f"N{n_value}_seed0" / run_subdir / "summary.json"
             if not summary_path.exists():
                 continue
             summary = load_json(summary_path)
@@ -96,10 +116,10 @@ def collect_finetune_seed0(repo: Path, families: list[str], ns: list[int], pd) -
     return pd.DataFrame(rows)
 
 
-def collect_zero_shot(repo: Path, families: list[str], pd) -> "pd.DataFrame":
+def collect_zero_shot(repo: Path, zero_shot_root: str, families: list[str], pd) -> "pd.DataFrame":
     rows: list[dict] = []
     for family in families:
-        summary_path = repo / "results" / family / "zero_shot" / "summary.json"
+        summary_path = repo / zero_shot_root / family / "zero_shot" / "summary.json"
         if not summary_path.exists():
             continue
         summary = load_json(summary_path)
@@ -107,19 +127,37 @@ def collect_zero_shot(repo: Path, families: list[str], pd) -> "pd.DataFrame":
             {
                 "family": family,
                 "zero_shot_mae_eV_per_atom": summary["mae_eV_per_atom"],
+                "zero_shot_summary_path": repo_relative(repo, summary_path),
             }
         )
     return pd.DataFrame(rows)
 
 
-def plot_family_comparison(df: "pd.DataFrame", family: str, out_png: Path, out_pdf: Path, plt) -> None:
+def plot_family_comparison(
+    df: "pd.DataFrame",
+    family: str,
+    out_png: Path,
+    out_pdf: Path,
+    plt,
+    title_label: str,
+) -> None:
     family_df = df[df["family"] == family].sort_values("N")
     if family_df.empty:
         return
 
     plt.figure(figsize=(7, 4.5))
-    plt.plot(family_df["N"], family_df["test_mae_eV_per_atom"], marker="o", linewidth=2, label="From scratch")
-    if "finetune_seed0_test_mae_eV_per_atom" in family_df:
+    plt.plot(
+        family_df["N"],
+        family_df["mean_test_mae_eV_per_atom"],
+        marker="o",
+        linewidth=2,
+        label="From scratch mean",
+    )
+    if (family_df["runs"] > 1).any():
+        lower = family_df["mean_test_mae_eV_per_atom"] - family_df["std_test_mae_eV_per_atom"].fillna(0.0)
+        upper = family_df["mean_test_mae_eV_per_atom"] + family_df["std_test_mae_eV_per_atom"].fillna(0.0)
+        plt.fill_between(family_df["N"], lower, upper, alpha=0.2, label="From scratch ±1 std")
+    if "finetune_seed0_test_mae_eV_per_atom" in family_df.columns:
         plt.plot(
             family_df["N"],
             family_df["finetune_seed0_test_mae_eV_per_atom"],
@@ -135,7 +173,7 @@ def plot_family_comparison(df: "pd.DataFrame", family: str, out_png: Path, out_p
     plt.xticks(family_df["N"], [str(v) for v in family_df["N"]])
     plt.xlabel("Training size N")
     plt.ylabel("Test MAE (eV/atom)")
-    plt.title(f"{family.capitalize()} Week 3 Baseline Comparison")
+    plt.title(f"{family.capitalize()} {title_label}")
     plt.grid(alpha=0.3)
     plt.legend()
     plt.tight_layout()
@@ -148,10 +186,16 @@ def plot_family_comparison(df: "pd.DataFrame", family: str, out_png: Path, out_p
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--results-root", default="results")
+    parser.add_argument("--finetune-results-root", default="results")
+    parser.add_argument("--zero-shot-root", default="results")
     parser.add_argument("--families", nargs="+", default=DEFAULT_FAMILIES)
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
+    parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
     parser.add_argument("--run-subdir", default="train_alignn_fromscratch")
+    parser.add_argument("--finetune-run-subdir", default="finetune_last2")
     parser.add_argument("--out-dir", default="reports/week3_fromscratch_baseline")
+    parser.add_argument("--title-label", default="Week 3 From-Scratch Comparison")
     args = parser.parse_args()
     pd, plt = load_reporting_dependencies()
 
@@ -159,23 +203,55 @@ def main() -> int:
     out_dir = (repo / args.out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    rows = collect_fromscratch_rows(repo, args.families, args.Ns, args.run_subdir)
+    rows = collect_fromscratch_rows(
+        repo,
+        args.results_root,
+        args.families,
+        args.Ns,
+        args.seeds,
+        args.run_subdir,
+    )
     if not rows:
         raise SystemExit("No from-scratch summaries found.")
 
-    runs_df = pd.DataFrame(rows).sort_values(["family", "N"]).reset_index(drop=True)
-    finetune_df = collect_finetune_seed0(repo, args.families, args.Ns, pd)
-    zero_df = collect_zero_shot(repo, args.families, pd)
-
-    merged = runs_df.merge(finetune_df, on=["family", "N"], how="left").merge(zero_df, on="family", how="left")
-    merged["gain_vs_zero_shot"] = merged["zero_shot_mae_eV_per_atom"] - merged["test_mae_eV_per_atom"]
+    runs_df = pd.DataFrame(rows).sort_values(["family", "N", "seed"]).reset_index(drop=True)
+    finetune_df = collect_finetune_seed0(
+        repo,
+        args.finetune_results_root,
+        args.families,
+        args.Ns,
+        args.finetune_run_subdir,
+        pd,
+    )
+    zero_df = collect_zero_shot(repo, args.zero_shot_root, args.families, pd)
+    summary_df = (
+        runs_df.groupby(["family", "N"], as_index=False)
+        .agg(
+            runs=("test_mae_eV_per_atom", "size"),
+            n_train=("n_train", "first"),
+            n_val=("n_val", "first"),
+            n_test=("n_test", "first"),
+            epochs=("epochs", "first"),
+            batch_size=("batch_size", "first"),
+            learning_rate=("learning_rate", "first"),
+            mean_test_mae_eV_per_atom=("test_mae_eV_per_atom", "mean"),
+            std_test_mae_eV_per_atom=("test_mae_eV_per_atom", "std"),
+            mean_train_mae_eV_per_atom=("train_mae_eV_per_atom", "mean"),
+            mean_val_best_l1=("val_best_l1", "mean"),
+        )
+        .sort_values(["family", "N"])
+        .reset_index(drop=True)
+    )
+    merged = summary_df.merge(finetune_df, on=["family", "N"], how="left").merge(zero_df, on="family", how="left")
+    merged["gain_vs_zero_shot"] = merged["zero_shot_mae_eV_per_atom"] - merged["mean_test_mae_eV_per_atom"]
     merged["gain_vs_finetune_seed0"] = (
-        merged["finetune_seed0_test_mae_eV_per_atom"] - merged["test_mae_eV_per_atom"]
+        merged["finetune_seed0_test_mae_eV_per_atom"] - merged["mean_test_mae_eV_per_atom"]
     )
 
     runs_csv = out_dir / "fromscratch_runs.csv"
     summary_csv = out_dir / "fromscratch_summary.csv"
     manifest_json = out_dir / "week3_fromscratch_manifest.json"
+    suite_json = out_dir / "run_suite_summary.json"
 
     runs_df.to_csv(runs_csv, index=False)
     merged.to_csv(summary_csv, index=False)
@@ -187,21 +263,39 @@ def main() -> int:
             out_dir / f"{family}_fromscratch_comparison.png",
             out_dir / f"{family}_fromscratch_comparison.pdf",
             plt,
+            args.title_label,
         )
 
     manifest = {
+        "results_root": args.results_root,
+        "finetune_results_root": args.finetune_results_root,
+        "zero_shot_root": args.zero_shot_root,
         "run_subdir": args.run_subdir,
-        "runs_csv": str(runs_csv),
-        "summary_csv": str(summary_csv),
+        "finetune_run_subdir": args.finetune_run_subdir,
+        "runs_csv": repo_relative(repo, runs_csv),
+        "summary_csv": repo_relative(repo, summary_csv),
+        "seeds": args.seeds,
         "plots": {
             family: {
-                "png": str((out_dir / f"{family}_fromscratch_comparison.png").resolve()),
-                "pdf": str((out_dir / f"{family}_fromscratch_comparison.pdf").resolve()),
+                "png": repo_relative(repo, out_dir / f"{family}_fromscratch_comparison.png"),
+                "pdf": repo_relative(repo, out_dir / f"{family}_fromscratch_comparison.pdf"),
             }
             for family in args.families
         },
     }
-    manifest_json.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    manifest_json.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+    suite_summary = {
+        "results_root": args.results_root,
+        "run_subdir": args.run_subdir,
+        "expected_runs": len(args.families) * len(args.Ns) * len(args.seeds),
+        "actual_runs": len(runs_df),
+        "complete": len(runs_df) == len(args.families) * len(args.Ns) * len(args.seeds),
+        "report_dir": repo_relative(repo, out_dir),
+        "summary_csv": repo_relative(repo, summary_csv),
+    }
+    suite_json.write_text(json.dumps(suite_summary, indent=2) + "\n", encoding="utf-8")
+
     print(json.dumps(manifest, indent=2))
     return 0
 

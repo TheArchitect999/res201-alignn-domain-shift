@@ -1,0 +1,26 @@
+{
+  "results_root": "results_prof_advice",
+  "finetune_results_root": "results_prof_advice",
+  "zero_shot_root": "results",
+  "run_subdir": "train_alignn_fromscratch",
+  "finetune_run_subdir": "finetune_last2",
+  "runs_csv": "reports/week3_fromscratch_prof_advice/fromscratch_runs.csv",
+  "summary_csv": "reports/week3_fromscratch_prof_advice/fromscratch_summary.csv",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "plots": {
+    "oxide": {
+      "png": "reports/week3_fromscratch_prof_advice/oxide_fromscratch_comparison.png",
+      "pdf": "reports/week3_fromscratch_prof_advice/oxide_fromscratch_comparison.pdf"
+    },
+    "nitride": {
+      "png": "reports/week3_fromscratch_prof_advice/nitride_fromscratch_comparison.png",
+      "pdf": "reports/week3_fromscratch_prof_advice/nitride_fromscratch_comparison.pdf"
+    }
+  }
+}

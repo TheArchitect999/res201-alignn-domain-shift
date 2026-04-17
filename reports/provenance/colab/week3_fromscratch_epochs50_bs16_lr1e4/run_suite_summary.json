@@ -1,0 +1,8 @@
+{
+  "requested_runs": 20,
+  "completed_runs": 20,
+  "skipped_existing_runs": 0,
+  "failed_runs": [],
+  "run_subdir": "train_alignn_fromscratch_epochs50_bs16_lr1e4",
+  "config_dir": "/content/res201-alignn-domain-shift/configs/week3_fromscratch_epochs50_bs16_lr1e4"
+}

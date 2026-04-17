@@ -3,11 +3,12 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import tempfile
 from pathlib import Path
 
-os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
-os.environ.setdefault("XDG_CACHE_HOME", "/tmp/xdg-cache")
-os.environ.setdefault("FC_CACHEDIR", "/tmp/fontconfig")
+os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "matplotlib"))
+os.environ.setdefault("XDG_CACHE_HOME", str(Path(tempfile.gettempdir()) / "xdg-cache"))
+os.environ.setdefault("FC_CACHEDIR", str(Path(tempfile.gettempdir()) / "fontconfig"))
 Path(os.environ["MPLCONFIGDIR"]).mkdir(parents=True, exist_ok=True)
 Path(os.environ["XDG_CACHE_HOME"]).mkdir(parents=True, exist_ok=True)
 Path(os.environ["FC_CACHEDIR"]).mkdir(parents=True, exist_ok=True)
@@ -24,12 +25,23 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def collect_finetune_rows(repo: Path, families: list[str], ns: list[int], seeds: list[int]) -> list[dict]:
+def repo_relative(repo: Path, path: Path) -> str:
+    return os.path.relpath(path.resolve(), repo.resolve())
+
+
+def collect_finetune_rows(
+    repo: Path,
+    results_root: str,
+    families: list[str],
+    ns: list[int],
+    seeds: list[int],
+    run_subdir: str,
+) -> list[dict]:
     rows: list[dict] = []
     for family in families:
         for n_value in ns:
             for seed in seeds:
-                summary_path = repo / "results" / family / f"N{n_value}_seed{seed}" / "finetune_last2" / "summary.json"
+                summary_path = repo / results_root / family / f"N{n_value}_seed{seed}" / run_subdir / "summary.json"
                 if not summary_path.exists():
                     continue
                 summary = load_json(summary_path)
@@ -43,22 +55,24 @@ def collect_finetune_rows(repo: Path, families: list[str], ns: list[int], seeds:
                         "n_test": summary["n_test"],
                         "epochs": summary["epochs"],
                         "batch_size": summary["batch_size"],
+                        "final_batch_size": summary.get("final_batch_size", summary["batch_size"]),
+                        "best_epoch": summary.get("best_epoch"),
                         "learning_rate": summary["learning_rate"],
                         "test_mae_eV_per_atom": summary["test_mae_eV_per_atom"],
                         "train_mae_eV_per_atom": summary["train_mae_eV_per_atom"],
                         "val_best_l1": summary["val_best_l1"],
                         "device": summary.get("device", "unknown"),
                         "elapsed_seconds": summary.get("elapsed_seconds"),
-                        "summary_path": str(summary_path.resolve()),
+                        "summary_path": repo_relative(repo, summary_path),
                     }
                 )
     return rows
 
 
-def collect_zero_shot_rows(repo: Path, families: list[str]) -> list[dict]:
+def collect_zero_shot_rows(repo: Path, zero_shot_root: str, families: list[str]) -> list[dict]:
     rows: list[dict] = []
     for family in families:
-        summary_path = repo / "results" / family / "zero_shot" / "summary.json"
+        summary_path = repo / zero_shot_root / family / "zero_shot" / "summary.json"
         if not summary_path.exists():
             continue
         summary = load_json(summary_path)
@@ -66,7 +80,7 @@ def collect_zero_shot_rows(repo: Path, families: list[str]) -> list[dict]:
             {
                 "family": family,
                 "zero_shot_mae_eV_per_atom": summary["mae_eV_per_atom"],
-                "summary_path": str(summary_path.resolve()),
+                "summary_path": repo_relative(repo, summary_path),
             }
         )
     return rows
@@ -80,9 +94,10 @@ def write_latex_table(path: Path, frame: pd.DataFrame) -> None:
         r"\midrule",
     ]
     for row in frame.itertuples(index=False):
+        std_value = 0.0 if pd.isna(row.std_test_mae_eV_per_atom) else row.std_test_mae_eV_per_atom
         lines.append(
             f"{row.family.capitalize()} & {row.N} & {row.runs} & {row.n_train} & {row.n_val} & "
-            f"{row.mean_test_mae_eV_per_atom:.6f} & {row.std_test_mae_eV_per_atom:.6f} \\\\"
+            f"{row.mean_test_mae_eV_per_atom:.6f} & {std_value:.6f} \\\\"
         )
     lines.extend([r"\bottomrule", r"\end{tabular}"])
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -94,6 +109,7 @@ def plot_family_curve(
     zero_shot_mae: float | None,
     out_png: Path,
     out_pdf: Path,
+    title_label: str,
 ) -> None:
     family_df = summary_df[summary_df["family"] == family].sort_values("N")
     if family_df.empty:
@@ -119,7 +135,7 @@ def plot_family_curve(
     plt.xticks(family_df["N"], [str(n) for n in family_df["N"]])
     plt.xlabel("Fine-tuning size N")
     plt.ylabel("Test MAE (eV/atom)")
-    plt.title(f"{family.capitalize()} fine-tuning learning curve")
+    plt.title(f"{family.capitalize()} {title_label}")
     plt.grid(True, alpha=0.3)
     plt.legend()
     plt.tight_layout()
@@ -129,27 +145,61 @@ def plot_family_curve(
     plt.close()
 
 
+def write_progress_manifest(
+    path: Path,
+    families: list[str],
+    ns: list[int],
+    seeds: list[int],
+    expected_runs: int,
+    actual_runs: int,
+    results_root: str,
+    run_subdir: str,
+) -> None:
+    progress = {
+        "families": families,
+        "Ns": ns,
+        "seeds": seeds,
+        "results_root": results_root,
+        "run_subdir": run_subdir,
+        "expected_runs": expected_runs,
+        "actual_runs": actual_runs,
+        "complete": actual_runs == expected_runs,
+    }
+    path.write_text(json.dumps(progress, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--results-root", default="results")
+    parser.add_argument("--zero-shot-root", default="results")
+    parser.add_argument("--run-subdir", default="finetune_last2")
     parser.add_argument("--families", nargs="+", default=["oxide", "nitride"])
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
     parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
     parser.add_argument("--out-dir", default="reports/week2")
+    parser.add_argument("--title-label", default="fine-tuning learning curve")
     args = parser.parse_args()
 
     repo = Path(args.repo_root).resolve()
     out_dir = (repo / args.out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    finetune_rows = collect_finetune_rows(repo, args.families, args.Ns, args.seeds)
-    zero_shot_rows = collect_zero_shot_rows(repo, args.families)
+    finetune_rows = collect_finetune_rows(
+        repo,
+        args.results_root,
+        args.families,
+        args.Ns,
+        args.seeds,
+        args.run_subdir,
+    )
+    zero_shot_rows = collect_zero_shot_rows(repo, args.zero_shot_root, args.families)
 
     runs_df = pd.DataFrame(finetune_rows)
     zero_df = pd.DataFrame(zero_shot_rows)
 
     if runs_df.empty:
-        raise SystemExit("No week 2 fine-tuning summaries were found.")
+        raise SystemExit("No fine-tuning summaries were found.")
 
     runs_df = runs_df.sort_values(["family", "N", "seed"]).reset_index(drop=True)
     summary_df = (
@@ -163,6 +213,8 @@ def main() -> int:
             std_test_mae_eV_per_atom=("test_mae_eV_per_atom", "std"),
             mean_train_mae_eV_per_atom=("train_mae_eV_per_atom", "mean"),
             mean_val_best_l1=("val_best_l1", "mean"),
+            mean_best_epoch=("best_epoch", "mean"),
+            mean_final_batch_size=("final_batch_size", "mean"),
         )
         .sort_values(["family", "N"])
         .reset_index(drop=True)
@@ -184,6 +236,7 @@ def main() -> int:
     zero_csv = out_dir / "zero_shot_summary.csv"
     latex_table = out_dir / "finetune_summary_table.tex"
     manifest_json = out_dir / "week2_summary_manifest.json"
+    progress_json = out_dir / "progress_manifest.json"
 
     runs_df.to_csv(runs_csv, index=False)
     summary_with_zero.to_csv(summary_csv, index=False)
@@ -199,23 +252,41 @@ def main() -> int:
             zero_lookup.get(family),
             out_dir / f"{family}_learning_curve.png",
             out_dir / f"{family}_learning_curve.pdf",
+            args.title_label,
         )
 
+    expected_runs = len(args.families) * len(args.Ns) * len(args.seeds)
+    write_progress_manifest(
+        progress_json,
+        args.families,
+        args.Ns,
+        args.seeds,
+        expected_runs,
+        len(runs_df),
+        args.results_root,
+        args.run_subdir,
+    )
+
     manifest = {
-        "runs_csv": str(runs_csv),
-        "summary_csv": str(summary_csv),
-        "wide_csv": str(wide_csv),
-        "zero_csv": str(zero_csv),
-        "latex_table": str(latex_table),
+        "results_root": args.results_root,
+        "zero_shot_root": args.zero_shot_root,
+        "run_subdir": args.run_subdir,
+        "seeds": args.seeds,
+        "runs_csv": repo_relative(repo, runs_csv),
+        "summary_csv": repo_relative(repo, summary_csv),
+        "wide_csv": repo_relative(repo, wide_csv),
+        "zero_csv": repo_relative(repo, zero_csv),
+        "latex_table": repo_relative(repo, latex_table),
+        "progress_manifest": repo_relative(repo, progress_json),
         "plots": {
             family: {
-                "png": str((out_dir / f"{family}_learning_curve.png").resolve()),
-                "pdf": str((out_dir / f"{family}_learning_curve.pdf").resolve()),
+                "png": repo_relative(repo, out_dir / f"{family}_learning_curve.png"),
+                "pdf": repo_relative(repo, out_dir / f"{family}_learning_curve.pdf"),
             }
             for family in args.families
         },
     }
-    manifest_json.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    manifest_json.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(manifest, indent=2))
     return 0
 

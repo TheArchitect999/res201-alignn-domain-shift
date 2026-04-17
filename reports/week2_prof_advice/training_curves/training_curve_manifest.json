@@ -1,0 +1,19 @@
+{
+  "results_root": "results_prof_advice",
+  "run_subdir": "finetune_last2",
+  "per_run_manifest_csv": "reports/week2_prof_advice/training_curves/training_curve_manifest.csv",
+  "readme": "reports/week2_prof_advice/training_curves/README.md",
+  "n_runs": 60,
+  "family_grids": [
+    {
+      "family": "oxide",
+      "png_path": "reports/week2_prof_advice/training_curves/oxide_training_curve_grid.png",
+      "pdf_path": "reports/week2_prof_advice/training_curves/oxide_training_curve_grid.pdf"
+    },
+    {
+      "family": "nitride",
+      "png_path": "reports/week2_prof_advice/training_curves/nitride_training_curve_grid.png",
+      "pdf_path": "reports/week2_prof_advice/training_curves/nitride_training_curve_grid.pdf"
+    }
+  ]
+}

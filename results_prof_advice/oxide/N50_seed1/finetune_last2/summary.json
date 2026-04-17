@@ -1,0 +1,21 @@
+{
+  "dataset_root": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/N50_seed1/dataset_root",
+  "output_dir": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/N50_seed1/finetune_last2",
+  "device": "cpu",
+  "n_train": 45,
+  "n_val": 5,
+  "n_test": 1484,
+  "epochs": 50,
+  "batch_size": 16,
+  "learning_rate": 0.0001,
+  "unfrozen_groups": [
+    "gcn_layers.3",
+    "fc"
+  ],
+  "train_mae_eV_per_atom": 0.04211851474311617,
+  "val_best_l1": 0.051486361771821976,
+  "test_l1": 0.0645198722279841,
+  "test_mae_eV_per_atom": 0.06448534763725022,
+  "prediction_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/N50_seed1/finetune_last2/prediction_results_test_set.csv",
+  "elapsed_seconds": 300.3469295501709
+}

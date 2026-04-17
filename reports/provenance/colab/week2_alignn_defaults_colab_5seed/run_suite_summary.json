@@ -1,0 +1,8 @@
+{
+  "experiment_tag": "week2_alignn_defaults_colab_5seed",
+  "run_subdir": "finetune_last2_week2_alignn_defaults_colab_5seed",
+  "requested_runs": 60,
+  "completed_runs": 55,
+  "skipped_existing_runs": 5,
+  "failed_runs": []
+}

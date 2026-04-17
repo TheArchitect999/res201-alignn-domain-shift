@@ -1,0 +1,9 @@
+{
+  "results_root": "results_prof_advice_alignn_recommended",
+  "run_subdir": "train_alignn_fromscratch",
+  "expected_runs": 20,
+  "actual_runs": 20,
+  "complete": true,
+  "report_dir": "reports/week3_fromscratch_alignn_recommended",
+  "summary_csv": "reports/week3_fromscratch_alignn_recommended/fromscratch_summary.csv"
+}

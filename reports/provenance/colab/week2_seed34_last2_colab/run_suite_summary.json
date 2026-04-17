@@ -1,0 +1,9 @@
+{
+  "experiment_tag": "week2_seed34_last2_colab",
+  "report_dir": "/content/res201-alignn-domain-shift/reports/week2_seed34_last2_colab",
+  "run_subdir": "finetune_last2",
+  "requested_runs": 24,
+  "completed_runs": 0,
+  "skipped_existing_runs": 24,
+  "failed_runs": []
+}

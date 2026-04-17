@@ -14,6 +14,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+def repo_relative(repo: Path, path: Path) -> str:
+    return os.path.relpath(path.resolve(), repo.resolve())
+
+
 def load_history(path: Path) -> np.ndarray:
     raw = json.loads(path.read_text())
     values: list[float] = []
@@ -36,12 +40,19 @@ def relative_reduction(losses: np.ndarray) -> np.ndarray:
     return 100.0 * (1.0 - losses / baseline)
 
 
-def discover_runs(repo_root: Path, families: list[str], ns: list[int], seeds: list[int]) -> list[dict]:
+def discover_runs(
+    repo_root: Path,
+    results_root: str,
+    run_subdir: str,
+    families: list[str],
+    ns: list[int],
+    seeds: list[int],
+) -> list[dict]:
     runs: list[dict] = []
     for family in families:
         for n in ns:
             for seed in seeds:
-                run_dir = repo_root / "results" / family / f"N{n}_seed{seed}" / "finetune_last2"
+                run_dir = repo_root / results_root / family / f"N{n}_seed{seed}" / run_subdir
                 summary_path = run_dir / "summary.json"
                 train_path = run_dir / "history_train.json"
                 val_path = run_dir / "history_val.json"
@@ -62,7 +73,7 @@ def discover_runs(repo_root: Path, families: list[str], ns: list[int], seeds: li
     return runs
 
 
-def plot_run(run: dict, out_dir: Path) -> dict:
+def plot_run(repo_root: Path, run: dict, out_dir: Path, protocol_note: str) -> dict:
     family = run["family"]
     n = run["N"]
     seed = run["seed"]
@@ -110,17 +121,13 @@ def plot_run(run: dict, out_dir: Path) -> dict:
     axes[1].grid(alpha=0.25)
     axes[1].legend()
 
-    title = (
-        f"{family.capitalize()} | N={n} | seed={seed} | "
-        f"test MAE={summary['test_mae_eV_per_atom']:.5f}"
-    )
+    title = f"{family.capitalize()} | N={n} | seed={seed} | test MAE={summary['test_mae_eV_per_atom']:.5f}"
     fig.suptitle(title, fontsize=13, fontweight="bold")
     fig.text(
         0.5,
         -0.01,
         (
-            f"Protocol: pretrained ALIGNN with partial fine-tuning only; "
-            f"unfrozen groups = {', '.join(summary.get('unfrozen_groups', [])) or 'unknown'}; "
+            f"Protocol: {protocol_note}; "
             f"best val L1 = {best_val:.5f} at epoch {best_epoch}"
         ),
         ha="center",
@@ -144,12 +151,18 @@ def plot_run(run: dict, out_dir: Path) -> dict:
         "best_val_epoch": best_epoch,
         "best_val_l1": best_val,
         "test_mae_eV_per_atom": float(summary["test_mae_eV_per_atom"]),
-        "png_path": str(png_path.resolve()),
-        "pdf_path": str(pdf_path.resolve()),
+        "png_path": repo_relative(repo_root, png_path),
+        "pdf_path": repo_relative(repo_root, pdf_path),
     }
 
 
-def plot_family_grid(runs: list[dict], family: str, out_dir: Path) -> dict:
+def plot_family_grid(
+    repo_root: Path,
+    runs: list[dict],
+    family: str,
+    out_dir: Path,
+    title_label: str,
+) -> dict:
     family_runs = [run for run in runs if run["family"] == family]
     if not family_runs:
         raise ValueError(f"No runs found for family={family}")
@@ -198,7 +211,7 @@ def plot_family_grid(runs: list[dict], family: str, out_dir: Path) -> dict:
     if handles:
         fig.legend(handles, labels, loc="upper center", ncol=2, frameon=False)
     fig.suptitle(
-        f"{family.capitalize()} Week 2 Training-Curve Grid (three seeds x six N values)",
+        f"{family.capitalize()} {title_label} Training-Curve Grid ({len(seeds)} seeds x {len(ns)} N values)",
         fontsize=14,
         fontweight="bold",
     )
@@ -210,12 +223,19 @@ def plot_family_grid(runs: list[dict], family: str, out_dir: Path) -> dict:
     plt.close(fig)
     return {
         "family": family,
-        "png_path": str(png_path.resolve()),
-        "pdf_path": str(pdf_path.resolve()),
+        "png_path": repo_relative(repo_root, png_path),
+        "pdf_path": repo_relative(repo_root, pdf_path),
     }
 
 
-def write_manifest(out_dir: Path, rows: list[dict], grid_rows: list[dict]) -> None:
+def write_manifest(
+    repo_root: Path,
+    out_dir: Path,
+    rows: list[dict],
+    grid_rows: list[dict],
+    results_root: str,
+    run_subdir: str,
+) -> None:
     csv_path = out_dir / "training_curve_manifest.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(
@@ -239,11 +259,12 @@ def write_manifest(out_dir: Path, rows: list[dict], grid_rows: list[dict]) -> No
     lines = [
         "# Week 2 Training Curves",
         "",
-        "These figures were generated from the saved `history_train.json` and `history_val.json` files for every completed Week 2 fine-tuning run.",
+        "These figures were generated from the saved `history_train.json` and `history_val.json` files for every completed Week 2 fine-tuning run in this namespace.",
         "",
-        "Important note:",
-        "This project is a regression task, not a classification task. That means there is no true training `accuracy` metric in the saved histories.",
-        "Instead, each per-run figure contains:",
+        f"- results root: `{results_root}`",
+        f"- run subdirectory: `{run_subdir}`",
+        "",
+        "Each per-run figure contains:",
         "- left panel: train and validation L1 loss curves",
         "- right panel: train and validation relative error reduction from epoch 1",
         "",
@@ -259,41 +280,52 @@ def write_manifest(out_dir: Path, rows: list[dict], grid_rows: list[dict]) -> No
     readme.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     manifest = {
-        "per_run_manifest_csv": str(csv_path.resolve()),
-        "readme": str(readme.resolve()),
+        "results_root": results_root,
+        "run_subdir": run_subdir,
+        "per_run_manifest_csv": repo_relative(repo_root, csv_path),
+        "readme": repo_relative(repo_root, readme),
         "n_runs": len(rows),
         "family_grids": grid_rows,
     }
-    (out_dir / "training_curve_manifest.json").write_text(json.dumps(manifest, indent=2))
+    (out_dir / "training_curve_manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--results-root", default="results")
+    parser.add_argument("--run-subdir", default="finetune_last2")
     parser.add_argument("--families", nargs="+", default=["oxide", "nitride"])
     parser.add_argument("--Ns", nargs="+", type=int, default=[10, 50, 100, 200, 500, 1000])
     parser.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
     parser.add_argument("--out-dir", default="reports/week2/training_curves")
+    parser.add_argument("--title-label", default="Week 2")
+    parser.add_argument(
+        "--protocol-note",
+        default="pretrained ALIGNN with partial fine-tuning only",
+    )
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()
     out_dir = (repo_root / args.out_dir).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    runs = discover_runs(repo_root, args.families, args.Ns, args.seeds)
+    runs = discover_runs(repo_root, args.results_root, args.run_subdir, args.families, args.Ns, args.seeds)
     if not runs:
         raise SystemExit("No completed fine-tuning runs with history files were found.")
 
-    per_run_rows = [plot_run(run, out_dir) for run in runs]
-    grid_rows = [plot_family_grid(runs, family, out_dir) for family in args.families]
-    write_manifest(out_dir, per_run_rows, grid_rows)
+    per_run_rows = [plot_run(repo_root, run, out_dir, args.protocol_note) for run in runs]
+    grid_rows = [plot_family_grid(repo_root, runs, family, out_dir, args.title_label) for family in args.families]
+    write_manifest(repo_root, out_dir, per_run_rows, grid_rows, args.results_root, args.run_subdir)
 
     print(
         json.dumps(
             {
+                "results_root": args.results_root,
+                "run_subdir": args.run_subdir,
                 "n_runs": len(per_run_rows),
-                "out_dir": str(out_dir),
-                "manifest_csv": str((out_dir / "training_curve_manifest.csv").resolve()),
+                "out_dir": repo_relative(repo_root, out_dir),
+                "manifest_csv": repo_relative(repo_root, out_dir / "training_curve_manifest.csv"),
             },
             indent=2,
         )
