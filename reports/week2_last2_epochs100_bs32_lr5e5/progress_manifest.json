@@ -100,6 +100,14 @@
       "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N100_seed1/finetune_last2_epochs100_bs32_lr5e5/summary.json"
     },
     {
+      "family": "nitride",
+      "N": 100,
+      "seed": 2,
+      "final_batch_size": 32,
+      "test_mae_eV_per_atom": 0.07282278507424533,
+      "summary_path": "/content/res201-alignn-domain-shift/results/nitride/N100_seed2/finetune_last2_epochs100_bs32_lr5e5/summary.json"
+    },
+    {
       "family": "oxide",
       "N": 10,
       "seed": 0,
@@ -340,5 +348,5 @@
       "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N1000_seed4/finetune_last2_epochs100_bs32_lr5e5/summary.json"
     }
   ],
-  "updated_at_epoch_seconds": 1776459255.6002183
+  "updated_at_epoch_seconds": 1776459317.1403787
 }
