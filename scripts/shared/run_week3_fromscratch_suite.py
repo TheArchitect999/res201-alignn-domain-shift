@@ -12,6 +12,7 @@ from pathlib import Path
 DEFAULT_FAMILIES = ["oxide", "nitride"]
 DEFAULT_NS = [50, 500]
 DEFAULT_SEEDS = [0]
+DEFAULT_BRANCH = "main"
 OOM_STRINGS = (
     "cuda error: out of memory",
     "cuda out of memory",
@@ -120,6 +121,44 @@ def run_train_with_oom_retry(
             batch_size = next_batch_size
 
 
+def git_commit_and_push(
+    repo: Path,
+    *,
+    remote: str,
+    branch: str,
+    message: str,
+    paths: list[Path],
+) -> bool:
+    path_args = [str(path) for path in paths]
+    subprocess.run(["git", "add", "--", *path_args], cwd=repo, check=True)
+    status = subprocess.run(
+        ["git", "status", "--porcelain", "--", *path_args],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    if not status.stdout.strip():
+        return False
+    remote_url = subprocess.run(
+        ["git", "remote", "get-url", remote],
+        cwd=repo,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    if "$GITHUB_TOKEN" in remote_url or "%24GITHUB_TOKEN" in remote_url:
+        raise RuntimeError(
+            "Git remote URL still contains a literal $GITHUB_TOKEN placeholder. "
+            "Re-set GITHUB_TOKEN in Colab and run "
+            "'git remote set-url origin \"https://${GITHUB_TOKEN}@github.com/TheArchitect999/res201-alignn-domain-shift.git\"' "
+            "before retrying."
+        )
+    subprocess.run(["git", "commit", "-m", message], cwd=repo, check=True)
+    subprocess.run(["git", "push", remote, f"HEAD:{branch}"], cwd=repo, check=True)
+    return True
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
@@ -137,6 +176,9 @@ def main() -> int:
     parser.add_argument("--report-dir", default="reports/week3_fromscratch_baseline")
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--continue-on-error", action="store_true")
+    parser.add_argument("--git-push-after-run", action="store_true")
+    parser.add_argument("--git-remote", default="origin")
+    parser.add_argument("--git-branch", default=DEFAULT_BRANCH)
     parser.add_argument(
         "--pretrained-config",
         default="jv_formation_energy_peratom_alignn/config.json",
@@ -242,6 +284,18 @@ def main() -> int:
                             }
                         )
                     )
+                    if args.git_push_after_run:
+                        commit_message = (
+                            f"colab: complete week3 fromscratch "
+                            f"{family} N{n_value} seed{seed}"
+                        )
+                        git_commit_and_push(
+                            repo,
+                            remote=args.git_remote,
+                            branch=args.git_branch,
+                            message=commit_message,
+                            paths=[dataset_root, output_dir, config_path],
+                        )
                 except Exception as exc:  # noqa: BLE001
                     failure = {
                         "run": run_name,

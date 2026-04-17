@@ -1,0 +1,9 @@
+{
+  "results_root": "results",
+  "run_subdir": "train_alignn_fromscratch_epochs100_bs32_lr5e5",
+  "expected_runs": 20,
+  "actual_runs": 20,
+  "complete": true,
+  "report_dir": "reports/week3_fromscratch_epochs100_bs32_lr5e5",
+  "summary_csv": "reports/week3_fromscratch_epochs100_bs32_lr5e5/fromscratch_summary.csv"
+}

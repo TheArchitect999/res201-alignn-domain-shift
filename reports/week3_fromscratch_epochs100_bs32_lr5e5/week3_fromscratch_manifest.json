@@ -1,0 +1,24 @@
+{
+  "results_root": "results",
+  "zero_shot_root": "results",
+  "run_subdir": "train_alignn_fromscratch_epochs100_bs32_lr5e5",
+  "runs_csv": "reports/week3_fromscratch_epochs100_bs32_lr5e5/fromscratch_runs.csv",
+  "summary_csv": "reports/week3_fromscratch_epochs100_bs32_lr5e5/fromscratch_summary.csv",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "plots": {
+    "oxide": {
+      "png": "reports/week3_fromscratch_epochs100_bs32_lr5e5/oxide_fromscratch_comparison.png",
+      "pdf": "reports/week3_fromscratch_epochs100_bs32_lr5e5/oxide_fromscratch_comparison.pdf"
+    },
+    "nitride": {
+      "png": "reports/week3_fromscratch_epochs100_bs32_lr5e5/nitride_fromscratch_comparison.png",
+      "pdf": "reports/week3_fromscratch_epochs100_bs32_lr5e5/nitride_fromscratch_comparison.pdf"
+    }
+  }
+}

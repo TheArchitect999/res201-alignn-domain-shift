@@ -60,6 +60,7 @@ To keep the full shared workspace publishable while preserving the files themsel
 | Namespace | Experiment type | Hyperparameters | Seeds covered | Canonical report folder |
 | --- | --- | --- | --- | --- |
 | `results/` | Baseline `main` experiments | Historical baseline values from the original `main` branch | Original baseline coverage only | `reports/week2/`, `reports/week3_fromscratch_baseline/` |
+| `results/*/train_alignn_fromscratch_epochs100_bs32_lr5e5/` | Main-native week-3 from-scratch extension | `epochs=100`, `batch_size=32`, `learning_rate=0.00005` | `N=50,500`, seeds `0..4` | `reports/week3_fromscratch_epochs100_bs32_lr5e5/` |
 | `results_prof_advice/` | Fine-tune and from-scratch imported from Colab | `epochs=50`, `batch_size=16`, `learning_rate=0.0001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/week2_prof_advice/`, `reports/week3_fromscratch_prof_advice/` |
 | `results_prof_advice_alignn_recommended/` | Fine-tune and from-scratch imported from Colab | `epochs=300`, `batch_size=64`, `learning_rate=0.001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/week2_prof_advice_alignn_recommended/`, `reports/week3_fromscratch_alignn_recommended/` |
 

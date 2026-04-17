@@ -15,6 +15,20 @@ The new scripts do not overwrite existing experiment outputs on `main`. They wri
 - from-scratch configs: `configs/week3_fromscratch_epochs100_bs32_lr5e5/`
 - from-scratch reports: `reports/week3_fromscratch_epochs100_bs32_lr5e5/`
 
+The consolidated week-3 from-scratch report bundle on `main` was generated against zero-shot references only and is reproducible with:
+
+```bash
+python scripts/shared/summarize_week3_fromscratch_zero_shot_only.py \
+  --repo-root . \
+  --results-root results \
+  --zero-shot-root results \
+  --families oxide nitride \
+  --Ns 50 500 \
+  --seeds 0 1 2 3 4 \
+  --run-subdir train_alignn_fromscratch_epochs100_bs32_lr5e5 \
+  --out-dir reports/week3_fromscratch_epochs100_bs32_lr5e5
+```
+
 Fine-tuning uses the existing explicit partial-finetune trainer and keeps the intended mode control:
 
 - `model.eval()`
