@@ -122,7 +122,15 @@
       "final_batch_size": 32,
       "test_mae_eV_per_atom": 0.039097680906844234,
       "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N100_seed4/finetune_last2_epochs100_bs32_lr5e5/summary.json"
+    },
+    {
+      "family": "oxide",
+      "N": 200,
+      "seed": 0,
+      "final_batch_size": 32,
+      "test_mae_eV_per_atom": 0.03628438742372592,
+      "summary_path": "/content/res201-alignn-domain-shift/results/oxide/N200_seed0/finetune_last2_epochs100_bs32_lr5e5/summary.json"
     }
   ],
-  "updated_at_epoch_seconds": 1776455425.1691062
+  "updated_at_epoch_seconds": 1776455549.631802
 }
