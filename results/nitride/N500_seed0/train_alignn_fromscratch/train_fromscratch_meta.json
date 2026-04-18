@@ -1,5 +1,0 @@
-{
-  "dataset_root": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N500_seed0/dataset_root",
-  "n_total_params": 4026753,
-  "train_protocol": "from_scratch"
-}
