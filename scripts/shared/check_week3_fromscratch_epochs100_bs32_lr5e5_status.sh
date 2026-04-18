@@ -33,11 +33,24 @@ aggregate_paths=(
   "${REPORT_DIR}/fromscratch_runs.csv"
   "${REPORT_DIR}/fromscratch_summary.csv"
   "${REPORT_DIR}/week3_fromscratch_manifest.json"
-  "${REPORT_DIR}/oxide_fromscratch_comparison.png"
-  "${REPORT_DIR}/oxide_fromscratch_comparison.pdf"
-  "${REPORT_DIR}/nitride_fromscratch_comparison.png"
-  "${REPORT_DIR}/nitride_fromscratch_comparison.pdf"
   "${REPORT_DIR}/run_suite_summary.json"
+)
+while IFS= read -r path; do
+  [[ -n "$path" ]] && aggregate_paths+=("$path")
+done < <(REPORT_DIR="$REPORT_DIR" python - <<'PY'
+import json
+import os
+from pathlib import Path
+
+manifest = Path(os.environ["REPORT_DIR"]) / "week3_fromscratch_manifest.json"
+data = json.loads(manifest.read_text(encoding="utf-8"))
+for family in ("oxide", "nitride"):
+    plot = data.get("plots", {}).get(family, {})
+    for key in ("png", "pdf"):
+        value = plot.get(key)
+        if value:
+            print(value)
+PY
 )
 for path in "${aggregate_paths[@]}"; do
   if [[ -f "$path" ]]; then

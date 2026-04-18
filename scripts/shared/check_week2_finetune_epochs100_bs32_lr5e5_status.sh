@@ -36,10 +36,6 @@ aggregate_paths=(
   "${REPORT_DIR}/finetune_summary_wide.csv"
   "${REPORT_DIR}/zero_shot_summary.csv"
   "${REPORT_DIR}/finetune_summary_table.tex"
-  "${REPORT_DIR}/oxide_learning_curve.png"
-  "${REPORT_DIR}/oxide_learning_curve.pdf"
-  "${REPORT_DIR}/nitride_learning_curve.png"
-  "${REPORT_DIR}/nitride_learning_curve.pdf"
   "${REPORT_DIR}/run_suite_summary.json"
   "${REPORT_DIR}/week2_summary_manifest.json"
   "${REPORT_DIR}/progress_manifest.json"
@@ -50,6 +46,23 @@ aggregate_paths=(
   "${TRAINING_CURVE_DIR}/oxide_training_curve_grid.pdf"
   "${TRAINING_CURVE_DIR}/nitride_training_curve_grid.png"
   "${TRAINING_CURVE_DIR}/nitride_training_curve_grid.pdf"
+)
+while IFS= read -r path; do
+  [[ -n "$path" ]] && aggregate_paths+=("$path")
+done < <(REPORT_DIR="$REPORT_DIR" python - <<'PY'
+import json
+import os
+from pathlib import Path
+
+manifest = Path(os.environ["REPORT_DIR"]) / "week2_summary_manifest.json"
+data = json.loads(manifest.read_text(encoding="utf-8"))
+for family in ("oxide", "nitride"):
+    plot = data.get("plots", {}).get(family, {})
+    for key in ("png", "pdf"):
+        value = plot.get(key)
+        if value:
+            print(value)
+PY
 )
 for path in "${aggregate_paths[@]}"; do
   if [[ -f "$path" ]]; then

@@ -15,12 +15,12 @@
   ],
   "plots": {
     "oxide": {
-      "png": "reports/week3_fromscratch_prof_advice/oxide_fromscratch_comparison.png",
-      "pdf": "reports/week3_fromscratch_prof_advice/oxide_fromscratch_comparison.pdf"
+      "png": "reports/week3_fromscratch_prof_advice/Oxide Comparison Plot - Hyperparameter Set 1.png",
+      "pdf": "reports/week3_fromscratch_prof_advice/Oxide Comparison Plot - Hyperparameter Set 1.pdf"
     },
     "nitride": {
-      "png": "reports/week3_fromscratch_prof_advice/nitride_fromscratch_comparison.png",
-      "pdf": "reports/week3_fromscratch_prof_advice/nitride_fromscratch_comparison.pdf"
+      "png": "reports/week3_fromscratch_prof_advice/Nitride Comparison Plot - Hyperparameter Set 1.png",
+      "pdf": "reports/week3_fromscratch_prof_advice/Nitride Comparison Plot - Hyperparameter Set 1.pdf"
     }
   }
 }

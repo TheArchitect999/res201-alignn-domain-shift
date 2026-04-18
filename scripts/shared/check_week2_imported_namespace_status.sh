@@ -41,14 +41,27 @@ aggregate_paths=(
   "${REPORT_DIR}/training_curves/training_curve_manifest.csv"
   "${REPORT_DIR}/training_curves/training_curve_manifest.json"
   "${REPORT_DIR}/training_curves/README.md"
-  "${REPORT_DIR}/oxide_learning_curve.png"
-  "${REPORT_DIR}/oxide_learning_curve.pdf"
-  "${REPORT_DIR}/nitride_learning_curve.png"
-  "${REPORT_DIR}/nitride_learning_curve.pdf"
   "${REPORT_DIR}/training_curves/oxide_training_curve_grid.png"
   "${REPORT_DIR}/training_curves/oxide_training_curve_grid.pdf"
   "${REPORT_DIR}/training_curves/nitride_training_curve_grid.png"
   "${REPORT_DIR}/training_curves/nitride_training_curve_grid.pdf"
+)
+while IFS= read -r path; do
+  [[ -n "$path" ]] && aggregate_paths+=("$path")
+done < <(REPORT_DIR="$REPORT_DIR" python - <<'PY'
+import json
+import os
+from pathlib import Path
+
+manifest = Path(os.environ["REPORT_DIR"]) / "week2_summary_manifest.json"
+data = json.loads(manifest.read_text(encoding="utf-8"))
+for family in ("oxide", "nitride"):
+    plot = data.get("plots", {}).get(family, {})
+    for key in ("png", "pdf"):
+        value = plot.get(key)
+        if value:
+            print(value)
+PY
 )
 for path in "${aggregate_paths[@]}"; do
   if [[ -f "$path" ]]; then

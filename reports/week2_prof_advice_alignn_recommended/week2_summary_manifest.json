@@ -17,12 +17,12 @@
   "progress_manifest": "reports/week2_prof_advice_alignn_recommended/progress_manifest.json",
   "plots": {
     "oxide": {
-      "png": "reports/week2_prof_advice_alignn_recommended/oxide_learning_curve.png",
-      "pdf": "reports/week2_prof_advice_alignn_recommended/oxide_learning_curve.pdf"
+      "png": "reports/week2_prof_advice_alignn_recommended/Oxide Learning Curve - Hyperparameter Set 2.png",
+      "pdf": "reports/week2_prof_advice_alignn_recommended/Oxide Learning Curve - Hyperparameter Set 2.pdf"
     },
     "nitride": {
-      "png": "reports/week2_prof_advice_alignn_recommended/nitride_learning_curve.png",
-      "pdf": "reports/week2_prof_advice_alignn_recommended/nitride_learning_curve.pdf"
+      "png": "reports/week2_prof_advice_alignn_recommended/Nitride Learning Curve - Hyperparameter Set 2.png",
+      "pdf": "reports/week2_prof_advice_alignn_recommended/Nitride Learning Curve - Hyperparameter Set 2.pdf"
     }
   }
 }

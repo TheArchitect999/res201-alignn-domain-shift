@@ -17,12 +17,12 @@
   "progress_manifest": "reports/week2_last2_epochs100_bs32_lr5e5/progress_manifest.json",
   "plots": {
     "oxide": {
-      "png": "reports/week2_last2_epochs100_bs32_lr5e5/oxide_learning_curve.png",
-      "pdf": "reports/week2_last2_epochs100_bs32_lr5e5/oxide_learning_curve.pdf"
+      "png": "reports/week2_last2_epochs100_bs32_lr5e5/Oxide Learning Curve - Hyperparameter Set 3.png",
+      "pdf": "reports/week2_last2_epochs100_bs32_lr5e5/Oxide Learning Curve - Hyperparameter Set 3.pdf"
     },
     "nitride": {
-      "png": "reports/week2_last2_epochs100_bs32_lr5e5/nitride_learning_curve.png",
-      "pdf": "reports/week2_last2_epochs100_bs32_lr5e5/nitride_learning_curve.pdf"
+      "png": "reports/week2_last2_epochs100_bs32_lr5e5/Nitride Learning Curve - Hyperparameter Set 3.png",
+      "pdf": "reports/week2_last2_epochs100_bs32_lr5e5/Nitride Learning Curve - Hyperparameter Set 3.pdf"
     }
   }
 }
