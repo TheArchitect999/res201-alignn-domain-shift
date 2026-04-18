@@ -1,0 +1,19 @@
+{
+  "results_root": "results",
+  "run_subdir": "train_alignn_fromscratch_epochs100_bs32_lr5e5",
+  "per_run_manifest_csv": "reports/Hyperparameter Set 3/Training Curves/From Scratch/training_curve_manifest.csv",
+  "readme": "reports/Hyperparameter Set 3/Training Curves/From Scratch/README.md",
+  "n_runs": 20,
+  "family_grids": [
+    {
+      "family": "oxide",
+      "png_path": "reports/Hyperparameter Set 3/Training Curves/From Scratch/oxide_training_curve_grid.png",
+      "pdf_path": "reports/Hyperparameter Set 3/Training Curves/From Scratch/oxide_training_curve_grid.pdf"
+    },
+    {
+      "family": "nitride",
+      "png_path": "reports/Hyperparameter Set 3/Training Curves/From Scratch/nitride_training_curve_grid.png",
+      "pdf_path": "reports/Hyperparameter Set 3/Training Curves/From Scratch/nitride_training_curve_grid.pdf"
+    }
+  ]
+}

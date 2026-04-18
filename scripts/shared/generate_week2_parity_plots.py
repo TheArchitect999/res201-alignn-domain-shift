@@ -158,6 +158,7 @@ def main() -> int:
     parser.add_argument("--results-root", required=True)
     parser.add_argument("--run-subdir", required=True)
     parser.add_argument("--report-dir", required=True)
+    parser.add_argument("--out-dir")
     parser.add_argument("--set-number", type=int, required=True)
     parser.add_argument("--families", nargs="+", default=["oxide", "nitride"])
     parser.add_argument("--Ns", nargs="+", type=int, default=[10, 50, 100, 200, 500, 1000])
@@ -167,7 +168,7 @@ def main() -> int:
     pd, plt = load_reporting_dependencies()
     repo = Path(args.repo_root).resolve()
     report_dir = (repo / args.report_dir).resolve()
-    out_dir = report_dir / "parity_plots"
+    out_dir = (repo / args.out_dir).resolve() if args.out_dir else report_dir / "parity_plots"
     out_dir.mkdir(parents=True, exist_ok=True)
 
     manifest_rows: list[dict] = []

@@ -110,6 +110,7 @@ def plot_family_curve(
     out_png: Path,
     out_pdf: Path,
     title_label: str,
+    plot_title_template: str | None,
 ) -> None:
     family_df = summary_df[summary_df["family"] == family].sort_values("N")
     if family_df.empty:
@@ -135,7 +136,8 @@ def plot_family_curve(
     plt.xticks(family_df["N"], [str(n) for n in family_df["N"]])
     plt.xlabel("Fine-tuning size N")
     plt.ylabel("Test MAE (eV/atom)")
-    plt.title(f"{family.capitalize()} {title_label}")
+    title = plot_title_template.format(family=family, Family=family.capitalize()) if plot_title_template else f"{family.capitalize()} {title_label}"
+    plt.title(title)
     plt.grid(True, alpha=0.3)
     plt.legend()
     plt.tight_layout()
@@ -178,12 +180,18 @@ def main() -> int:
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
     parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
     parser.add_argument("--out-dir", default="reports/week2")
+    parser.add_argument("--summary-dir")
+    parser.add_argument("--plot-dir")
     parser.add_argument("--title-label", default="fine-tuning learning curve")
+    parser.add_argument("--plot-name-template")
+    parser.add_argument("--plot-title-template")
     args = parser.parse_args()
 
     repo = Path(args.repo_root).resolve()
-    out_dir = (repo / args.out_dir).resolve()
-    out_dir.mkdir(parents=True, exist_ok=True)
+    summary_dir = (repo / (args.summary_dir or args.out_dir)).resolve()
+    plot_dir = (repo / (args.plot_dir or args.out_dir)).resolve()
+    summary_dir.mkdir(parents=True, exist_ok=True)
+    plot_dir.mkdir(parents=True, exist_ok=True)
 
     finetune_rows = collect_finetune_rows(
         repo,
@@ -230,13 +238,13 @@ def main() -> int:
         summary_with_zero["zero_shot_mae_eV_per_atom"] - summary_with_zero["mean_test_mae_eV_per_atom"]
     )
 
-    runs_csv = out_dir / "finetune_runs.csv"
-    summary_csv = out_dir / "finetune_summary_by_N.csv"
-    wide_csv = out_dir / "finetune_summary_wide.csv"
-    zero_csv = out_dir / "zero_shot_summary.csv"
-    latex_table = out_dir / "finetune_summary_table.tex"
-    manifest_json = out_dir / "week2_summary_manifest.json"
-    progress_json = out_dir / "progress_manifest.json"
+    runs_csv = summary_dir / "finetune_runs.csv"
+    summary_csv = summary_dir / "finetune_summary_by_N.csv"
+    wide_csv = summary_dir / "finetune_summary_wide.csv"
+    zero_csv = summary_dir / "zero_shot_summary.csv"
+    latex_table = summary_dir / "finetune_summary_table.tex"
+    manifest_json = summary_dir / "week2_summary_manifest.json"
+    progress_json = summary_dir / "progress_manifest.json"
 
     runs_df.to_csv(runs_csv, index=False)
     summary_with_zero.to_csv(summary_csv, index=False)
@@ -246,13 +254,19 @@ def main() -> int:
 
     zero_lookup = {row["family"]: row["zero_shot_mae_eV_per_atom"] for row in zero_shot_rows}
     for family in args.families:
+        stem = (
+            args.plot_name_template.format(family=family, Family=family.capitalize())
+            if args.plot_name_template
+            else f"{family}_learning_curve"
+        )
         plot_family_curve(
             family,
             summary_df,
             zero_lookup.get(family),
-            out_dir / f"{family}_learning_curve.png",
-            out_dir / f"{family}_learning_curve.pdf",
+            plot_dir / f"{stem}.png",
+            plot_dir / f"{stem}.pdf",
             args.title_label,
+            args.plot_title_template,
         )
 
     expected_runs = len(args.families) * len(args.Ns) * len(args.seeds)
@@ -267,6 +281,36 @@ def main() -> int:
         args.run_subdir,
     )
 
+    plot_paths = {
+        family: {
+            "png": repo_relative(
+                repo,
+                plot_dir
+                / (
+                    (
+                        args.plot_name_template.format(family=family, Family=family.capitalize())
+                        if args.plot_name_template
+                        else f"{family}_learning_curve"
+                    )
+                    + ".png"
+                ),
+            ),
+            "pdf": repo_relative(
+                repo,
+                plot_dir
+                / (
+                    (
+                        args.plot_name_template.format(family=family, Family=family.capitalize())
+                        if args.plot_name_template
+                        else f"{family}_learning_curve"
+                    )
+                    + ".pdf"
+                ),
+            ),
+        }
+        for family in args.families
+    }
+
     manifest = {
         "results_root": args.results_root,
         "zero_shot_root": args.zero_shot_root,
@@ -278,13 +322,7 @@ def main() -> int:
         "zero_csv": repo_relative(repo, zero_csv),
         "latex_table": repo_relative(repo, latex_table),
         "progress_manifest": repo_relative(repo, progress_json),
-        "plots": {
-            family: {
-                "png": repo_relative(repo, out_dir / f"{family}_learning_curve.png"),
-                "pdf": repo_relative(repo, out_dir / f"{family}_learning_curve.pdf"),
-            }
-            for family in args.families
-        },
+        "plots": plot_paths,
     }
     manifest_json.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(manifest, indent=2))

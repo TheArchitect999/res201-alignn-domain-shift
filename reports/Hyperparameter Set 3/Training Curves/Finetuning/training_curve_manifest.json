@@ -1,0 +1,19 @@
+{
+  "results_root": "results",
+  "run_subdir": "finetune_last2_epochs100_bs32_lr5e5",
+  "per_run_manifest_csv": "reports/Hyperparameter Set 3/Training Curves/Finetuning/training_curve_manifest.csv",
+  "readme": "reports/Hyperparameter Set 3/Training Curves/Finetuning/README.md",
+  "n_runs": 60,
+  "family_grids": [
+    {
+      "family": "oxide",
+      "png_path": "reports/Hyperparameter Set 3/Training Curves/Finetuning/oxide_training_curve_grid.png",
+      "pdf_path": "reports/Hyperparameter Set 3/Training Curves/Finetuning/oxide_training_curve_grid.pdf"
+    },
+    {
+      "family": "nitride",
+      "png_path": "reports/Hyperparameter Set 3/Training Curves/Finetuning/nitride_training_curve_grid.png",
+      "pdf_path": "reports/Hyperparameter Set 3/Training Curves/Finetuning/nitride_training_curve_grid.pdf"
+    }
+  ]
+}

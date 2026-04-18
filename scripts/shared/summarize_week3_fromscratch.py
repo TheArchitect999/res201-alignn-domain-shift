@@ -140,6 +140,7 @@ def plot_family_comparison(
     out_pdf: Path,
     plt,
     title_label: str,
+    plot_title_template: str | None,
 ) -> None:
     family_df = df[df["family"] == family].sort_values("N")
     if family_df.empty:
@@ -173,7 +174,8 @@ def plot_family_comparison(
     plt.xticks(family_df["N"], [str(v) for v in family_df["N"]])
     plt.xlabel("Training size N")
     plt.ylabel("Test MAE (eV/atom)")
-    plt.title(f"{family.capitalize()} {title_label}")
+    title = plot_title_template.format(family=family, Family=family.capitalize()) if plot_title_template else f"{family.capitalize()} {title_label}"
+    plt.title(title)
     plt.grid(alpha=0.3)
     plt.legend()
     plt.tight_layout()
@@ -195,13 +197,19 @@ def main() -> int:
     parser.add_argument("--run-subdir", default="train_alignn_fromscratch")
     parser.add_argument("--finetune-run-subdir", default="finetune_last2")
     parser.add_argument("--out-dir", default="reports/week3_fromscratch_baseline")
+    parser.add_argument("--summary-dir")
+    parser.add_argument("--plot-dir")
     parser.add_argument("--title-label", default="Week 3 From-Scratch Comparison")
+    parser.add_argument("--plot-name-template")
+    parser.add_argument("--plot-title-template")
     args = parser.parse_args()
     pd, plt = load_reporting_dependencies()
 
     repo = Path(args.repo_root).resolve()
-    out_dir = (repo / args.out_dir).resolve()
-    out_dir.mkdir(parents=True, exist_ok=True)
+    summary_dir = (repo / (args.summary_dir or args.out_dir)).resolve()
+    plot_dir = (repo / (args.plot_dir or args.out_dir)).resolve()
+    summary_dir.mkdir(parents=True, exist_ok=True)
+    plot_dir.mkdir(parents=True, exist_ok=True)
 
     rows = collect_fromscratch_rows(
         repo,
@@ -248,23 +256,59 @@ def main() -> int:
         merged["finetune_seed0_test_mae_eV_per_atom"] - merged["mean_test_mae_eV_per_atom"]
     )
 
-    runs_csv = out_dir / "fromscratch_runs.csv"
-    summary_csv = out_dir / "fromscratch_summary.csv"
-    manifest_json = out_dir / "week3_fromscratch_manifest.json"
-    suite_json = out_dir / "run_suite_summary.json"
+    runs_csv = summary_dir / "fromscratch_runs.csv"
+    summary_csv = summary_dir / "fromscratch_summary.csv"
+    manifest_json = summary_dir / "week3_fromscratch_manifest.json"
+    suite_json = summary_dir / "run_suite_summary.json"
 
     runs_df.to_csv(runs_csv, index=False)
     merged.to_csv(summary_csv, index=False)
 
     for family in args.families:
+        stem = (
+            args.plot_name_template.format(family=family, Family=family.capitalize())
+            if args.plot_name_template
+            else f"{family}_fromscratch_comparison"
+        )
         plot_family_comparison(
             merged,
             family,
-            out_dir / f"{family}_fromscratch_comparison.png",
-            out_dir / f"{family}_fromscratch_comparison.pdf",
+            plot_dir / f"{stem}.png",
+            plot_dir / f"{stem}.pdf",
             plt,
             args.title_label,
+            args.plot_title_template,
         )
+
+    plot_paths = {
+        family: {
+            "png": repo_relative(
+                repo,
+                plot_dir
+                / (
+                    (
+                        args.plot_name_template.format(family=family, Family=family.capitalize())
+                        if args.plot_name_template
+                        else f"{family}_fromscratch_comparison"
+                    )
+                    + ".png"
+                ),
+            ),
+            "pdf": repo_relative(
+                repo,
+                plot_dir
+                / (
+                    (
+                        args.plot_name_template.format(family=family, Family=family.capitalize())
+                        if args.plot_name_template
+                        else f"{family}_fromscratch_comparison"
+                    )
+                    + ".pdf"
+                ),
+            ),
+        }
+        for family in args.families
+    }
 
     manifest = {
         "results_root": args.results_root,
@@ -275,13 +319,7 @@ def main() -> int:
         "runs_csv": repo_relative(repo, runs_csv),
         "summary_csv": repo_relative(repo, summary_csv),
         "seeds": args.seeds,
-        "plots": {
-            family: {
-                "png": repo_relative(repo, out_dir / f"{family}_fromscratch_comparison.png"),
-                "pdf": repo_relative(repo, out_dir / f"{family}_fromscratch_comparison.pdf"),
-            }
-            for family in args.families
-        },
+        "plots": plot_paths,
     }
     manifest_json.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
@@ -291,8 +329,9 @@ def main() -> int:
         "expected_runs": len(args.families) * len(args.Ns) * len(args.seeds),
         "actual_runs": len(runs_df),
         "complete": len(runs_df) == len(args.families) * len(args.Ns) * len(args.seeds),
-        "report_dir": repo_relative(repo, out_dir),
+        "report_dir": repo_relative(repo, summary_dir),
         "summary_csv": repo_relative(repo, summary_csv),
+        "plot_dir": repo_relative(repo, plot_dir),
     }
     suite_json.write_text(json.dumps(suite_summary, indent=2) + "\n", encoding="utf-8")
 

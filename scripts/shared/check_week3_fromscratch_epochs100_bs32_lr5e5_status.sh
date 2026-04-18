@@ -3,7 +3,9 @@ set -euo pipefail
 
 REPO_ROOT="${1:-.}"
 RUN_SUBDIR="${2:-train_alignn_fromscratch_epochs100_bs32_lr5e5}"
-REPORT_DIR="${3:-reports/week3_fromscratch_epochs100_bs32_lr5e5}"
+REPORT_ROOT="${3:-reports/Hyperparameter Set 3}"
+SUMMARY_DIR="${REPORT_ROOT}/Summaries/From Scratch"
+TRAINING_DIR="${REPORT_ROOT}/Training Curves/From Scratch"
 
 cd "$REPO_ROOT"
 
@@ -30,19 +32,26 @@ done
 echo
 echo "[2/3] Checking aggregate artifacts..."
 aggregate_paths=(
-  "${REPORT_DIR}/fromscratch_runs.csv"
-  "${REPORT_DIR}/fromscratch_summary.csv"
-  "${REPORT_DIR}/week3_fromscratch_manifest.json"
-  "${REPORT_DIR}/run_suite_summary.json"
+  "${SUMMARY_DIR}/fromscratch_runs.csv"
+  "${SUMMARY_DIR}/fromscratch_summary.csv"
+  "${SUMMARY_DIR}/week3_fromscratch_manifest.json"
+  "${SUMMARY_DIR}/run_suite_summary.json"
+  "${TRAINING_DIR}/training_curve_manifest.csv"
+  "${TRAINING_DIR}/training_curve_manifest.json"
+  "${TRAINING_DIR}/README.md"
+  "${TRAINING_DIR}/oxide_training_curve_grid.png"
+  "${TRAINING_DIR}/oxide_training_curve_grid.pdf"
+  "${TRAINING_DIR}/nitride_training_curve_grid.png"
+  "${TRAINING_DIR}/nitride_training_curve_grid.pdf"
 )
 while IFS= read -r path; do
   [[ -n "$path" ]] && aggregate_paths+=("$path")
-done < <(REPORT_DIR="$REPORT_DIR" python - <<'PY'
+done < <(SUMMARY_DIR="$SUMMARY_DIR" python - <<'PY'
 import json
 import os
 from pathlib import Path
 
-manifest = Path(os.environ["REPORT_DIR"]) / "week3_fromscratch_manifest.json"
+manifest = Path(os.environ["SUMMARY_DIR"]) / "week3_fromscratch_manifest.json"
 data = json.loads(manifest.read_text(encoding="utf-8"))
 for family in ("oxide", "nitride"):
     plot = data.get("plots", {}).get(family, {})
@@ -63,17 +72,27 @@ done
 
 echo
 echo "[3/3] Validating run-row count..."
-if ! REPORT_DIR="$REPORT_DIR" python - <<'PY'
+if ! SUMMARY_DIR="$SUMMARY_DIR" TRAINING_DIR="$TRAINING_DIR" python - <<'PY'
 import csv
 import os
 import sys
+from pathlib import Path
 
-path = os.path.join(os.environ["REPORT_DIR"], "fromscratch_runs.csv")
-with open(path, newline="", encoding="utf-8") as handle:
+summary_dir = Path(os.environ["SUMMARY_DIR"])
+training_dir = Path(os.environ["TRAINING_DIR"])
+
+with open(summary_dir / "fromscratch_runs.csv", newline="", encoding="utf-8") as handle:
     rows = list(csv.DictReader(handle))
 if len(rows) != 20:
     print(f"Expected 20 run rows, found {len(rows)}")
     sys.exit(1)
+
+with open(training_dir / "training_curve_manifest.csv", newline="", encoding="utf-8") as handle:
+    training_rows = list(csv.DictReader(handle))
+if len(training_rows) != 20:
+    print(f"Expected 20 training-curve rows, found {len(training_rows)}")
+    sys.exit(1)
+
 print("Row-count check passed (20 runs).")
 PY
 then

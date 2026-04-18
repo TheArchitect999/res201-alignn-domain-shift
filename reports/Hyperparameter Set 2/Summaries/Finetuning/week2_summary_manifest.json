@@ -1,0 +1,28 @@
+{
+  "results_root": "results_prof_advice_alignn_recommended",
+  "zero_shot_root": "results",
+  "run_subdir": "finetune_last2",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "runs_csv": "reports/Hyperparameter Set 2/Summaries/Finetuning/finetune_runs.csv",
+  "summary_csv": "reports/Hyperparameter Set 2/Summaries/Finetuning/finetune_summary_by_N.csv",
+  "wide_csv": "reports/Hyperparameter Set 2/Summaries/Finetuning/finetune_summary_wide.csv",
+  "zero_csv": "reports/Hyperparameter Set 2/Summaries/Finetuning/zero_shot_summary.csv",
+  "latex_table": "reports/Hyperparameter Set 2/Summaries/Finetuning/finetune_summary_table.tex",
+  "progress_manifest": "reports/Hyperparameter Set 2/Summaries/Finetuning/progress_manifest.json",
+  "plots": {
+    "oxide": {
+      "png": "reports/Hyperparameter Set 2/Learning Curves/Oxide Learning Curve - Hyperparameter Set 2.png",
+      "pdf": "reports/Hyperparameter Set 2/Learning Curves/Oxide Learning Curve - Hyperparameter Set 2.pdf"
+    },
+    "nitride": {
+      "png": "reports/Hyperparameter Set 2/Learning Curves/Nitride Learning Curve - Hyperparameter Set 2.png",
+      "pdf": "reports/Hyperparameter Set 2/Learning Curves/Nitride Learning Curve - Hyperparameter Set 2.pdf"
+    }
+  }
+}

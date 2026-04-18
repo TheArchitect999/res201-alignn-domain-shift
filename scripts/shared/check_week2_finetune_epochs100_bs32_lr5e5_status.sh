@@ -3,8 +3,11 @@ set -euo pipefail
 
 REPO_ROOT="${1:-.}"
 RUN_SUBDIR="${2:-finetune_last2_epochs100_bs32_lr5e5}"
-REPORT_DIR="${3:-reports/week2_last2_epochs100_bs32_lr5e5}"
-TRAINING_CURVE_DIR="${REPORT_DIR}/training_curves"
+REPORT_ROOT="${3:-reports/Hyperparameter Set 3}"
+SUMMARY_DIR="${REPORT_ROOT}/Summaries/Finetuning"
+LEARNING_DIR="${REPORT_ROOT}/Learning Curves"
+TRAINING_CURVE_DIR="${REPORT_ROOT}/Training Curves/Finetuning"
+PARITY_DIR="${REPORT_ROOT}/Parity Plots"
 
 cd "$REPO_ROOT"
 
@@ -31,16 +34,19 @@ done
 echo
 echo "[2/4] Checking aggregate fine-tune artifacts..."
 aggregate_paths=(
-  "${REPORT_DIR}/finetune_runs.csv"
-  "${REPORT_DIR}/finetune_summary_by_N.csv"
-  "${REPORT_DIR}/finetune_summary_wide.csv"
-  "${REPORT_DIR}/zero_shot_summary.csv"
-  "${REPORT_DIR}/finetune_summary_table.tex"
-  "${REPORT_DIR}/run_suite_summary.json"
-  "${REPORT_DIR}/week2_summary_manifest.json"
-  "${REPORT_DIR}/progress_manifest.json"
+  "${SUMMARY_DIR}/finetune_runs.csv"
+  "${SUMMARY_DIR}/finetune_summary_by_N.csv"
+  "${SUMMARY_DIR}/finetune_summary_wide.csv"
+  "${SUMMARY_DIR}/zero_shot_summary.csv"
+  "${SUMMARY_DIR}/finetune_summary_table.tex"
+  "${SUMMARY_DIR}/run_suite_summary.json"
+  "${SUMMARY_DIR}/week2_summary_manifest.json"
+  "${SUMMARY_DIR}/progress_manifest.json"
   "${TRAINING_CURVE_DIR}/training_curve_manifest.csv"
   "${TRAINING_CURVE_DIR}/training_curve_manifest.json"
+  "${PARITY_DIR}/parity_plot_manifest.csv"
+  "${PARITY_DIR}/parity_plot_manifest.json"
+  "${PARITY_DIR}/README.md"
   "${TRAINING_CURVE_DIR}/README.md"
   "${TRAINING_CURVE_DIR}/oxide_training_curve_grid.png"
   "${TRAINING_CURVE_DIR}/oxide_training_curve_grid.pdf"
@@ -49,12 +55,12 @@ aggregate_paths=(
 )
 while IFS= read -r path; do
   [[ -n "$path" ]] && aggregate_paths+=("$path")
-done < <(REPORT_DIR="$REPORT_DIR" python - <<'PY'
+done < <(SUMMARY_DIR="$SUMMARY_DIR" python - <<'PY'
 import json
 import os
 from pathlib import Path
 
-manifest = Path(os.environ["REPORT_DIR"]) / "week2_summary_manifest.json"
+manifest = Path(os.environ["SUMMARY_DIR"]) / "week2_summary_manifest.json"
 data = json.loads(manifest.read_text(encoding="utf-8"))
 for family in ("oxide", "nitride"):
     plot = data.get("plots", {}).get(family, {})
@@ -75,14 +81,15 @@ done
 
 echo
 echo "[3/4] Validating aggregate CSV contents..."
-if ! REPORT_DIR="$REPORT_DIR" TRAINING_CURVE_DIR="$TRAINING_CURVE_DIR" python - <<'PY'
+if ! SUMMARY_DIR="$SUMMARY_DIR" TRAINING_CURVE_DIR="$TRAINING_CURVE_DIR" PARITY_DIR="$PARITY_DIR" python - <<'PY'
 import csv
 import os
 import sys
 from pathlib import Path
 
-report_dir = Path(os.environ["REPORT_DIR"])
+report_dir = Path(os.environ["SUMMARY_DIR"])
 training_curve_dir = Path(os.environ["TRAINING_CURVE_DIR"])
+parity_dir = Path(os.environ["PARITY_DIR"])
 families = ["oxide", "nitride"]
 ns = [10, 50, 100, 200, 500, 1000]
 expected_runs = 5
@@ -121,6 +128,12 @@ with open(training_curve_dir / "training_curve_manifest.csv", newline="", encodi
     training_rows = list(csv.DictReader(handle))
 if len(training_rows) != expected_total:
     print(f"Training-curve manifest mismatch: expected {expected_total}, found {len(training_rows)}")
+    bad = True
+
+with open(parity_dir / "parity_plot_manifest.csv", newline="", encoding="utf-8") as handle:
+    parity_rows = list(csv.DictReader(handle))
+if len(parity_rows) != 12:
+    print(f"Parity-plot manifest mismatch: expected 12, found {len(parity_rows)}")
     bad = True
 
 if bad:
