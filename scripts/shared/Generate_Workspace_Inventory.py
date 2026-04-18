@@ -115,13 +115,13 @@ def describe(rel_path: str, is_dir: bool) -> str:
             return dataset_map.get(name, "Stage 2 dataset pipeline script.")
         if parts[1] == "shared":
             shared_map = {
-                "zero_shot_alignn.py": "Run zero-shot pretrained ALIGNN evaluation on a family test set.",
-                "prepare_week1_finetune_dataset.py": "Prepare the local Week 1 fine-tuning dataset root for a chosen family and N.",
-                "write_week1_alignn_config.py": "Write a TrainingConfig-compatible ALIGNN config for Week 1 runs.",
-                "finetune_last2_alignn.py": "Custom Week 1 fine-tuning wrapper that loads the pretrained checkpoint and unfreezes the final parameter groups.",
-                "save_pretrained_state_dict.py": "Extract and save pretrained model state data.",
-                "check_week1_status.sh": "End-to-end terminal checker for Week 1 completion.",
-                "generate_workspace_inventory.py": "Generate a full CSV inventory of workspace files and folders.",
+                "Evaluate_ALIGNN_Zero_Shot.py": "Run zero-shot pretrained ALIGNN evaluation on a family test set.",
+                "Prepare_Week1_Finetuning_Dataset.py": "Prepare the local Week 1 fine-tuning dataset root for a chosen family and N.",
+                "Write_Week1_ALIGNN_Config.py": "Write a TrainingConfig-compatible ALIGNN config for Week 1 runs.",
+                "Fine_Tune_Last_Two_ALIGNN_Layers.py": "Custom Week 1 fine-tuning wrapper that loads the pretrained checkpoint and unfreezes the final parameter groups.",
+                "Save_Pretrained_ALIGNN_State_Dict.py": "Extract and save pretrained model state data.",
+                "Check_Week1_Baseline_Status.sh": "End-to-end terminal checker for Week 1 completion.",
+                "Generate_Workspace_Inventory.py": "Generate a full CSV inventory of workspace files and folders.",
             }
             return shared_map.get(name, "Shared Week 1 experiment utility.")
 

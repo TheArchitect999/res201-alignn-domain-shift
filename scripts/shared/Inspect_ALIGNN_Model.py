@@ -110,7 +110,7 @@ def print_parameter_groups(model, n_last_groups: int) -> None:
         print(f"  [{index:02d}] {group:<20} params={counts[group]:>10,}{marker}")
 
     print()
-    print(f"Last {n_last_groups} groups according to finetune_last2_alignn.py")
+    print(f"Last {n_last_groups} groups according to Fine_Tune_Last_Two_ALIGNN_Layers.py")
     print("  " + (", ".join(chosen) if chosen else "<none>"))
     print()
 

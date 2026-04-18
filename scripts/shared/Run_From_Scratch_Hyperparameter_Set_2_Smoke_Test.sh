@@ -4,8 +4,8 @@ set -euo pipefail
 REPO_ROOT="${1:-.}"
 cd "$REPO_ROOT"
 
-python scripts/shared/preflight_week3_fromscratch.py
-python scripts/shared/run_week3_fromscratch_suite.py \
+python scripts/shared/Preflight_From_Scratch_Hyperparameter_Set_2.py
+python scripts/shared/Run_From_Scratch_Suite.py \
   --repo-root . \
   --families oxide nitride \
   --Ns 50 \

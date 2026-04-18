@@ -44,7 +44,7 @@ def main() -> int:
 
     cmd = [
         sys.executable,
-        "scripts/shared/run_week2_alignn_defaults_colab_5seed_suite.py",
+        "scripts/shared/Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Suite.py",
         "--repo-root",
         args.repo_root,
         "--experiment-tag",

@@ -17,7 +17,7 @@ FINETUNE_RUN_SUBDIR="finetune_last2_epochs100_bs32_lr5e5"
 
 cd "$REPO_ROOT"
 
-python scripts/shared/preflight_week3_fromscratch_epochs100_bs32_lr5e5.py
+python scripts/shared/Preflight_From_Scratch_Hyperparameter_Set_3.py
 
 suite_args=(
   --repo-root .
@@ -28,9 +28,9 @@ if [[ "$PUSH_AFTER_RUN" == "1" ]]; then
   suite_args+=(--git-push-after-run --git-remote "$GIT_REMOTE" --git-branch "$GIT_BRANCH")
 fi
 
-python scripts/shared/run_week3_fromscratch_suite_epochs100_bs32_lr5e5.py "${suite_args[@]}"
+python scripts/shared/Run_From_Scratch_Hyperparameter_Set_3_Suite.py "${suite_args[@]}"
 
-python scripts/shared/summarize_week3_fromscratch.py \
+python scripts/shared/Summarize_From_Scratch_Reports.py \
   --repo-root . \
   --results-root results \
   --finetune-results-root results \
@@ -46,7 +46,7 @@ python scripts/shared/summarize_week3_fromscratch.py \
   --plot-name-template "{Family} Comparison Plot - Hyperparameter Set 3" \
   --plot-title-template "{Family} Comparison Plot - Hyperparameter Set 3"
 
-python scripts/shared/plot_week3_training_curves.py \
+python scripts/shared/Plot_From_Scratch_Training_Curves.py \
   --repo-root . \
   --results-root results \
   --run-subdir "$RUN_SUBDIR" \
@@ -57,7 +57,7 @@ python scripts/shared/plot_week3_training_curves.py \
   --title-label "Hyperparameter Set 3 From-Scratch" \
   --protocol-note "randomly initialized ALIGNN trained from scratch; epochs=100, batch_size=32, learning_rate=0.00005"
 
-bash scripts/shared/check_week3_fromscratch_epochs100_bs32_lr5e5_status.sh . "$RUN_SUBDIR" "$REPORT_ROOT"
+bash scripts/shared/Check_From_Scratch_Hyperparameter_Set_3_Status.sh . "$RUN_SUBDIR" "$REPORT_ROOT"
 
 if [[ "$PUSH_FINAL_REPORTS" == "1" ]]; then
   git add -- "$REPORT_ROOT" "$CONFIG_DIR"

@@ -146,7 +146,7 @@ python -m pip install \
 
 python -m pip install --no-deps --force-reinstall "$DGL_WHEEL"
 
-python scripts/shared/preflight_week2_alignn_defaults_colab_5seed.py
+python scripts/shared/Preflight_Finetuning_Hyperparameter_Set_2_Colab_5Seed.py
 
 echo
 echo "Colab bootstrap finished."
@@ -154,5 +154,5 @@ echo "Workspace: $WORKSPACE_DIR"
 echo "Checked out branch: $TARGET_BRANCH"
 echo "Next steps:"
 echo "  cd $WORKSPACE_DIR"
-echo "  bash scripts/shared/run_week2_alignn_defaults_colab_5seed_smoke.sh ."
-echo "  bash scripts/shared/run_week2_alignn_defaults_colab_5seed_pipeline.sh ."
+echo "  bash scripts/shared/Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Smoke_Test.sh ."
+echo "  bash scripts/shared/Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Pipeline.sh ."

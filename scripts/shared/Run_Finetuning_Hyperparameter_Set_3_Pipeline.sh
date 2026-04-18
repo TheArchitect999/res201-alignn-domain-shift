@@ -17,7 +17,7 @@ PARITY_DIR="${REPORT_ROOT}/Parity Plots"
 
 cd "$REPO_ROOT"
 
-python scripts/shared/preflight_week2_last2_epochs100_bs32_lr5e5.py
+python scripts/shared/Preflight_Finetuning_Hyperparameter_Set_3.py
 
 suite_args=(
   --repo-root .
@@ -28,9 +28,9 @@ if [[ "$PUSH_AFTER_RUN" == "1" ]]; then
   suite_args+=(--git-push-after-run --git-remote "$GIT_REMOTE" --git-branch "$GIT_BRANCH")
 fi
 
-python scripts/shared/run_week2_finetune_suite_epochs100_bs32_lr5e5.py "${suite_args[@]}"
+python scripts/shared/Run_Finetuning_Hyperparameter_Set_3_Suite.py "${suite_args[@]}"
 
-python scripts/shared/summarize_week2_finetune.py \
+python scripts/shared/Summarize_Finetuning_Reports.py \
   --repo-root . \
   --results-root results \
   --zero-shot-root results \
@@ -44,7 +44,7 @@ python scripts/shared/summarize_week2_finetune.py \
   --plot-name-template "{Family} Learning Curve - Hyperparameter Set 3" \
   --plot-title-template "{Family} Learning Curve - Hyperparameter Set 3"
 
-python scripts/shared/plot_week2_training_curves.py \
+python scripts/shared/Plot_Finetuning_Training_Curves.py \
   --repo-root . \
   --results-root results \
   --run-subdir "$RUN_SUBDIR" \
@@ -55,7 +55,7 @@ python scripts/shared/plot_week2_training_curves.py \
   --title-label "Week 2 E100-B32-LR5e-5" \
   --protocol-note "pretrained ALIGNN with explicit partial fine-tuning; model.eval() then fc.train() + gcn_layers[3].train(); all other layers frozen"
 
-python scripts/shared/generate_week2_parity_plots.py \
+python scripts/shared/Generate_Finetuning_Parity_Plots.py \
   --repo-root . \
   --results-root results \
   --run-subdir "$RUN_SUBDIR" \
@@ -63,7 +63,7 @@ python scripts/shared/generate_week2_parity_plots.py \
   --out-dir "$PARITY_DIR" \
   --set-number 3
 
-bash scripts/shared/check_week2_finetune_epochs100_bs32_lr5e5_status.sh . "$RUN_SUBDIR" "$REPORT_ROOT"
+bash scripts/shared/Check_Finetuning_Hyperparameter_Set_3_Status.sh . "$RUN_SUBDIR" "$REPORT_ROOT"
 
 if [[ "$PUSH_FINAL_REPORTS" == "1" ]]; then
   git add -- "$REPORT_ROOT" "$CONFIG_DIR"

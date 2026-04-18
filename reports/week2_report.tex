@@ -188,7 +188,7 @@ The additional seed sweep for Week 2 was executed using commands of the followin
 \begin{lstlisting}[language=bash]
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate res201_train
-python -u scripts/shared/run_week2_finetune_suite.py \
+python -u scripts/shared/Run_Finetuning_Original_Baseline_Suite.py \
   --repo-root . \
   --families oxide nitride \
   --Ns 10 50 100 200 500 1000 \
@@ -202,7 +202,7 @@ Aggregation into CSV summaries and plots was done with:
 \begin{lstlisting}[language=bash]
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate res201_train
-python -u scripts/shared/summarize_week2_finetune.py \
+python -u scripts/shared/Summarize_Finetuning_Reports.py \
   --repo-root . \
   --families oxide nitride \
   --Ns 10 50 100 200 500 1000 \
@@ -213,7 +213,7 @@ python -u scripts/shared/summarize_week2_finetune.py \
 Final verification is:
 
 \begin{lstlisting}[language=bash]
-scripts/shared/check_week2_status.sh .
+scripts/shared/Check_Finetuning_Original_Baseline_Status.sh .
 \end{lstlisting}
 
 The run-suite summary file reports that the seed-1 and seed-2 completion batch requested 24 runs, completed 24 runs, and had 0 failures.
@@ -367,7 +367,7 @@ The most important Week 2 files and folders in the workspace are:
 The Week 2 checker script is:
 
 \begin{lstlisting}[language=bash]
-scripts/shared/check_week2_status.sh .
+scripts/shared/Check_Finetuning_Original_Baseline_Status.sh .
 \end{lstlisting}
 
 This checker confirms:

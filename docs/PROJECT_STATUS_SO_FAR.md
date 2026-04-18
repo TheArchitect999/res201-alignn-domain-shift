@@ -144,7 +144,7 @@ The currently uncommitted work reviewed in this audit mainly extends documentati
 - `env/bootstrap_res201_stage3_train.sh` and `requirements/res201_train_frozen.txt` document the training environment.
 - `jv_formation_energy_peratom_alignn/config.json` preserves the pretrained checkpoint configuration.
 - `reports/week2/training_curves/` contains per-run training-curve figures plus family grid figures and manifests.
-- `scripts/shared/plot_week2_training_curves.py` generates those Week 2 curve artifacts.
+- `scripts/shared/Plot_Finetuning_Training_Curves.py` generates those Week 2 curve artifacts.
 - `data_shared/diagnostics/` preserves dataset inspection artifacts that support the Stage 2 story.
 - `results/oxide/N50_seed0/train_alignn_restart/` preserves an older partial restart attempt for the oxide `N=50` path.
 

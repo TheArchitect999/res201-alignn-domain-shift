@@ -119,7 +119,7 @@ def generate_finetune_training_curves(repo: Path, cfg: dict, out_dir: Path) -> N
         repo,
         [
             sys.executable,
-            "scripts/shared/plot_week2_training_curves.py",
+            "scripts/shared/Plot_Finetuning_Training_Curves.py",
             "--repo-root",
             ".",
             "--results-root",
@@ -153,7 +153,7 @@ def generate_fromscratch_training_curves(repo: Path, cfg: dict, out_dir: Path) -
         repo,
         [
             sys.executable,
-            "scripts/shared/plot_week3_training_curves.py",
+            "scripts/shared/Plot_From_Scratch_Training_Curves.py",
             "--repo-root",
             ".",
             "--results-root",

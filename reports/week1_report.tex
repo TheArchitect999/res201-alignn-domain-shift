@@ -164,8 +164,8 @@ Representative command form:
 \begin{lstlisting}[language=bash]
 source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate res201_train
-python scripts/shared/zero_shot_alignn.py --family oxide --repo-root .
-python scripts/shared/zero_shot_alignn.py --family nitride --repo-root .
+python scripts/shared/Evaluate_ALIGNN_Zero_Shot.py --family oxide --repo-root .
+python scripts/shared/Evaluate_ALIGNN_Zero_Shot.py --family nitride --repo-root .
 \end{lstlisting}
 
 \subsection{$N=50$ Fine-Tuning Dataset Preparation}
@@ -186,10 +186,10 @@ This script constructs a local \texttt{dataset\_root} for each family as follows
 
 Representative commands used:
 \begin{lstlisting}[language=bash]
-python scripts/shared/prepare_week1_finetune_dataset.py \
+python scripts/shared/Prepare_Week1_Finetuning_Dataset.py \
   --family oxide --N 50 --seed 0 --repo-root . --link-mode copy
 
-python scripts/shared/prepare_week1_finetune_dataset.py \
+python scripts/shared/Prepare_Week1_Finetuning_Dataset.py \
   --family nitride --N 50 --seed 0 --repo-root . --link-mode copy
 \end{lstlisting}
 
@@ -238,7 +238,7 @@ The Week 1 wrapper performs the following:
 
 Representative commands used:
 \begin{lstlisting}[language=bash]
-python scripts/shared/finetune_last2_alignn.py \
+python scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py \
   --config configs/oxide_week1_N50_seed0.finetune_last2.json \
   --output-dir results/oxide/N50_seed0/finetune_last2 \
   --dataset-root results/oxide/N50_seed0/dataset_root \
@@ -246,7 +246,7 @@ python scripts/shared/finetune_last2_alignn.py \
   --pretrained-config jv_formation_energy_peratom_alignn/config.json \
   --device cpu
 
-python scripts/shared/finetune_last2_alignn.py \
+python scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py \
   --config configs/nitride_week1_N50_seed0.finetune_last2.json \
   --output-dir results/nitride/N50_seed0/finetune_last2 \
   --dataset-root results/nitride/N50_seed0/dataset_root \
@@ -312,7 +312,7 @@ One nitride fine-tune at $N=50$ completed & Done & \texttt{results/nitride/N50\_
 \section{Verification Commands}
 The simplest verification command is now:
 \begin{lstlisting}[language=bash]
-scripts/shared/check_week1_status.sh .
+scripts/shared/Check_Week1_Baseline_Status.sh .
 \end{lstlisting}
 
 Additional direct checks:
@@ -489,9 +489,9 @@ Recommended push workflow:
 \begin{lstlisting}[language=bash]
 git status
 git add .gitignore
-git add scripts/shared/check_week1_status.sh
-git add scripts/shared/finetune_last2_alignn.py
-git add scripts/shared/write_week1_alignn_config.py
+git add scripts/shared/Check_Week1_Baseline_Status.sh
+git add scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py
+git add scripts/shared/Write_Week1_ALIGNN_Config.py
 git add configs/oxide_week1_N50_seed0.finetune_last2.json
 git add configs/nitride_week1_N50_seed0.finetune_last2.json
 git add results/oxide/zero_shot/summary.json

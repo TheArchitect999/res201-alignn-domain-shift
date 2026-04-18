@@ -9,7 +9,7 @@ PUSH_AFTER_RUN="${PUSH_AFTER_RUN:-0}"
 
 cd "$REPO_ROOT"
 
-python scripts/shared/preflight_week2_alignn_defaults_colab_5seed.py
+python scripts/shared/Preflight_Finetuning_Hyperparameter_Set_2_Colab_5Seed.py
 
 suite_args=(
   --repo-root .
@@ -28,14 +28,14 @@ if [[ "$PUSH_AFTER_RUN" == "1" ]]; then
   suite_args+=(--git-push-after-run --git-remote "$GIT_REMOTE" --git-branch "$GIT_BRANCH")
 fi
 
-python scripts/shared/run_week2_alignn_defaults_colab_5seed_suite.py "${suite_args[@]}"
-python scripts/shared/summarize_week2_alignn_defaults_colab_5seed.py \
+python scripts/shared/Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Suite.py "${suite_args[@]}"
+python scripts/shared/Summarize_Finetuning_Hyperparameter_Set_2_Colab_5Seed.py \
   --repo-root . \
   --experiment-tag "$TAG" \
   --families oxide \
   --Ns 50 \
   --seeds 0
-python scripts/shared/plot_week2_training_curves_alignn_defaults_colab_5seed.py \
+python scripts/shared/Plot_Finetuning_Training_Curves_Hyperparameter_Set_2_Colab_5Seed.py \
   --repo-root . \
   --experiment-tag "$TAG" \
   --families oxide \

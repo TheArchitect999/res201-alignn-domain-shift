@@ -9,7 +9,7 @@ SUMMARY_DIR="${SET_ROOT}/Summaries/From Scratch"
 PLOT_DIR="${SET_ROOT}/Comparison Plots"
 TRAINING_DIR="${SET_ROOT}/Training Curves/From Scratch"
 
-python scripts/shared/summarize_week3_fromscratch.py \
+python scripts/shared/Summarize_From_Scratch_Reports.py \
   --repo-root . \
   --results-root results_prof_advice \
   --finetune-results-root results_prof_advice \
@@ -25,7 +25,7 @@ python scripts/shared/summarize_week3_fromscratch.py \
   --plot-name-template "{Family} Comparison Plot - Hyperparameter Set 1" \
   --plot-title-template "{Family} Comparison Plot - Hyperparameter Set 1"
 
-python scripts/shared/plot_week3_training_curves.py \
+python scripts/shared/Plot_From_Scratch_Training_Curves.py \
   --repo-root . \
   --results-root results_prof_advice \
   --run-subdir train_alignn_fromscratch \

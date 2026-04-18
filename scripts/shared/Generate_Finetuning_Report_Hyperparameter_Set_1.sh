@@ -10,7 +10,7 @@ LEARNING_DIR="${SET_ROOT}/Learning Curves"
 TRAINING_DIR="${SET_ROOT}/Training Curves/Finetuning"
 PARITY_DIR="${SET_ROOT}/Parity Plots"
 
-python scripts/shared/summarize_week2_finetune.py \
+python scripts/shared/Summarize_Finetuning_Reports.py \
   --repo-root . \
   --results-root results_prof_advice \
   --zero-shot-root results \
@@ -24,7 +24,7 @@ python scripts/shared/summarize_week2_finetune.py \
   --plot-name-template "{Family} Learning Curve - Hyperparameter Set 1" \
   --plot-title-template "{Family} Learning Curve - Hyperparameter Set 1"
 
-python scripts/shared/plot_week2_training_curves.py \
+python scripts/shared/Plot_Finetuning_Training_Curves.py \
   --repo-root . \
   --results-root results_prof_advice \
   --run-subdir finetune_last2 \
@@ -35,7 +35,7 @@ python scripts/shared/plot_week2_training_curves.py \
   --title-label "Week 2 Professor-Hyperparameter" \
   --protocol-note "pretrained ALIGNN with professor hyperparameters (epochs=50, batch_size=16, learning_rate=0.0001)"
 
-python scripts/shared/generate_week2_parity_plots.py \
+python scripts/shared/Generate_Finetuning_Parity_Plots.py \
   --repo-root . \
   --results-root results_prof_advice \
   --run-subdir finetune_last2 \

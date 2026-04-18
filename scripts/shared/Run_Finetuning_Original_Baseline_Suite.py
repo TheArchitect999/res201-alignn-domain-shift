@@ -96,7 +96,7 @@ def main() -> int:
                     if args.force or not split_manifest_path.exists():
                         prep_cmd = [
                             python,
-                            "scripts/shared/prepare_week1_finetune_dataset.py",
+                            "scripts/shared/Prepare_Week1_Finetuning_Dataset.py",
                             "--family",
                             family,
                             "--N",
@@ -122,7 +122,7 @@ def main() -> int:
                     split_manifest = load_json(split_manifest_path)
                     config_cmd = [
                         python,
-                        "scripts/shared/write_week1_alignn_config.py",
+                        "scripts/shared/Write_Week1_ALIGNN_Config.py",
                         "--dataset-root",
                         str(dataset_root),
                         "--out",
@@ -171,7 +171,7 @@ def main() -> int:
 
                     finetune_cmd = [
                         python,
-                        "scripts/shared/finetune_last2_alignn.py",
+                        "scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py",
                         "--config",
                         str(config_path),
                         "--output-dir",

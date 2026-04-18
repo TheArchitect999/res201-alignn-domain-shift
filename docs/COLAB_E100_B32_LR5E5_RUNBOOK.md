@@ -18,7 +18,7 @@ The new scripts do not overwrite existing experiment outputs on `main`. They wri
 The consolidated week-3 from-scratch report bundle on `main` was generated against zero-shot references only and is reproducible with:
 
 ```bash
-python scripts/shared/summarize_week3_fromscratch_zero_shot_only.py \
+python scripts/shared/Summarize_From_Scratch_Zero_Shot_Only.py \
   --repo-root . \
   --results-root results \
   --zero-shot-root results \
@@ -42,13 +42,13 @@ Fine-tuning uses the existing explicit partial-finetune trainer and keeps the in
 After bootstrapping the repo and checking out `main`, run:
 
 ```bash
-bash scripts/shared/run_week2_finetune_pipeline_epochs100_bs32_lr5e5.sh .
+bash scripts/shared/Run_Finetuning_Hyperparameter_Set_3_Pipeline.sh .
 ```
 
 and for from-scratch:
 
 ```bash
-bash scripts/shared/run_week3_fromscratch_pipeline_epochs100_bs32_lr5e5.sh .
+bash scripts/shared/Run_From_Scratch_Hyperparameter_Set_3_Pipeline.sh .
 ```
 
 Both pipelines default to:
@@ -61,10 +61,10 @@ To disable auto-push temporarily:
 
 ```bash
 PUSH_AFTER_RUN=0 PUSH_FINAL_REPORTS=0 \
-bash scripts/shared/run_week2_finetune_pipeline_epochs100_bs32_lr5e5.sh .
+bash scripts/shared/Run_Finetuning_Hyperparameter_Set_3_Pipeline.sh .
 ```
 
 ```bash
 PUSH_AFTER_RUN=0 PUSH_FINAL_REPORTS=0 \
-bash scripts/shared/run_week3_fromscratch_pipeline_epochs100_bs32_lr5e5.sh .
+bash scripts/shared/Run_From_Scratch_Hyperparameter_Set_3_Pipeline.sh .
 ```

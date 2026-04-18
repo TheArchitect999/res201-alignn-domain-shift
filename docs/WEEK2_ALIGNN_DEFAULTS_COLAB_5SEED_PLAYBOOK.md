@@ -46,7 +46,7 @@ What the bootstrap does:
 - installs the pinned CUDA 12.1 PyTorch wheels
 - installs `alignn`, `jarvis-tools`, `pandas`, `matplotlib`, and related dependencies
 - reinstalls the CUDA-enabled DGL wheel for Python `3.10` or `3.11`
-- runs `scripts/shared/preflight_week2_alignn_defaults_colab_5seed.py`
+- runs `scripts/shared/Preflight_Finetuning_Hyperparameter_Set_2_Colab_5Seed.py`
 
 ## Smoke Test
 
@@ -54,7 +54,7 @@ Run the smoke test first:
 
 ```bash
 cd /content/res201-alignn-domain-shift
-bash scripts/shared/run_week2_alignn_defaults_colab_5seed_smoke.sh .
+bash scripts/shared/Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Smoke_Test.sh .
 ```
 
 Defaults:
@@ -68,7 +68,7 @@ Defaults:
 To exercise the GitHub persistence path during smoke:
 
 ```bash
-PUSH_AFTER_RUN=1 bash scripts/shared/run_week2_alignn_defaults_colab_5seed_smoke.sh .
+PUSH_AFTER_RUN=1 bash scripts/shared/Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Smoke_Test.sh .
 ```
 
 ## Full Sweep
@@ -77,7 +77,7 @@ Run the full tagged five-seed sweep:
 
 ```bash
 cd /content/res201-alignn-domain-shift
-bash scripts/shared/run_week2_alignn_defaults_colab_5seed_pipeline.sh .
+bash scripts/shared/Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Pipeline.sh .
 ```
 
 Defaults:
@@ -141,13 +141,13 @@ After the suite finishes, the pipeline generates and pushes:
 Preflight:
 
 ```bash
-python scripts/shared/preflight_week2_alignn_defaults_colab_5seed.py
+python scripts/shared/Preflight_Finetuning_Hyperparameter_Set_2_Colab_5Seed.py
 ```
 
 Final checker:
 
 ```bash
-bash scripts/shared/check_week2_alignn_defaults_colab_5seed_status.sh .
+bash scripts/shared/Check_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Status.sh .
 ```
 
 The checker expects:

@@ -38,7 +38,7 @@ def main() -> int:
 
     cmd = [
         sys.executable,
-        "scripts/shared/run_week3_fromscratch_suite.py",
+        "scripts/shared/Run_From_Scratch_Suite.py",
         "--repo-root",
         args.repo_root,
         "--run-subdir",
