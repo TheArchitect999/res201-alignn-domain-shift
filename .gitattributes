@@ -1,1 +1,2 @@
 *.mdb filter=lfs diff=lfs merge=lfs -text
+artifacts/embedding_analysis/cache/**/*.mdb filter=lfs diff=lfs merge=lfs -text
