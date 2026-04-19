@@ -1,0 +1,33 @@
+{
+  "command": "scripts/embedding_analysis/02_build_embedding_metadata.py --seed 42",
+  "created_at_unix": 1776600908.0928042,
+  "created_by": "scripts/embedding_analysis/02_build_embedding_metadata.py",
+  "embedding_sources": [
+    "last_alignn_pool",
+    "last_gcn_pool",
+    "pre_head"
+  ],
+  "fixed_test_embedding_rows": 5178,
+  "fixed_test_structure_count": 1726,
+  "inputs": {
+    "embedding_manifest": "artifacts/embedding_analysis/manifests/test_set_embedding_manifest.json",
+    "embedding_metadata": "artifacts/embedding_analysis/embeddings/test_set/structure_embedding_metadata.csv",
+    "fixed_test_manifests": [
+      "data_shared/oxide/manifests/test.csv",
+      "data_shared/nitride/manifests/test.csv"
+    ],
+    "pool_manifests": [
+      "data_shared/oxide/manifests/pool.csv",
+      "data_shared/nitride/manifests/pool.csv"
+    ]
+  },
+  "outputs": {
+    "master_embedding_metadata_csv": "artifacts/embedding_analysis/metadata/fixed_test_set_embedding_master.csv",
+    "master_structure_metadata_csv": "artifacts/embedding_analysis/metadata/fixed_test_set_structure_master.csv",
+    "report_subset_counts_csv": "reports/week4_embedding_analysis/subset_counts.csv",
+    "report_subset_design_md": "reports/week4_embedding_analysis/subset_design.md",
+    "subset_counts_csv": "artifacts/embedding_analysis/manifests/subset_counts.csv",
+    "subset_manifest_json": "artifacts/embedding_analysis/manifests/subset_manifest.json"
+  },
+  "random_seed": 42
+}

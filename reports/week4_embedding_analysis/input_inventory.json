@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "created_for": "RES201 ALIGNN domain-shift embedding analysis",
+  "created_date": "2026-04-19",
+  "phase_constraints": [
+    "additive analysis only",
+    "do not retrain any model",
+    "do not fine-tune any model",
+    "do not overwrite existing results",
+    "do not download a new model from the internet",
+    "reuse the local pretrained checkpoint and config already stored in the repo"
+  ],
+  "canonical_inputs": {
+    "datasets": {
+      "oxide": {
+        "authority": "authoritative",
+        "family_manifest": "data_shared/oxide/manifests/all.csv",
+        "fixed_test_manifest": "data_shared/oxide/manifests/test.csv",
+        "train_val_pool_manifest": "data_shared/oxide/manifests/pool.csv",
+        "train_manifest": "data_shared/oxide/manifests/train.csv",
+        "val_manifest": "data_shared/oxide/manifests/val.csv",
+        "structures_dir": "data_shared/oxide/structures",
+        "alignn_ready_pool_root": "data_shared/oxide/alignn_ready/pool",
+        "alignn_ready_pool_id_prop": "data_shared/oxide/alignn_ready/pool/id_prop.csv",
+        "alignn_ready_pool_manifest": "data_shared/oxide/alignn_ready/pool/manifest.csv",
+        "alignn_ready_test_root": "data_shared/oxide/alignn_ready/test",
+        "alignn_ready_test_id_prop": "data_shared/oxide/alignn_ready/test/id_prop.csv",
+        "alignn_ready_test_manifest": "data_shared/oxide/alignn_ready/test/manifest.csv",
+        "summary_json": "data_shared/oxide/summaries/summary.json",
+        "counts": {
+          "all": 14991,
+          "pool": 13507,
+          "test": 1484,
+          "train": 11960,
+          "val": 1547
+        }
+      },
+      "nitride": {
+        "authority": "authoritative",
+        "family_manifest": "data_shared/nitride/manifests/all.csv",
+        "fixed_test_manifest": "data_shared/nitride/manifests/test.csv",
+        "train_val_pool_manifest": "data_shared/nitride/manifests/pool.csv",
+        "train_manifest": "data_shared/nitride/manifests/train.csv",
+        "val_manifest": "data_shared/nitride/manifests/val.csv",
+        "structures_dir": "data_shared/nitride/structures",
+        "alignn_ready_pool_root": "data_shared/nitride/alignn_ready/pool",
+        "alignn_ready_pool_id_prop": "data_shared/nitride/alignn_ready/pool/id_prop.csv",
+        "alignn_ready_pool_manifest": "data_shared/nitride/alignn_ready/pool/manifest.csv",
+        "alignn_ready_test_root": "data_shared/nitride/alignn_ready/test",
+        "alignn_ready_test_id_prop": "data_shared/nitride/alignn_ready/test/id_prop.csv",
+        "alignn_ready_test_manifest": "data_shared/nitride/alignn_ready/test/manifest.csv",
+        "summary_json": "data_shared/nitride/summaries/summary.json",
+        "counts": {
+          "all": 2288,
+          "pool": 2046,
+          "test": 242,
+          "train": 1837,
+          "val": 209
+        }
+      },
+      "global_split_source": "manifests/dft_3d_formation_energy_peratom_splits.csv",
+      "global_split_conflicts": "manifests/dft_3d_formation_energy_peratom_splits_conflicts.csv",
+      "diagnostics": [
+        "data_shared/diagnostics/global_record_catalog.csv",
+        "data_shared/diagnostics/global_split_manifest.json",
+        "data_shared/diagnostics/schema_report.json"
+      ]
+    },
+    "pretrained_alignn": {
+      "authority": "authoritative_local_model_bundle",
+      "checkpoint": "jv_formation_energy_peratom_alignn/checkpoint_300.pt",
+      "config": "jv_formation_energy_peratom_alignn/config.json",
+      "readme": "jv_formation_energy_peratom_alignn/README.md",
+      "target": "formation_energy_peratom",
+      "config_model_notes": {
+        "name": "alignn",
+        "alignn_layers": 4,
+        "gcn_layers": 4,
+        "embedding_features": 64,
+        "hidden_features": 256,
+        "output_features": 1
+      }
+    },
+    "zero_shot_outputs": {
+      "authority": "authoritative_zero_shot_outputs",
+      "oxide": {
+        "predictions_csv": "results/oxide/zero_shot/predictions.csv",
+        "summary_json": "results/oxide/zero_shot/summary.json",
+        "prediction_columns": [
+          "jid",
+          "filename",
+          "target",
+          "prediction",
+          "abs_error"
+        ],
+        "n_test": 1484,
+        "mae": 0.03418360680813096
+      },
+      "nitride": {
+        "predictions_csv": "results/nitride/zero_shot/predictions.csv",
+        "summary_json": "results/nitride/zero_shot/summary.json",
+        "prediction_columns": [
+          "jid",
+          "filename",
+          "target",
+          "prediction",
+          "abs_error"
+        ],
+        "n_test": 242,
+        "mae": 0.06954201496284854
+      },
+      "secondary_report_summaries": [
+        "reports/Hyperparameter Set 1/Summaries/Finetuning/zero_shot_summary.csv",
+        "reports/Hyperparameter Set 2/Summaries/Finetuning/zero_shot_summary.csv",
+        "reports/Hyperparameter Set 3/Summaries/Finetuning/zero_shot_summary.csv",
+        "reports/week2/zero_shot_summary.csv"
+      ]
+    }
+  },
+  "canonical_error_linked_namespace": {
+    "decision": "Use results_prof_advice/ with reports/Hyperparameter Set 1/ for fine-tuned and from-scratch error-linked analysis.",
+    "namespace": "results_prof_advice",
+    "report_namespace": "reports/Hyperparameter Set 1",
+    "hyperparameter_set": "Hyperparameter Set 1",
+    "hyperparameters": {
+      "epochs": 50,
+      "batch_size": 16,
+      "learning_rate": 0.0001
+    },
+    "rationale": [
+      "Closest local repo evidence for the official project brief/professor-advice setting.",
+      "Validated complete in this audit: 60 fine-tuning summaries and 20 from-scratch summaries.",
+      "Contains per-run prediction CSVs and copied dataset roots needed to link errors to structures.",
+      "Aggregated report tables and parity-plot manifests are present under reports/Hyperparameter Set 1/."
+    ],
+    "fine_tuning": {
+      "run_dir_template": "results_prof_advice/{oxide,nitride}/N{10,50,100,200,500,1000}_seed{0,1,2,3,4}/finetune_last2",
+      "prediction_file": "prediction_results_test_set.csv",
+      "summary_file": "summary.json",
+      "aggregate_runs_csv": "reports/Hyperparameter Set 1/Summaries/Finetuning/finetune_runs.csv",
+      "aggregate_by_n_csv": "reports/Hyperparameter Set 1/Summaries/Finetuning/finetune_summary_by_N.csv",
+      "manifest_json": "reports/Hyperparameter Set 1/Summaries/Finetuning/week2_summary_manifest.json",
+      "coverage": {
+        "families": [
+          "oxide",
+          "nitride"
+        ],
+        "sample_sizes": [
+          10,
+          50,
+          100,
+          200,
+          500,
+          1000
+        ],
+        "seeds": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "summary_count": 60,
+        "status": "complete"
+      }
+    },
+    "from_scratch": {
+      "run_dir_template": "results_prof_advice/{oxide,nitride}/N{50,500}_seed{0,1,2,3,4}/train_alignn_fromscratch",
+      "prediction_file": "prediction_results_test_set.csv",
+      "train_prediction_file": "prediction_results_train_set.csv",
+      "summary_file": "summary.json",
+      "aggregate_runs_csv": "reports/Hyperparameter Set 1/Summaries/From Scratch/fromscratch_runs.csv",
+      "aggregate_summary_csv": "reports/Hyperparameter Set 1/Summaries/From Scratch/fromscratch_summary.csv",
+      "manifest_json": "reports/Hyperparameter Set 1/Summaries/From Scratch/week3_fromscratch_manifest.json",
+      "coverage": {
+        "families": [
+          "oxide",
+          "nitride"
+        ],
+        "sample_sizes": [
+          50,
+          500
+        ],
+        "seeds": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "summary_count": 20,
+        "status": "complete"
+      }
+    },
+    "parity_manifest": "reports/Hyperparameter Set 1/Parity Plots/parity_plot_manifest.json",
+    "configs": [
+      "configs_prof_advice/week2_finetune",
+      "configs_prof_advice/week3_fromscratch"
+    ]
+  },
+  "alternative_namespaces": [
+    {
+      "namespace": "results_prof_advice_alignn_recommended",
+      "report_namespace": "reports/Hyperparameter Set 2",
+      "hyperparameters": {
+        "epochs": 300,
+        "batch_size": 64,
+        "learning_rate": 0.001
+      },
+      "status": "complete",
+      "role": "authoritative comparison namespace for ALIGNN-recommended hyperparameters, not canonical for project-brief error-linked analysis"
+    },
+    {
+      "namespace": "results",
+      "report_namespace": "reports/Hyperparameter Set 3",
+      "hyperparameters": {
+        "epochs": 100,
+        "batch_size": 32,
+        "learning_rate": 0.00005
+      },
+      "status": "complete for Set 3 extension; also contains canonical zero-shot outputs",
+      "role": "canonical for zero-shot; Set 3 is an additional low-learning-rate comparison"
+    },
+    {
+      "namespace": "reports/provenance/colab",
+      "status": "historical",
+      "role": "provenance-only, not canonical input paths"
+    }
+  ],
+  "reusable_helper_scripts": [
+    {
+      "path": "scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py",
+      "reuse": "local checkpoint/config loading and ALIGNN data-loading patterns",
+      "caution": "reuse only non-training logic"
+    },
+    {
+      "path": "scripts/shared/Inspect_ALIGNN_Model.py",
+      "reuse": "local architecture/checkpoint inspection",
+      "caution": "read-only inspection"
+    },
+    {
+      "path": "scripts/dataset/materialize_alignn_root.py",
+      "reuse": "manifest-to-ALIGNN-root materialization logic",
+      "caution": "existing data_shared roots already exist"
+    },
+    {
+      "path": "scripts/dataset/res201_stage2_lib.py",
+      "reuse": "shared dataset helpers",
+      "caution": "keep new outputs additive"
+    },
+    {
+      "path": "scripts/shared/Generate_Finetuning_Parity_Plots.py",
+      "reuse": "prediction discovery and plotting conventions",
+      "caution": "do not overwrite existing plots"
+    },
+    {
+      "path": "scripts/shared/Generate_Workspace_Inventory.py",
+      "reuse": "workspace inventory context",
+      "caution": "not an embedding extraction script"
+    },
+    {
+      "path": "scripts/shared/Evaluate_ALIGNN_Zero_Shot.py",
+      "reuse": "zero-shot prediction schema reference",
+      "caution": "may use pretrained helper behavior that can rely on online/cache access; do not use unless modified to force local checkpoint/config only"
+    },
+    {
+      "path": "scripts/shared/Reorganize_Reports_By_Hyperparameter_Set.py",
+      "reuse": "hyperparameter-set/report organization reference",
+      "caution": "not needed for embedding computation"
+    }
+  ],
+  "partial_embedding_analysis": {
+    "status": "not_found",
+    "searched_concepts": [
+      "embedding",
+      "representation",
+      "PCA",
+      "UMAP",
+      "t-SNE",
+      "latent"
+    ],
+    "notes": [
+      "No completed or partial Week 4 embedding-analysis scripts/artifacts were found.",
+      "Only planning/report mentions and model config fields such as embedding_features were found.",
+      "docs/PROJECT_STATUS_SO_FAR.md states that Week 4 embedding analysis is not yet completed."
+    ]
+  },
+  "ambiguities_and_risks": [
+    "Some docs reference old report paths such as reports/week2_prof_advice/ and reports/week3_fromscratch_prof_advice/; current organized report paths are reports/Hyperparameter Set 1/, reports/Hyperparameter Set 2/, and reports/Hyperparameter Set 3/.",
+    "The pretrained config hyperparameters match Hyperparameter Set 2, but those describe the local pretrained bundle, not the canonical project-brief fine-tuning namespace.",
+    "Zero-shot summary JSON files contain stale historical absolute paths; use the repo-relative prediction CSVs under results/{oxide,nitride}/zero_shot/.",
+    "The project PDF in Project_Task/ could not be text-extracted with available local tools in this audit; the official-brief interpretation is based on repo reports/docs.",
+    "Multiple complete namespaces exist. The canonical decision is a recommendation for error-linked analysis, not an invalidation of comparison namespaces."
+  ]
+}
+

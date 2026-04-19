@@ -1,0 +1,12 @@
+# Generated runtime caches
+artifacts/embedding_analysis/cache/
+__pycache__/
+*.py[cod]
+
+# ALIGNN/DGL/LMDB cache files
+*.mdb
+*_lmdb/
+*_lmdb_data_range
+
+# Local OS/editor noise
+.DS_Store
