@@ -1,5 +1,5 @@
 {
-  "results_root": "results",
+  "results_root": "Results_Hyperparameter_Set_3",
   "run_subdir": "train_alignn_fromscratch_epochs100_bs32_lr5e5",
   "expected_runs": 20,
   "actual_runs": 20,

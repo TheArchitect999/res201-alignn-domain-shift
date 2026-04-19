@@ -1,5 +1,5 @@
 {
-  "results_root": "results_prof_advice",
+  "results_root": "Results_Hyperparameter_Set_1",
   "run_subdir": "finetune_last2",
   "per_run_manifest_csv": "reports/Hyperparameter Set 1/Training Curves/Finetuning/training_curve_manifest.csv",
   "readme": "reports/Hyperparameter Set 1/Training Curves/Finetuning/README.md",

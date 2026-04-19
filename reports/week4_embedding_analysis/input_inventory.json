@@ -84,8 +84,7 @@
     "zero_shot_outputs": {
       "authority": "authoritative_zero_shot_outputs",
       "oxide": {
-        "predictions_csv": "results/oxide/zero_shot/predictions.csv",
-        "summary_json": "results/oxide/zero_shot/summary.json",
+        "predictions_csv": "Results_Before_Correction/oxide/zero_shot/predictions.csv",
         "prediction_columns": [
           "jid",
           "filename",
@@ -94,11 +93,11 @@
           "abs_error"
         ],
         "n_test": 1484,
-        "mae": 0.03418360680813096
+        "mae": 0.03418360680813096,
+        "summary_csv": "reports/zero_shot/zero_shot_summary.csv"
       },
       "nitride": {
-        "predictions_csv": "results/nitride/zero_shot/predictions.csv",
-        "summary_json": "results/nitride/zero_shot/summary.json",
+        "predictions_csv": "Results_Before_Correction/nitride/zero_shot/predictions.csv",
         "prediction_columns": [
           "jid",
           "filename",
@@ -107,19 +106,16 @@
           "abs_error"
         ],
         "n_test": 242,
-        "mae": 0.06954201496284854
+        "mae": 0.06954201496284854,
+        "summary_csv": "reports/zero_shot/zero_shot_summary.csv"
       },
-      "secondary_report_summaries": [
-        "reports/Hyperparameter Set 1/Summaries/Finetuning/zero_shot_summary.csv",
-        "reports/Hyperparameter Set 2/Summaries/Finetuning/zero_shot_summary.csv",
-        "reports/Hyperparameter Set 3/Summaries/Finetuning/zero_shot_summary.csv",
-        "reports/week2/zero_shot_summary.csv"
-      ]
+      "report_level_summary_copies": "Consolidated to the single canonical report table at reports/zero_shot/zero_shot_summary.csv.",
+      "summary_csv": "reports/zero_shot/zero_shot_summary.csv"
     }
   },
   "canonical_error_linked_namespace": {
-    "decision": "Use results_prof_advice/ with reports/Hyperparameter Set 1/ for fine-tuned and from-scratch error-linked analysis.",
-    "namespace": "results_prof_advice",
+    "decision": "Use Results_Hyperparameter_Set_1/ with reports/Hyperparameter Set 1/ for fine-tuned and from-scratch error-linked analysis.",
+    "namespace": "Results_Hyperparameter_Set_1",
     "report_namespace": "reports/Hyperparameter Set 1",
     "hyperparameter_set": "Hyperparameter Set 1",
     "hyperparameters": {
@@ -134,7 +130,7 @@
       "Aggregated report tables and parity-plot manifests are present under reports/Hyperparameter Set 1/."
     ],
     "fine_tuning": {
-      "run_dir_template": "results_prof_advice/{oxide,nitride}/N{10,50,100,200,500,1000}_seed{0,1,2,3,4}/finetune_last2",
+      "run_dir_template": "Results_Hyperparameter_Set_1/{oxide,nitride}/N{10,50,100,200,500,1000}_seed{0,1,2,3,4}/finetune_last2",
       "prediction_file": "prediction_results_test_set.csv",
       "summary_file": "summary.json",
       "aggregate_runs_csv": "reports/Hyperparameter Set 1/Summaries/Finetuning/finetune_runs.csv",
@@ -165,7 +161,7 @@
       }
     },
     "from_scratch": {
-      "run_dir_template": "results_prof_advice/{oxide,nitride}/N{50,500}_seed{0,1,2,3,4}/train_alignn_fromscratch",
+      "run_dir_template": "Results_Hyperparameter_Set_1/{oxide,nitride}/N{50,500}_seed{0,1,2,3,4}/train_alignn_fromscratch",
       "prediction_file": "prediction_results_test_set.csv",
       "train_prediction_file": "prediction_results_train_set.csv",
       "summary_file": "summary.json",
@@ -200,7 +196,7 @@
   },
   "alternative_namespaces": [
     {
-      "namespace": "results_prof_advice_alignn_recommended",
+      "namespace": "Results_Hyperparameter_Set_2",
       "report_namespace": "reports/Hyperparameter Set 2",
       "hyperparameters": {
         "epochs": 300,
@@ -211,12 +207,12 @@
       "role": "authoritative comparison namespace for ALIGNN-recommended hyperparameters, not canonical for project-brief error-linked analysis"
     },
     {
-      "namespace": "results",
+      "namespace": "Results_Hyperparameter_Set_3",
       "report_namespace": "reports/Hyperparameter Set 3",
       "hyperparameters": {
         "epochs": 100,
         "batch_size": 32,
-        "learning_rate": 0.00005
+        "learning_rate": 5e-05
       },
       "status": "complete for Set 3 extension; also contains canonical zero-shot outputs",
       "role": "canonical for zero-shot; Set 3 is an additional low-learning-rate comparison"
@@ -288,9 +284,8 @@
   "ambiguities_and_risks": [
     "Some docs reference old report paths such as reports/week2_prof_advice/ and reports/week3_fromscratch_prof_advice/; current organized report paths are reports/Hyperparameter Set 1/, reports/Hyperparameter Set 2/, and reports/Hyperparameter Set 3/.",
     "The pretrained config hyperparameters match Hyperparameter Set 2, but those describe the local pretrained bundle, not the canonical project-brief fine-tuning namespace.",
-    "Zero-shot summary JSON files contain stale historical absolute paths; use the repo-relative prediction CSVs under results/{oxide,nitride}/zero_shot/.",
     "The project PDF in Project_Task/ could not be text-extracted with available local tools in this audit; the official-brief interpretation is based on repo reports/docs.",
-    "Multiple complete namespaces exist. The canonical decision is a recommendation for error-linked analysis, not an invalidation of comparison namespaces."
+    "Multiple complete namespaces exist. The canonical decision is a recommendation for error-linked analysis, not an invalidation of comparison namespaces.",
+    "Zero-shot summary values are centralized in reports/zero_shot/zero_shot_summary.csv; prediction CSVs remain under Results_Before_Correction/{oxide,nitride}/zero_shot/."
   ]
 }
-

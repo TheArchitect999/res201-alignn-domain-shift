@@ -1,3 +1,0 @@
-family,zero_shot_mae_eV_per_atom,summary_path
-oxide,0.03418360680813096,results/oxide/zero_shot/summary.json
-nitride,0.06954201496284854,results/nitride/zero_shot/summary.json

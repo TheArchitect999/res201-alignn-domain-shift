@@ -2,7 +2,7 @@
 
 These figures were generated from the saved `history_train.json` and `history_val.json` files for every completed from-scratch run in this namespace.
 
-- results root: `results_prof_advice`
+- results root: `Results_Hyperparameter_Set_1`
 - run subdirectory: `train_alignn_fromscratch`
 
 Each per-run figure contains:

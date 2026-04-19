@@ -87,10 +87,9 @@ Interpretation:
 
 Evidence:
 
-- `results/oxide/zero_shot/summary.json`
-- `results/nitride/zero_shot/summary.json`
-- `results/oxide/N50_seed0/finetune_last2/summary.json`
-- `results/nitride/N50_seed0/finetune_last2/summary.json`
+- `reports/zero_shot/zero_shot_summary.csv`
+- `Results_Before_Correction/oxide/N50_seed0/finetune_last2/summary.json`
+- `Results_Before_Correction/nitride/N50_seed0/finetune_last2/summary.json`
 - `reports/week1_report.tex`
 
 ### 3. Week 2 deliverables are complete
@@ -129,7 +128,7 @@ Evidence:
 - `reports/week2/finetune_runs.csv`
 - `reports/week2/finetune_summary_by_N.csv`
 - `reports/week2/finetune_summary_wide.csv`
-- `reports/week2/zero_shot_summary.csv`
+- Canonical zero-shot summary table: `reports/zero_shot/zero_shot_summary.csv`
 - `reports/week2/oxide_learning_curve.pdf`
 - `reports/week2/nitride_learning_curve.pdf`
 - `reports/week2/training_curves/`
@@ -146,7 +145,7 @@ The currently uncommitted work reviewed in this audit mainly extends documentati
 - `reports/week2/training_curves/` contains per-run training-curve figures plus family grid figures and manifests.
 - `scripts/shared/Plot_Finetuning_Training_Curves.py` generates those Week 2 curve artifacts.
 - `data_shared/diagnostics/` preserves dataset inspection artifacts that support the Stage 2 story.
-- `results/oxide/N50_seed0/train_alignn_restart/` preserves an older partial restart attempt for the oxide `N=50` path.
+- `Results_Before_Correction/oxide/N50_seed0/train_alignn_restart/` preserves an older partial restart attempt for the oxide `N=50` path.
 
 ## What Is Not Done Yet
 

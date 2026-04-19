@@ -1,5 +1,5 @@
 {
-  "results_root": "results_prof_advice",
+  "results_root": "Results_Hyperparameter_Set_1",
   "run_subdir": "train_alignn_fromscratch",
   "expected_runs": 20,
   "actual_runs": 20,

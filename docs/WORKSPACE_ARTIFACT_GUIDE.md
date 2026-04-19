@@ -28,41 +28,53 @@ workspace.
 
 ## Generated Experiment Assets
 
-- `results/`
-  Stores the preserved baseline namespace from the original `main` branch. This is
-  the only canonical home for baseline `zero_shot/` outputs and the original
-  `results/*/finetune_last2/` tree.
-- `results_prof_advice/`
-  Imported 5-seed experiment namespace for professor-hyperparameter runs.
-- `results_prof_advice_alignn_recommended/`
-  Imported 5-seed experiment namespace for ALIGNN-recommended runs.
-- `id_prop.csvtrain_data/`, `id_prop.csvval_data/`, `id_prop.csvtest_data/`
-  Root-level LMDB caches created by ALIGNN preprocessing.
-- `results/*/*/finetune_last2/id_prop.csv*_data/`
-  Per-run LMDB caches produced while preparing graph datasets for training.
+- `Results_Before_Correction/`
+  Stores the preserved pre-correction namespace. This is the canonical home for
+  baseline zero-shot prediction CSVs, original `finetune_last2/` runs, and shared
+  run-level `dataset_root/` directories. The single canonical zero-shot summary
+  table lives at `reports/zero_shot/zero_shot_summary.csv`.
+- `Results_Hyperparameter_Set_1/`
+  5-seed experiment namespace for professor-hyperparameter runs.
+- `Results_Hyperparameter_Set_2/`
+  5-seed experiment namespace for ALIGNN-recommended runs.
+- `Results_Hyperparameter_Set_3/`
+  5-seed experiment namespace for the 100-epoch/batch-32/lr-5e-5 corrected runs
+  split out from the old `results/` tree.
+- `Results_*/*/*/finetune_last2/id_prop.csv*_data/`
+  Per-run LMDB caches produced while preparing graph datasets for training. These
+  are generated runtime artifacts and are intentionally not versioned.
 
-## Why Some Large Files Use Git LFS
+Root-level `id_prop.csv*_data/` LMDB caches, `artifacts/embedding_analysis/cache/`,
+and local download caches under `cache/` are intentionally not kept as canonical
+repo assets. They are generated preprocessing/runtime caches and can be recreated
+when needed.
 
-Several LMDB `data.mdb` files are larger than GitHub's standard per-file push limit.
-To keep the full shared workspace publishable while preserving the files themselves,
-`*.mdb` artifacts are stored through Git LFS.
+## Cache Policy
+
+LMDB cache files are not required to interpret the completed research results.
+The durable research assets are the frozen datasets, run configs, split/id
+manifests, predictions, histories, summaries, figures, reports, and scripts. Do
+not commit `*.mdb`, `id_prop.csv*_data/`, `*_lmdb/`, `*_data_range`, or local
+`cache/` contents.
 
 ## Files A New Collaborator Should Understand First
 
 - `README.md`
 - `docs/PROJECT_STATUS_SO_FAR.md`
 - `docs/WORKSPACE_ARTIFACT_GUIDE.md`
-- `results_prof_advice/README.md`
-- `results_prof_advice_alignn_recommended/README.md`
+- `Results_Before_Correction/README.md`
+- `Results_Hyperparameter_Set_1/README.md`
+- `Results_Hyperparameter_Set_2/README.md`
+- `Results_Hyperparameter_Set_3/README.md`
 
 ## Canonical Experiment Namespaces
 
 | Namespace | Experiment type | Hyperparameters | Seeds covered | Canonical report folder |
 | --- | --- | --- | --- | --- |
-| `results/` | Baseline `main` experiments | Historical baseline values from the original `main` branch | Original baseline coverage only | `reports/week2/`, `reports/week3_fromscratch_baseline/` |
-| `results/*/train_alignn_fromscratch_epochs100_bs32_lr5e5/` | Main-native week-3 from-scratch extension | `epochs=100`, `batch_size=32`, `learning_rate=0.00005` | `N=50,500`, seeds `0..4` | `reports/week3_fromscratch_epochs100_bs32_lr5e5/` |
-| `results_prof_advice/` | Fine-tune and from-scratch imported from Colab | `epochs=50`, `batch_size=16`, `learning_rate=0.0001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/week2_prof_advice/`, `reports/week3_fromscratch_prof_advice/` |
-| `results_prof_advice_alignn_recommended/` | Fine-tune and from-scratch imported from Colab | `epochs=300`, `batch_size=64`, `learning_rate=0.001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/week2_prof_advice_alignn_recommended/`, `reports/week3_fromscratch_alignn_recommended/` |
+| `Results_Before_Correction/` | Pre-correction baseline experiments | Historical values from the original before-correction workflow | Original baseline coverage plus canonical zero-shot prediction CSVs | `reports/week2/`, `reports/week3_fromscratch_baseline/` |
+| `Results_Hyperparameter_Set_1/` | Fine-tune and from-scratch imported from Colab | `epochs=50`, `batch_size=16`, `learning_rate=0.0001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/week2_prof_advice/`, `reports/week3_fromscratch_prof_advice/` |
+| `Results_Hyperparameter_Set_2/` | Fine-tune and from-scratch imported from Colab | `epochs=300`, `batch_size=64`, `learning_rate=0.001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/week2_prof_advice_alignn_recommended/`, `reports/week3_fromscratch_alignn_recommended/` |
+| `Results_Hyperparameter_Set_3/` | Corrected low-learning-rate fine-tune and from-scratch runs | `epochs=100`, `batch_size=32`, `learning_rate=0.00005` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/Hyperparameter Set 3/` |
 
 ## Config Layout
 
@@ -87,8 +99,8 @@ To keep the full shared workspace publishable while preserving the files themsel
 ## Practical Rule Of Thumb
 
 If a file lives under `data_shared/`, it is part of the canonical dataset story.
-If it lives under `results/`, it belongs to the preserved original `main` baseline.
-If it lives under `results_prof_advice*`, it belongs to one of the imported 5-seed
-experiment namespaces.
+If it lives under `Results_Before_Correction/`, it belongs to the pre-correction
+baseline namespace. If it lives under `Results_Hyperparameter_Set_*/`, it belongs
+to the matching hyperparameter set.
 If it lives under `jv_formation_energy_peratom_alignn/`, it is part of the pretrained
 model payload needed for the current training workflow.

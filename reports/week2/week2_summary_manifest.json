@@ -2,7 +2,6 @@
   "runs_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/finetune_runs.csv",
   "summary_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/finetune_summary_by_N.csv",
   "wide_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/finetune_summary_wide.csv",
-  "zero_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/zero_shot_summary.csv",
   "latex_table": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/finetune_summary_table.tex",
   "plots": {
     "oxide": {
@@ -13,5 +12,6 @@
       "png": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/nitride_learning_curve.png",
       "pdf": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/reports/week2/nitride_learning_curve.pdf"
     }
-  }
+  },
+  "canonical_zero_shot_summary": "reports/zero_shot/zero_shot_summary.csv"
 }

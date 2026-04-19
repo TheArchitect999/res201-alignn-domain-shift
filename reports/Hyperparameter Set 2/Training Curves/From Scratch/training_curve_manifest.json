@@ -1,5 +1,5 @@
 {
-  "results_root": "results_prof_advice_alignn_recommended",
+  "results_root": "Results_Hyperparameter_Set_2",
   "run_subdir": "train_alignn_fromscratch",
   "per_run_manifest_csv": "reports/Hyperparameter Set 2/Training Curves/From Scratch/training_curve_manifest.csv",
   "readme": "reports/Hyperparameter Set 2/Training Curves/From Scratch/README.md",

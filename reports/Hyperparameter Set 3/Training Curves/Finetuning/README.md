@@ -2,7 +2,7 @@
 
 These figures were generated from the saved `history_train.json` and `history_val.json` files for every completed Week 2 fine-tuning run in this namespace.
 
-- results root: `results`
+- results root: `Results_Hyperparameter_Set_3`
 - run subdirectory: `finetune_last2_epochs100_bs32_lr5e5`
 
 Each per-run figure contains:

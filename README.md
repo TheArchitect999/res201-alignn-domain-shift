@@ -9,9 +9,11 @@ that exist in the main working folder.
 
 - canonical oxide and nitride family datasets under `data_shared/`
 - the pretrained ALIGNN checkpoint and paired config under `jv_formation_energy_peratom_alignn/`
-- preserved baseline zero-shot and original fine-tuning outputs under `results/`
-- imported 5-seed professor-hyperparameter experiments under `results_prof_advice/`
-- imported 5-seed ALIGNN-recommended experiments under `results_prof_advice_alignn_recommended/`
+- preserved zero-shot predictions and before-correction fine-tuning outputs under `Results_Before_Correction/`
+- the canonical zero-shot summary table under `reports/zero_shot/`
+- 5-seed professor-hyperparameter experiments under `Results_Hyperparameter_Set_1/`
+- 5-seed ALIGNN-recommended experiments under `Results_Hyperparameter_Set_2/`
+- 5-seed 100-epoch/batch-32/lr-5e-5 experiments under `Results_Hyperparameter_Set_3/`
 - environment bootstrap scripts in `env/`
 - experiment automation in `scripts/`
 - reports, plots, inventories, and project reference PDFs
@@ -19,8 +21,11 @@ that exist in the main working folder.
 
 ## Collaboration Notes
 
-- Large LMDB cache files (`*.mdb`) are versioned through Git LFS because several of
-  them exceed GitHub's regular 100 MB per-file limit.
+- Generated cache files are intentionally not versioned. This includes ALIGNN/DGL
+  LMDB folders (`id_prop.csv*_data/`, `*_lmdb/`, `*.mdb`) and local download or
+  plotting caches under `cache/` and `artifacts/embedding_analysis/cache/`.
+  They can be recreated from the canonical datasets, manifests, configs, and scripts
+  when a workflow is rerun.
 - Historical project documents still use the course timeline names "Stage 2" and
   "Stage 3". In this repo, those names mean:
   Stage 2 = dataset construction and validation.
@@ -31,29 +36,35 @@ that exist in the main working folder.
 ## Key Directories
 
 - `data_shared/`: frozen oxide/nitride dataset manifests, summaries, structures, diagnostics, and ALIGNN-ready exports
-- `results/`: immutable baseline namespace from the original `main` branch, including zero-shot and the original fine-tuning/from-scratch artifacts
-- `results_prof_advice/`: imported 5-seed professor-hyperparameter fine-tune and from-scratch runs
-- `results_prof_advice_alignn_recommended/`: imported 5-seed ALIGNN-recommended fine-tune and from-scratch runs
+- `Results_Before_Correction/`: immutable pre-correction namespace, including zero-shot prediction CSVs, original fine-tuning runs, and the shared run-level `dataset_root/` directories inherited from the old `results/` tree
+- `Results_Hyperparameter_Set_1/`: 5-seed professor-hyperparameter fine-tune and from-scratch runs
+- `Results_Hyperparameter_Set_2/`: 5-seed ALIGNN-recommended fine-tune and from-scratch runs
+- `Results_Hyperparameter_Set_3/`: 5-seed 100-epoch/batch-32/lr-5e-5 fine-tune and from-scratch runs split out from the old `results/` tree
 - `configs_prof_advice/` and `configs_prof_advice_alignn_recommended/`: matching canonical configs for the imported namespaces
 - `jv_formation_energy_peratom_alignn/`: pretrained checkpoint assets used by the training scripts
 - `env/`: reproducible environment setup scripts
 - `scripts/`: dataset, training, plotting, and inventory utilities
-- `reports/`: baseline reports, imported canonical reports, and preserved provenance bundles
+- `reports/`: baseline reports, imported canonical reports, the canonical zero-shot summary, and preserved provenance bundles
 
 ## Experiment Namespaces
 
 The repository now keeps experiment families separated by both provenance and
 hyperparameter set:
 
-- `results/`
-  Baseline namespace preserved from `main`. This includes the original
-  `results/*/finetune_last2/` tree and the canonical `zero_shot/` results.
-- `results_prof_advice/`
-  Imported experiments using the professor hyperparameters:
+- `Results_Before_Correction/`
+  Baseline namespace preserved from the pre-correction workflow. This includes the
+  original `finetune_last2/` runs, zero-shot prediction CSVs, and shared run-level
+  dataset roots. The canonical zero-shot MAE summary table lives at
+  `reports/zero_shot/zero_shot_summary.csv`.
+- `Results_Hyperparameter_Set_1/`
+  Experiments using the professor hyperparameters:
   `epochs=50`, `batch_size=16`, `learning_rate=0.0001`.
-- `results_prof_advice_alignn_recommended/`
-  Imported experiments using ALIGNN-recommended hyperparameters:
+- `Results_Hyperparameter_Set_2/`
+  Experiments using ALIGNN-recommended hyperparameters:
   `epochs=300`, `batch_size=64`, `learning_rate=0.001`.
+- `Results_Hyperparameter_Set_3/`
+  Experiments using the low-learning-rate corrected setting:
+  `epochs=100`, `batch_size=32`, `learning_rate=0.00005`.
 
 Canonical imported report folders mirror the same split:
 

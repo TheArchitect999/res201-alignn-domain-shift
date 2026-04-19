@@ -8,10 +8,10 @@ This runbook describes the new non-destructive experiment entrypoints added for 
 
 The new scripts do not overwrite existing experiment outputs on `main`. They write to fresh directories:
 
-- fine-tune results: `results/<family>/N<N>_seed<seed>/finetune_last2_epochs100_bs32_lr5e5/`
+- fine-tune results: `Results_Hyperparameter_Set_3/<family>/N<N>_seed<seed>/finetune_last2_epochs100_bs32_lr5e5/`
 - fine-tune configs: `configs/week2_last2_epochs100_bs32_lr5e5/`
 - fine-tune reports: `reports/week2_last2_epochs100_bs32_lr5e5/`
-- from-scratch results: `results/<family>/N<N>_seed<seed>/train_alignn_fromscratch_epochs100_bs32_lr5e5/`
+- from-scratch results: `Results_Hyperparameter_Set_3/<family>/N<N>_seed<seed>/train_alignn_fromscratch_epochs100_bs32_lr5e5/`
 - from-scratch configs: `configs/week3_fromscratch_epochs100_bs32_lr5e5/`
 - from-scratch reports: `reports/week3_fromscratch_epochs100_bs32_lr5e5/`
 
@@ -20,8 +20,8 @@ The consolidated week-3 from-scratch report bundle on `main` was generated again
 ```bash
 python scripts/shared/Summarize_From_Scratch_Zero_Shot_Only.py \
   --repo-root . \
-  --results-root results \
-  --zero-shot-root results \
+  --results-root Results_Hyperparameter_Set_3 \
+  --zero-shot-root Results_Before_Correction \
   --families oxide nitride \
   --Ns 50 500 \
   --seeds 0 1 2 3 4 \

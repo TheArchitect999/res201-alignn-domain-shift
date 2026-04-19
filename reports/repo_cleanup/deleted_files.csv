@@ -1,0 +1,15 @@
+deleted_path,duplicate_of / canonical_path,category,reason
+reports/week2/zero_shot_summary.csv,reports/zero_shot/zero_shot_summary.csv,semantic_duplicate_zero_shot_report_copy,Duplicate convenience CSV; canonical zero-shot summary is reports/zero_shot/zero_shot_summary.csv.
+reports/Hyperparameter Set 1/Summaries/Finetuning/zero_shot_summary.csv,reports/zero_shot/zero_shot_summary.csv,semantic_duplicate_zero_shot_report_copy,Duplicate convenience CSV; canonical zero-shot summary is reports/zero_shot/zero_shot_summary.csv.
+reports/Hyperparameter Set 2/Summaries/Finetuning/zero_shot_summary.csv,reports/zero_shot/zero_shot_summary.csv,semantic_duplicate_zero_shot_report_copy,Duplicate convenience CSV; canonical zero-shot summary is reports/zero_shot/zero_shot_summary.csv.
+reports/Hyperparameter Set 3/Summaries/Finetuning/zero_shot_summary.csv,reports/zero_shot/zero_shot_summary.csv,semantic_duplicate_zero_shot_report_copy,Duplicate convenience CSV; canonical zero-shot summary is reports/zero_shot/zero_shot_summary.csv.
+id_prop.csvtest_data/data.mdb,not_applicable_regenerable_cache,generated_root_lmdb_cache,Generated root-level ALIGNN LMDB cache; not canonical and safely regenerable.
+id_prop.csvtest_data/lock.mdb,not_applicable_regenerable_cache,generated_root_lmdb_cache,Generated root-level ALIGNN LMDB cache; not canonical and safely regenerable.
+id_prop.csvtrain_data/data.mdb,not_applicable_regenerable_cache,generated_root_lmdb_cache,Generated root-level ALIGNN LMDB cache; not canonical and safely regenerable.
+id_prop.csvtrain_data/lock.mdb,not_applicable_regenerable_cache,generated_root_lmdb_cache,Generated root-level ALIGNN LMDB cache; not canonical and safely regenerable.
+id_prop.csvval_data/data.mdb,not_applicable_regenerable_cache,generated_root_lmdb_cache,Generated root-level ALIGNN LMDB cache; not canonical and safely regenerable.
+id_prop.csvval_data/lock.mdb,not_applicable_regenerable_cache,generated_root_lmdb_cache,Generated root-level ALIGNN LMDB cache; not canonical and safely regenerable.
+Results_Before_Correction/oxide/zero_shot/summary.json,reports/zero_shot/zero_shot_summary.csv,semantic_transfer_zero_shot_family_json,Family-level JSON summary consolidated into reports/zero_shot/zero_shot_summary.csv.
+Results_Before_Correction/nitride/zero_shot/summary.json,reports/zero_shot/zero_shot_summary.csv,semantic_transfer_zero_shot_family_json,Family-level JSON summary consolidated into reports/zero_shot/zero_shot_summary.csv.
+reports/provenance/colab/week2_alignn_defaults_colab_5seed/zero_shot_summary.csv,reports/zero_shot/zero_shot_summary.csv,provenance_zero_shot_csv_copy,Provenance copy repeats canonical zero-shot summary values and used stale absolute paths.
+reports/provenance/colab/week2_seed34_last2_colab/zero_shot_summary.csv,reports/zero_shot/zero_shot_summary.csv,provenance_zero_shot_csv_copy,Provenance copy repeats canonical zero-shot summary values and used stale absolute paths.

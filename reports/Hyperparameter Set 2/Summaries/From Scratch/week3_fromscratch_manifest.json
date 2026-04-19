@@ -1,7 +1,7 @@
 {
-  "results_root": "results_prof_advice_alignn_recommended",
-  "finetune_results_root": "results_prof_advice_alignn_recommended",
-  "zero_shot_root": "results",
+  "results_root": "Results_Hyperparameter_Set_2",
+  "finetune_results_root": "Results_Hyperparameter_Set_2",
+  "zero_shot_root": "Results_Before_Correction",
   "run_subdir": "train_alignn_fromscratch",
   "finetune_run_subdir": "finetune_last2",
   "runs_csv": "reports/Hyperparameter Set 2/Summaries/From Scratch/fromscratch_runs.csv",

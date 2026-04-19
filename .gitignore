@@ -1,10 +1,13 @@
 # Generated runtime caches
+cache/
 artifacts/embedding_analysis/cache/
 __pycache__/
 *.py[cod]
 
 # ALIGNN/DGL/LMDB cache files
 *.mdb
+id_prop.csv*_data/
+id_prop.csv*_data_range
 *_lmdb/
 *_lmdb_data_range
 

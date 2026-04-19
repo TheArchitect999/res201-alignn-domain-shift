@@ -17,7 +17,7 @@ The local from-scratch debugging surfaced a small set of recurring environment f
 - Colab and pip environments can contain conflicting preinstalled `torch`, `torchvision`, `torchaudio`, `triton`, or `dgl` packages.
 - ALIGNN `2025.4.1` still declares `dgl<=1.1.1`, which is CPU-only on PyPI, so the CUDA wheel must be reinstalled explicitly after `alignn`.
 - `matplotlib` and cache directories can fail noisily if they are not configured in a writable temp location.
-- A full clone of this repo is unnecessary and expensive in Colab because the historical `results/` payload is large.
+- A full clone of this repo is unnecessary and expensive in Colab because the historical `Results_Before_Correction/` payload is large.
 
 ## Colab Setup
 
@@ -33,8 +33,7 @@ bash env/bootstrap_res201_colab_week2_alignn_defaults_5seed.sh \
 
 What the bootstrap does:
 
-- installs `git-lfs`
-- clones `main` with `--filter=blob:none` and `GIT_LFS_SKIP_SMUDGE=1`
+- clones `main` with `--filter=blob:none`
 - checks out `colab/week2-alignn-defaults-5seed`
 - applies a sparse checkout that keeps:
   - source scripts
@@ -119,8 +118,8 @@ Checkpoint selection:
 
 The suite commits and pushes only after a run finishes successfully. Each per-run push stages:
 
-- `results/<family>/N<N>_seed<seed>/dataset_root/`
-- `results/<family>/N<N>_seed<seed>/finetune_last2_week2_alignn_defaults_colab_5seed/`
+- `Results_Hyperparameter_Set_2/<family>/N<N>_seed<seed>/dataset_root/`
+- `Results_Hyperparameter_Set_2/<family>/N<N>_seed<seed>/finetune_last2_week2_alignn_defaults_colab_5seed/`
 - `configs/week2_alignn_defaults_colab_5seed/...`
 - `reports/week2_alignn_defaults_colab_5seed/progress_manifest.json`
 
@@ -160,6 +159,6 @@ The checker expects:
 ## Expected Output Roots
 
 - configs: `configs/week2_alignn_defaults_colab_5seed/`
-- per-run outputs: `results/<family>/N<N>_seed<seed>/finetune_last2_week2_alignn_defaults_colab_5seed/`
+- per-run outputs: `Results_Hyperparameter_Set_2/<family>/N<N>_seed<seed>/finetune_last2_week2_alignn_defaults_colab_5seed/`
 - reports: `reports/week2_alignn_defaults_colab_5seed/`
 - training-curve reports: `reports/week2_alignn_defaults_colab_5seed/training_curves/`

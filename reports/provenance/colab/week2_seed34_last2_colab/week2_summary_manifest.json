@@ -2,7 +2,6 @@
   "runs_csv": "/content/res201-alignn-domain-shift/reports/week2_seed34_last2_colab/finetune_runs.csv",
   "summary_csv": "/content/res201-alignn-domain-shift/reports/week2_seed34_last2_colab/finetune_summary_by_N.csv",
   "wide_csv": "/content/res201-alignn-domain-shift/reports/week2_seed34_last2_colab/finetune_summary_wide.csv",
-  "zero_csv": "/content/res201-alignn-domain-shift/reports/week2_seed34_last2_colab/zero_shot_summary.csv",
   "latex_table": "/content/res201-alignn-domain-shift/reports/week2_seed34_last2_colab/finetune_summary_table.tex",
   "plots": {
     "oxide": {
@@ -13,5 +12,6 @@
       "png": "/content/res201-alignn-domain-shift/reports/week2_seed34_last2_colab/nitride_learning_curve.png",
       "pdf": "/content/res201-alignn-domain-shift/reports/week2_seed34_last2_colab/nitride_learning_curve.pdf"
     }
-  }
+  },
+  "canonical_zero_shot_summary": "reports/zero_shot/zero_shot_summary.csv"
 }

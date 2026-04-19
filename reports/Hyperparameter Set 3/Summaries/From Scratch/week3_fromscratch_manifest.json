@@ -1,6 +1,6 @@
 {
-  "results_root": "results",
-  "zero_shot_root": "results",
+  "results_root": "Results_Hyperparameter_Set_3",
+  "zero_shot_root": "Results_Before_Correction",
   "run_subdir": "train_alignn_fromscratch_epochs100_bs32_lr5e5",
   "runs_csv": "reports/Hyperparameter Set 3/Summaries/From Scratch/fromscratch_runs.csv",
   "summary_csv": "reports/Hyperparameter Set 3/Summaries/From Scratch/fromscratch_summary.csv",

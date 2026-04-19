@@ -134,8 +134,8 @@ The per-run train and validation sizes follow the same rule used in Week 1:
 \subsection{Dataset Materialization}
 Each individual run has its own local dataset root under:
 \begin{itemize}
-  \item \texttt{results/oxide/N...\_seed.../dataset\_root/}
-  \item \texttt{results/nitride/N...\_seed.../dataset\_root/}
+  \item \texttt{Results_Before_Correction/oxide/N...\_seed.../dataset\_root/}
+  \item \texttt{Results_Before_Correction/nitride/N...\_seed.../dataset\_root/}
 \end{itemize}
 
 Each dataset root contains:
@@ -335,8 +335,8 @@ If the files are present, they are inserted below.
 \toprule
 Deliverable & Status & Evidence \\
 \midrule
-All oxide fine-tuning runs completed & Done & \texttt{results/oxide/N10\_seed0} through \texttt{results/oxide/N1000\_seed2} \\
-All nitride fine-tuning runs completed & Done & \texttt{results/nitride/N10\_seed0} through \texttt{results/nitride/N1000\_seed2} \\
+All oxide fine-tuning runs completed & Done & \texttt{Results_Before_Correction/oxide/N10\_seed0} through \texttt{Results_Before_Correction/oxide/N1000\_seed2} \\
+All nitride fine-tuning runs completed & Done & \texttt{Results_Before_Correction/nitride/N10\_seed0} through \texttt{Results_Before_Correction/nitride/N1000\_seed2} \\
 Oxide MAE table & Done & embedded in this report and saved in \texttt{reports/week2/finetune\_summary\_by\_N.csv} \\
 Nitride MAE table & Done & embedded in this report and saved in \texttt{reports/week2/finetune\_summary\_by\_N.csv} \\
 Oxide learning-curve plot & Done & \texttt{reports/week2/oxide\_learning\_curve.pdf} and \texttt{.png} \\
@@ -350,12 +350,12 @@ The most important Week 2 files and folders in the workspace are:
 \begin{itemize}
   \item \texttt{configs/oxide\_week2\_N...\_seed....finetune\_last2.json}: oxide run-specific ALIGNN configs.
   \item \texttt{configs/nitride\_week2\_N...\_seed....finetune\_last2.json}: nitride run-specific ALIGNN configs.
-  \item \texttt{results/oxide/N...\_seed.../dataset\_root/}: oxide dataset materialization for each run.
-  \item \texttt{results/nitride/N...\_seed.../dataset\_root/}: nitride dataset materialization for each run.
-  \item \texttt{results/.../finetune\_last2/summary.json}: primary run summary files.
-  \item \texttt{results/.../finetune\_last2/history\_train.json}: training history for each run.
-  \item \texttt{results/.../finetune\_last2/history\_val.json}: validation history for each run.
-  \item \texttt{results/.../finetune\_last2/prediction\_results\_test\_set.csv}: per-structure test predictions.
+  \item \texttt{Results_Before_Correction/oxide/N...\_seed.../dataset\_root/}: oxide dataset materialization for each run.
+  \item \texttt{Results_Before_Correction/nitride/N...\_seed.../dataset\_root/}: nitride dataset materialization for each run.
+  \item \texttt{Results_Before_Correction/.../finetune\_last2/summary.json}: primary run summary files.
+  \item \texttt{Results_Before_Correction/.../finetune\_last2/history\_train.json}: training history for each run.
+  \item \texttt{Results_Before_Correction/.../finetune\_last2/history\_val.json}: validation history for each run.
+  \item \texttt{Results_Before_Correction/.../finetune\_last2/prediction\_results\_test\_set.csv}: per-structure test predictions.
   \item \texttt{reports/week2/finetune\_runs.csv}: one row per Week 2 run.
   \item \texttt{reports/week2/finetune\_summary\_by\_N.csv}: aggregate mean and standard deviation table.
   \item \texttt{reports/week2/finetune\_summary\_wide.csv}: wide-format comparison table across families and training sizes.
@@ -453,7 +453,7 @@ The Week 2 report was written from the executed workspace artifacts together wit
   \item the RES201 project brief in \texttt{Project\_Task/RES201 Project.pdf};
   \item the ALIGNN tutorial and project timeline notes in \texttt{Project\_Task/};
   \item the saved Week 2 result summaries in \texttt{reports/week2/};
-  \item the per-run outputs in \texttt{results/oxide/} and \texttt{results/nitride/}.
+  \item the per-run outputs in \texttt{Results_Before_Correction/oxide/} and \texttt{Results_Before_Correction/nitride/}.
 \end{itemize}
 
 \end{document}

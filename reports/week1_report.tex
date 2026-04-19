@@ -157,7 +157,7 @@ This script:
   \item runs \texttt{alignn.pretrained.get\_prediction};
   \item coerces ALIGNN outputs to scalar floats;
   \item computes test MAE in eV/atom;
-  \item writes both a predictions CSV and a summary JSON.
+  \item writes a predictions CSV and updates the canonical report-level zero-shot summary table.
 \end{enumerate}
 
 Representative command form:
@@ -180,7 +180,7 @@ This script constructs a local \texttt{dataset\_root} for each family as follows
   \item sample $N=50$ points from the pool using NumPy RNG with \texttt{seed = 0};
   \item allocate $45$ samples to train and $5$ samples to validation;
   \item keep the family test set fixed and unchanged;
-  \item copy the corresponding POSCAR files into \texttt{results/<family>/N50\_seed0/dataset\_root};
+  \item copy the corresponding POSCAR files into \texttt{Results_Before_Correction/<family>/N50\_seed0/dataset\_root};
   \item write \texttt{id\_prop.csv} and \texttt{split\_manifest.json}.
 \end{enumerate}
 
@@ -240,16 +240,16 @@ Representative commands used:
 \begin{lstlisting}[language=bash]
 python scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py \
   --config configs/oxide_week1_N50_seed0.finetune_last2.json \
-  --output-dir results/oxide/N50_seed0/finetune_last2 \
-  --dataset-root results/oxide/N50_seed0/dataset_root \
+  --output-dir Results_Before_Correction/oxide/N50_seed0/finetune_last2 \
+  --dataset-root Results_Before_Correction/oxide/N50_seed0/dataset_root \
   --pretrained-checkpoint jv_formation_energy_peratom_alignn/checkpoint_300.pt \
   --pretrained-config jv_formation_energy_peratom_alignn/config.json \
   --device cpu
 
 python scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py \
   --config configs/nitride_week1_N50_seed0.finetune_last2.json \
-  --output-dir results/nitride/N50_seed0/finetune_last2 \
-  --dataset-root results/nitride/N50_seed0/dataset_root \
+  --output-dir Results_Before_Correction/nitride/N50_seed0/finetune_last2 \
+  --dataset-root Results_Before_Correction/nitride/N50_seed0/dataset_root \
   --pretrained-checkpoint jv_formation_energy_peratom_alignn/checkpoint_300.pt \
   --pretrained-config jv_formation_energy_peratom_alignn/config.json \
   --device cpu
@@ -302,10 +302,10 @@ Original split IDs applied first & Done & split source in summaries points to \t
 Fixed oxide test set & Done & \texttt{data\_shared/oxide/manifests/test.csv} \\
 Fixed nitride test set & Done & \texttt{data\_shared/nitride/manifests/test.csv} \\
 Pretrained checkpoint loaded & Done & \texttt{jv\_formation\_energy\_peratom\_alignn/checkpoint\_300.pt} \\
-Oxide zero-shot MAE reported & Done & \texttt{results/oxide/zero\_shot/summary.json} \\
-Nitride zero-shot MAE reported & Done & \texttt{results/nitride/zero\_shot/summary.json} \\
-One oxide fine-tune at $N=50$ completed & Done & \texttt{results/oxide/N50\_seed0/finetune\_last2/summary.json} \\
-One nitride fine-tune at $N=50$ completed & Done & \texttt{results/nitride/N50\_seed0/finetune\_last2/summary.json} \\
+Oxide zero-shot MAE reported & Done & \texttt{reports/zero\_shot/zero\_shot\_summary.csv} \\
+Nitride zero-shot MAE reported & Done & \texttt{reports/zero\_shot/zero\_shot\_summary.csv} \\
+One oxide fine-tune at $N=50$ completed & Done & \texttt{Results_Before_Correction/oxide/N50\_seed0/finetune\_last2/summary.json} \\
+One nitride fine-tune at $N=50$ completed & Done & \texttt{Results_Before_Correction/nitride/N50\_seed0/finetune\_last2/summary.json} \\
 \bottomrule
 \end{longtable}
 
@@ -319,16 +319,19 @@ Additional direct checks:
 \begin{lstlisting}[language=bash]
 python scripts/dataset/validate_res201_stage2.py --root ./data_shared
 
-python -m json.tool results/oxide/zero_shot/summary.json
-python -m json.tool results/nitride/zero_shot/summary.json
-python -m json.tool results/oxide/N50_seed0/finetune_last2/summary.json
-python -m json.tool results/nitride/N50_seed0/finetune_last2/summary.json
+python - <<'PY'
+import csv
+for row in csv.DictReader(open("reports/zero_shot/zero_shot_summary.csv")):
+    print(row)
+PY
+python -m json.tool Results_Before_Correction/oxide/N50_seed0/finetune_last2/summary.json
+python -m json.tool Results_Before_Correction/nitride/N50_seed0/finetune_last2/summary.json
 
 python - <<'PY'
 import json
 for p in [
-    "results/oxide/N50_seed0/finetune_last2/history_val.json",
-    "results/nitride/N50_seed0/finetune_last2/history_val.json",
+    "Results_Before_Correction/oxide/N50_seed0/finetune_last2/history_val.json",
+    "Results_Before_Correction/nitride/N50_seed0/finetune_last2/history_val.json",
 ]:
     h = json.load(open(p))
     print(p, len(h), h[-1])
@@ -347,19 +350,17 @@ Path & Description \\
 \texttt{.gitignore} & Ignore rules controlling which generated artifacts should stay local. \\
 \texttt{Project\_Task/} & Course and project reference PDFs: project brief, ALIGNN tutorial, and timeline notes. \\
 \texttt{README.md} & Original Stage 2 payload README. \\
-\texttt{cache/} & Local JARVIS download/cache area. \\
 \texttt{configs/} & Saved Week 1 configuration JSON files, including historical failed attempts and final working fine-tune configs. \\
 \texttt{data\_shared/} & Canonical Stage 2 family datasets, manifests, summaries, diagnostics, structures, and ALIGNN-ready exports. \\
 \texttt{docs/} & Stage 2 and Stage 3 playbooks plus frozen dataset notes. \\
 \texttt{env/} & Environment bootstrap and validation scripts for the data and training environments. \\
-\texttt{id\_prop.csvtrain\_data/}, \texttt{id\_prop.csvval\_data/}, \texttt{id\_prop.csvtest\_data/} & Root-level LMDB caches created by ALIGNN training utilities. These are local/generated artifacts, not canonical research outputs. \\
 \texttt{jv\_formation\_energy\_peratom\_alignn/} & Local pretrained checkpoint directory containing the extracted formation-energy checkpoint and its config. \\
 \texttt{manifests/} & Official split manifest, conflict list, and split manifest templates. \\
 \texttt{notebooks/} & Currently empty notebook area reserved for later analysis. \\
 \texttt{reports/} & Reporting area. This report and generated inventory files belong here. \\
 \texttt{requirements/} & Frozen dependency record for the training environment. \\
 \texttt{res201\_stage2\_data\_shared.zip} & Local archive copy of the Stage 2 shared dataset payload. \\
-\texttt{results/} & Week 1 outputs, including zero-shot predictions and $N=50$ oxide/nitride experiment folders. \\
+\texttt{Results_Before_Correction/} & Week 1 outputs, including zero-shot predictions and $N=50$ oxide/nitride experiment folders. \\
 \texttt{scripts/} & Dataset pipeline scripts and shared Week 1 experiment scripts. \\
 \bottomrule
 \end{longtable}
@@ -438,13 +439,14 @@ Path & Description \\
 
 \paragraph{results}
 \begin{itemize}
-  \item \texttt{results/oxide/zero\_shot/}: oxide predictions CSV and summary JSON.
-  \item \texttt{results/nitride/zero\_shot/}: nitride predictions CSV and summary JSON.
-  \item \texttt{results/oxide/N50\_seed0/dataset\_root/}: local oxide Week 1 POSCAR subset, \texttt{id\_prop.csv}, and split manifest.
-  \item \texttt{results/nitride/N50\_seed0/dataset\_root/}: local nitride Week 1 POSCAR subset, \texttt{id\_prop.csv}, and split manifest.
-  \item \texttt{results/oxide/N50\_seed0/finetune\_last2/}: completed oxide Week 1 fine-tune outputs.
-  \item \texttt{results/nitride/N50\_seed0/finetune\_last2/}: completed nitride Week 1 fine-tune outputs.
-  \item \texttt{results/oxide/N50\_seed0/train\_alignn\_restart/}: older partial attempt from the original debugging path.
+  \item \texttt{Results_Before_Correction/oxide/zero\_shot/predictions.csv}: oxide zero-shot predictions.
+  \item \texttt{Results_Before_Correction/nitride/zero\_shot/predictions.csv}: nitride zero-shot predictions.
+  \item \texttt{reports/zero\_shot/zero\_shot\_summary.csv}: single canonical zero-shot MAE summary table.
+  \item \texttt{Results_Before_Correction/oxide/N50\_seed0/dataset\_root/}: local oxide Week 1 POSCAR subset, \texttt{id\_prop.csv}, and split manifest.
+  \item \texttt{Results_Before_Correction/nitride/N50\_seed0/dataset\_root/}: local nitride Week 1 POSCAR subset, \texttt{id\_prop.csv}, and split manifest.
+  \item \texttt{Results_Before_Correction/oxide/N50\_seed0/finetune\_last2/}: completed oxide Week 1 fine-tune outputs.
+  \item \texttt{Results_Before_Correction/nitride/N50\_seed0/finetune\_last2/}: completed nitride Week 1 fine-tune outputs.
+  \item \texttt{Results_Before_Correction/oxide/N50\_seed0/train\_alignn\_restart/}: older partial attempt from the original debugging path.
 \end{itemize}
 
 \subsection{Full Inventory File}
@@ -482,7 +484,7 @@ To make this safer, the local \texttt{.gitignore} was tightened during this audi
   \item pretrained checkpoint binary;
   \item heavy result checkpoints and LMDB caches;
   \item local Stage 2 zip archive;
-  \item copied POSCARs inside \texttt{results/*/dataset\_root}.
+  \item copied POSCARs inside \texttt{Results_Before_Correction/*/dataset\_root}.
 \end{itemize}
 
 Recommended push workflow:
@@ -494,14 +496,13 @@ git add scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py
 git add scripts/shared/Write_Week1_ALIGNN_Config.py
 git add configs/oxide_week1_N50_seed0.finetune_last2.json
 git add configs/nitride_week1_N50_seed0.finetune_last2.json
-git add results/oxide/zero_shot/summary.json
-git add results/oxide/zero_shot/predictions.csv
-git add results/nitride/zero_shot/summary.json
-git add results/nitride/zero_shot/predictions.csv
-git add results/oxide/N50_seed0/finetune_last2/*.json
-git add results/oxide/N50_seed0/finetune_last2/*.csv
-git add results/nitride/N50_seed0/finetune_last2/*.json
-git add results/nitride/N50_seed0/finetune_last2/*.csv
+git add reports/zero_shot/zero_shot_summary.csv
+git add Results_Before_Correction/oxide/zero_shot/predictions.csv
+git add Results_Before_Correction/nitride/zero_shot/predictions.csv
+git add Results_Before_Correction/oxide/N50_seed0/finetune_last2/*.json
+git add Results_Before_Correction/oxide/N50_seed0/finetune_last2/*.csv
+git add Results_Before_Correction/nitride/N50_seed0/finetune_last2/*.json
+git add Results_Before_Correction/nitride/N50_seed0/finetune_last2/*.csv
 git add reports/week1_report.tex
 git add reports/workspace_inventory_summary.json
 git add reports/workspace_inventory.csv

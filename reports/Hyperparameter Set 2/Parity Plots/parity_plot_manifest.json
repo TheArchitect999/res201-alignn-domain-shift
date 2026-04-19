@@ -10,7 +10,7 @@
     "r2": 0.994445260976024,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=10.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=10.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/oxide/N10_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N10_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N10_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N10_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N10_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/oxide/N10_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N10_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N10_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N10_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N10_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "oxide",
@@ -23,7 +23,7 @@
     "r2": 0.9944369641808937,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=50.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=50.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/oxide/N50_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N50_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N50_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N50_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N50_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/oxide/N50_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N50_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N50_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N50_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N50_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "oxide",
@@ -36,7 +36,7 @@
     "r2": 0.9942275950788589,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=100.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=100.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/oxide/N100_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N100_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N100_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N100_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N100_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/oxide/N100_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N100_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N100_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N100_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N100_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "oxide",
@@ -49,7 +49,7 @@
     "r2": 0.9941114835693697,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=200.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=200.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/oxide/N200_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N200_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N200_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N200_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N200_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/oxide/N200_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N200_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N200_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N200_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N200_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "oxide",
@@ -62,7 +62,7 @@
     "r2": 0.9941315301477429,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=500.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=500.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/oxide/N500_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N500_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N500_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N500_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N500_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/oxide/N500_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N500_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N500_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N500_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N500_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "oxide",
@@ -75,7 +75,7 @@
     "r2": 0.9941647580351574,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=1000.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Oxide Parity Plot - Hyperparameter Set 2, N=1000.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/oxide/N1000_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N1000_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N1000_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N1000_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/oxide/N1000_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/oxide/N1000_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N1000_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N1000_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N1000_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/oxide/N1000_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "nitride",
@@ -88,7 +88,7 @@
     "r2": 0.9867601002338783,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=10.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=10.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/nitride/N10_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N10_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N10_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N10_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N10_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/nitride/N10_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N10_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N10_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N10_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N10_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "nitride",
@@ -101,7 +101,7 @@
     "r2": 0.9867097074620006,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=50.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=50.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/nitride/N50_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N50_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N50_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N50_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N50_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/nitride/N50_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N50_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N50_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N50_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N50_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "nitride",
@@ -114,7 +114,7 @@
     "r2": 0.9867132923323833,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=100.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=100.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/nitride/N100_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N100_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N100_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N100_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N100_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/nitride/N100_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N100_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N100_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N100_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N100_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "nitride",
@@ -127,7 +127,7 @@
     "r2": 0.9865974543860966,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=200.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=200.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/nitride/N200_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N200_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N200_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N200_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N200_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/nitride/N200_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N200_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N200_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N200_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N200_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "nitride",
@@ -140,7 +140,7 @@
     "r2": 0.9857870949248511,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=500.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=500.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/nitride/N500_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N500_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N500_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N500_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N500_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/nitride/N500_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N500_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N500_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N500_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N500_seed4/finetune_last2/prediction_results_test_set.csv"
   },
   {
     "family": "nitride",
@@ -153,6 +153,6 @@
     "r2": 0.9861065760855566,
     "png": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=1000.png",
     "pdf": "reports/Hyperparameter Set 2/Parity Plots/Nitride Parity Plot - Hyperparameter Set 2, N=1000.pdf",
-    "source_prediction_csvs": "results_prof_advice_alignn_recommended/nitride/N1000_seed0/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N1000_seed1/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N1000_seed2/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N1000_seed3/finetune_last2/prediction_results_test_set.csv;results_prof_advice_alignn_recommended/nitride/N1000_seed4/finetune_last2/prediction_results_test_set.csv"
+    "source_prediction_csvs": "Results_Hyperparameter_Set_2/nitride/N1000_seed0/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N1000_seed1/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N1000_seed2/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N1000_seed3/finetune_last2/prediction_results_test_set.csv;Results_Hyperparameter_Set_2/nitride/N1000_seed4/finetune_last2/prediction_results_test_set.csv"
   }
 ]

@@ -18,7 +18,7 @@
     3,
     4
   ],
-  "results_root": "results_prof_advice_alignn_recommended",
+  "results_root": "Results_Hyperparameter_Set_2",
   "run_subdir": "finetune_last2",
   "expected_runs": 60,
   "actual_runs": 60,

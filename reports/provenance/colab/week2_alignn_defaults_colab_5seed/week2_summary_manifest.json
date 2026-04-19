@@ -4,7 +4,6 @@
   "runs_csv": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/finetune_runs.csv",
   "summary_csv": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/finetune_summary_by_N.csv",
   "wide_csv": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/finetune_summary_wide.csv",
-  "zero_csv": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/zero_shot_summary.csv",
   "latex_table": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/finetune_summary_table.tex",
   "plots": {
     "oxide": {
@@ -15,5 +14,6 @@
       "png": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/nitride_learning_curve.png",
       "pdf": "/content/res201-alignn-domain-shift/reports/week2_alignn_defaults_colab_5seed/nitride_learning_curve.pdf"
     }
-  }
+  },
+  "canonical_zero_shot_summary": "reports/zero_shot/zero_shot_summary.csv"
 }

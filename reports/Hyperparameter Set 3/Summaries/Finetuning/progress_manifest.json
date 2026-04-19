@@ -18,7 +18,7 @@
     3,
     4
   ],
-  "results_root": "results",
+  "results_root": "Results_Hyperparameter_Set_3",
   "run_subdir": "finetune_last2_epochs100_bs32_lr5e5",
   "expected_runs": 60,
   "actual_runs": 60,
