@@ -20,7 +20,7 @@ missing=0
 for family in "${FAMILIES[@]}"; do
   for n in "${NS[@]}"; do
     for seed in "${SEEDS[@]}"; do
-      path="results/${family}/N${n}_seed${seed}/${RUN_SUBDIR}/summary.json"
+      path="Results_Hyperparameter_Set_3/${family}/N${n}_seed${seed}/${RUN_SUBDIR}/summary.json"
       if [[ -f "$path" ]]; then
         echo "OK  $path"
       else
@@ -37,7 +37,6 @@ aggregate_paths=(
   "${SUMMARY_DIR}/finetune_runs.csv"
   "${SUMMARY_DIR}/finetune_summary_by_N.csv"
   "${SUMMARY_DIR}/finetune_summary_wide.csv"
-  "${SUMMARY_DIR}/zero_shot_summary.csv"
   "${SUMMARY_DIR}/finetune_summary_table.tex"
   "${SUMMARY_DIR}/run_suite_summary.json"
   "${SUMMARY_DIR}/week2_summary_manifest.json"

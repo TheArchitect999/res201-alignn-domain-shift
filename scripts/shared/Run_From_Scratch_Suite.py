@@ -13,6 +13,7 @@ DEFAULT_FAMILIES = ["oxide", "nitride"]
 DEFAULT_NS = [50, 500]
 DEFAULT_SEEDS = [0]
 DEFAULT_BRANCH = "main"
+DEFAULT_RESULTS_ROOT = "Results_Before_Correction"
 OOM_STRINGS = (
     "cuda error: out of memory",
     "cuda out of memory",
@@ -162,6 +163,7 @@ def git_commit_and_push(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--results-root", default=DEFAULT_RESULTS_ROOT)
     parser.add_argument("--families", nargs="+", default=DEFAULT_FAMILIES)
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
     parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
@@ -200,7 +202,7 @@ def main() -> int:
             for seed in args.seeds:
                 started_at = time.time()
                 run_name = f"{family}:N{n_value}:seed{seed}"
-                run_root = repo / "results" / family / f"N{n_value}_seed{seed}"
+                run_root = repo / args.results_root / family / f"N{n_value}_seed{seed}"
                 dataset_root = run_root / "dataset_root"
                 split_manifest_path = dataset_root / "split_manifest.json"
                 output_dir = run_root / args.run_subdir
@@ -223,6 +225,8 @@ def main() -> int:
                             str(seed),
                             "--repo-root",
                             ".",
+                            "--results-root",
+                            args.results_root,
                             "--link-mode",
                             args.link_mode,
                         ]

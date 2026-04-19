@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import os
 import tempfile
@@ -19,6 +20,7 @@ import pandas as pd
 
 DEFAULT_NS = [10, 50, 100, 200, 500, 1000]
 DEFAULT_SEEDS = [0, 1, 2]
+DEFAULT_ZERO_SHOT_SUMMARY = "reports/zero_shot/zero_shot_summary.csv"
 
 
 def load_json(path: Path) -> dict:
@@ -69,20 +71,21 @@ def collect_finetune_rows(
     return rows
 
 
-def collect_zero_shot_rows(repo: Path, zero_shot_root: str, families: list[str]) -> list[dict]:
+def collect_zero_shot_rows(repo: Path, zero_shot_summary: str, families: list[str]) -> list[dict]:
     rows: list[dict] = []
-    for family in families:
-        summary_path = repo / zero_shot_root / family / "zero_shot" / "summary.json"
-        if not summary_path.exists():
-            continue
-        summary = load_json(summary_path)
-        rows.append(
-            {
-                "family": family,
-                "zero_shot_mae_eV_per_atom": summary["mae_eV_per_atom"],
-                "summary_path": repo_relative(repo, summary_path),
-            }
-        )
+    summary_path = repo / zero_shot_summary
+    with summary_path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            if row["family"] not in families:
+                continue
+            rows.append(
+                {
+                    "family": row["family"],
+                    "zero_shot_mae_eV_per_atom": float(row["mae_eV_per_atom"]),
+                    "summary_path": repo_relative(repo, summary_path),
+                }
+            )
     return rows
 
 
@@ -173,8 +176,9 @@ def write_progress_manifest(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
-    parser.add_argument("--results-root", default="results")
-    parser.add_argument("--zero-shot-root", default="results")
+    parser.add_argument("--results-root", default="Results_Before_Correction")
+    parser.add_argument("--zero-shot-root", default="Results_Before_Correction")
+    parser.add_argument("--zero-shot-summary", default=DEFAULT_ZERO_SHOT_SUMMARY)
     parser.add_argument("--run-subdir", default="finetune_last2")
     parser.add_argument("--families", nargs="+", default=["oxide", "nitride"])
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
@@ -201,7 +205,7 @@ def main() -> int:
         args.seeds,
         args.run_subdir,
     )
-    zero_shot_rows = collect_zero_shot_rows(repo, args.zero_shot_root, args.families)
+    zero_shot_rows = collect_zero_shot_rows(repo, args.zero_shot_summary, args.families)
 
     runs_df = pd.DataFrame(finetune_rows)
     zero_df = pd.DataFrame(zero_shot_rows)
@@ -241,7 +245,6 @@ def main() -> int:
     runs_csv = summary_dir / "finetune_runs.csv"
     summary_csv = summary_dir / "finetune_summary_by_N.csv"
     wide_csv = summary_dir / "finetune_summary_wide.csv"
-    zero_csv = summary_dir / "zero_shot_summary.csv"
     latex_table = summary_dir / "finetune_summary_table.tex"
     manifest_json = summary_dir / "week2_summary_manifest.json"
     progress_json = summary_dir / "progress_manifest.json"
@@ -249,7 +252,6 @@ def main() -> int:
     runs_df.to_csv(runs_csv, index=False)
     summary_with_zero.to_csv(summary_csv, index=False)
     wide_df.to_csv(wide_csv, index=False)
-    zero_df.to_csv(zero_csv, index=False)
     write_latex_table(latex_table, summary_df)
 
     zero_lookup = {row["family"]: row["zero_shot_mae_eV_per_atom"] for row in zero_shot_rows}
@@ -313,13 +315,13 @@ def main() -> int:
 
     manifest = {
         "results_root": args.results_root,
-        "zero_shot_root": args.zero_shot_root,
+        "zero_shot_summary": args.zero_shot_summary,
         "run_subdir": args.run_subdir,
         "seeds": args.seeds,
         "runs_csv": repo_relative(repo, runs_csv),
         "summary_csv": repo_relative(repo, summary_csv),
         "wide_csv": repo_relative(repo, wide_csv),
-        "zero_csv": repo_relative(repo, zero_csv),
+        "canonical_zero_shot_summary": repo_relative(repo, repo / args.zero_shot_summary),
         "latex_table": repo_relative(repo, latex_table),
         "progress_manifest": repo_relative(repo, progress_json),
         "plots": plot_paths,

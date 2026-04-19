@@ -13,7 +13,7 @@ echo "[1/3] Checking per-run from-scratch summaries..."
 missing=0
 for family in "${FAMILIES[@]}"; do
   for n in "${NS[@]}"; do
-    path="results/${family}/N${n}_seed0/${RUN_SUBDIR}/summary.json"
+    path="Results_Before_Correction/${family}/N${n}_seed0/${RUN_SUBDIR}/summary.json"
     if [[ -f "$path" ]]; then
       echo "OK  $path"
     else

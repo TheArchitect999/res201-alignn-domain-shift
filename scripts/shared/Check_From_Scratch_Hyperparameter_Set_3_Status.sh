@@ -18,7 +18,7 @@ missing=0
 for family in "${FAMILIES[@]}"; do
   for n in "${NS[@]}"; do
     for seed in "${SEEDS[@]}"; do
-      path="results/${family}/N${n}_seed${seed}/${RUN_SUBDIR}/summary.json"
+      path="Results_Hyperparameter_Set_3/${family}/N${n}_seed${seed}/${RUN_SUBDIR}/summary.json"
       if [[ -f "$path" ]]; then
         echo "OK  $path"
       else

@@ -32,9 +32,9 @@ python scripts/shared/Run_From_Scratch_Hyperparameter_Set_3_Suite.py "${suite_ar
 
 python scripts/shared/Summarize_From_Scratch_Reports.py \
   --repo-root . \
-  --results-root results \
-  --finetune-results-root results \
-  --zero-shot-root results \
+  --results-root Results_Hyperparameter_Set_3 \
+  --finetune-results-root Results_Hyperparameter_Set_3 \
+  --zero-shot-root Results_Before_Correction \
   --families oxide nitride \
   --Ns 50 500 \
   --seeds 0 1 2 3 4 \
@@ -48,7 +48,7 @@ python scripts/shared/Summarize_From_Scratch_Reports.py \
 
 python scripts/shared/Plot_From_Scratch_Training_Curves.py \
   --repo-root . \
-  --results-root results \
+  --results-root Results_Hyperparameter_Set_3 \
   --run-subdir "$RUN_SUBDIR" \
   --families oxide nitride \
   --Ns 50 500 \

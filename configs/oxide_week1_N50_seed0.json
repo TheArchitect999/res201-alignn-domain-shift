@@ -1,5 +1,5 @@
 {
-  "dataset": "./results/oxide/N50_seed0/dataset_root",
+  "dataset": "./Results_Before_Correction/oxide/N50_seed0/dataset_root",
   "filename": "id_prop.csv",
   "target": "target",
   "atom_features": "cgcnn",

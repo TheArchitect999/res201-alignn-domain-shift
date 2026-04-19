@@ -12,8 +12,8 @@ PARITY_DIR="${SET_ROOT}/Parity Plots"
 
 python scripts/shared/Summarize_Finetuning_Reports.py \
   --repo-root . \
-  --results-root results_prof_advice \
-  --zero-shot-root results \
+  --results-root Results_Hyperparameter_Set_1 \
+  --zero-shot-root Results_Before_Correction \
   --run-subdir finetune_last2 \
   --families oxide nitride \
   --Ns 10 50 100 200 500 1000 \
@@ -26,7 +26,7 @@ python scripts/shared/Summarize_Finetuning_Reports.py \
 
 python scripts/shared/Plot_Finetuning_Training_Curves.py \
   --repo-root . \
-  --results-root results_prof_advice \
+  --results-root Results_Hyperparameter_Set_1 \
   --run-subdir finetune_last2 \
   --families oxide nitride \
   --Ns 10 50 100 200 500 1000 \
@@ -37,7 +37,7 @@ python scripts/shared/Plot_Finetuning_Training_Curves.py \
 
 python scripts/shared/Generate_Finetuning_Parity_Plots.py \
   --repo-root . \
-  --results-root results_prof_advice \
+  --results-root Results_Hyperparameter_Set_1 \
   --run-subdir finetune_last2 \
   --report-dir "${SET_ROOT}" \
   --out-dir "${PARITY_DIR}" \

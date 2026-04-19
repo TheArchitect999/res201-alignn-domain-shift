@@ -2,8 +2,8 @@
 
 Canonical imported configs for the ALIGNN-recommended experiment namespace.
 
-- `week2_finetune/`: configs matching `results_prof_advice_alignn_recommended/*/*/finetune_last2/`
-- `week3_fromscratch/`: configs matching `results_prof_advice_alignn_recommended/*/*/train_alignn_fromscratch/`
+- `week2_finetune/`: configs matching `Results_Hyperparameter_Set_2/*/*/finetune_last2/`
+- `week3_fromscratch/`: configs matching `Results_Hyperparameter_Set_2/*/*/train_alignn_fromscratch/`
 
 These configs correspond to:
 

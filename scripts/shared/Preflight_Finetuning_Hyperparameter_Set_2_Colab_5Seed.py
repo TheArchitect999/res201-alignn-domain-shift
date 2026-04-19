@@ -4,7 +4,6 @@ import importlib
 import json
 import os
 import platform
-import subprocess
 import sys
 from pathlib import Path
 
@@ -21,19 +20,6 @@ def _optional_version(module_name: str) -> tuple[bool, str]:
     except Exception:
         return False, "missing"
     return True, getattr(module, "__version__", "unknown")
-
-
-def _git_lfs_version() -> tuple[bool, str]:
-    try:
-        result = subprocess.run(
-            ["git", "lfs", "version"],
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-    except Exception as exc:  # noqa: BLE001
-        return False, repr(exc)
-    return True, result.stdout.strip()
 
 
 def _dgl_cuda_check(cuda_available: bool) -> tuple[bool, str]:
@@ -85,8 +71,6 @@ def main() -> int:
     jarvis_ok, jarvis_ver = _optional_version("jarvis")
     pandas_ok, pandas_ver = _optional_version("pandas")
     matplotlib_ok, matplotlib_ver = _optional_version("matplotlib")
-    git_lfs_ok, git_lfs_ver = _git_lfs_version()
-
     payload = {
         "python": platform.python_version(),
         "python_supported": python_ok,
@@ -102,8 +86,6 @@ def main() -> int:
         "pandas": pandas_ver,
         "matplotlib_installed": matplotlib_ok,
         "matplotlib": matplotlib_ver,
-        "git_lfs_installed": git_lfs_ok,
-        "git_lfs": git_lfs_ver,
         "github_token_present": bool(os.environ.get("GITHUB_TOKEN")),
         "checkpoint_path": str(checkpoint_path),
         "config_path": str(config_path),
@@ -155,8 +137,6 @@ def main() -> int:
         raise SystemExit(f"Missing Colab fine-tune dependencies: {missing_text}. {INSTALL_HINT}")
     if not payload["github_token_present"]:
         raise SystemExit("GITHUB_TOKEN is required for the Colab GitHub persistence workflow.")
-    if not git_lfs_ok:
-        raise SystemExit("Git LFS is not installed in this runtime.")
     if not payload["cuda_available"]:
         raise SystemExit("CUDA unavailable. Configure a Colab GPU runtime before running this sweep.")
     if not dgl_cuda_ok:

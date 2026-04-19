@@ -32,8 +32,8 @@ python scripts/shared/Run_Finetuning_Hyperparameter_Set_3_Suite.py "${suite_args
 
 python scripts/shared/Summarize_Finetuning_Reports.py \
   --repo-root . \
-  --results-root results \
-  --zero-shot-root results \
+  --results-root Results_Hyperparameter_Set_3 \
+  --zero-shot-root Results_Before_Correction \
   --run-subdir "$RUN_SUBDIR" \
   --families oxide nitride \
   --Ns 10 50 100 200 500 1000 \
@@ -46,7 +46,7 @@ python scripts/shared/Summarize_Finetuning_Reports.py \
 
 python scripts/shared/Plot_Finetuning_Training_Curves.py \
   --repo-root . \
-  --results-root results \
+  --results-root Results_Hyperparameter_Set_3 \
   --run-subdir "$RUN_SUBDIR" \
   --families oxide nitride \
   --Ns 10 50 100 200 500 1000 \
@@ -57,7 +57,7 @@ python scripts/shared/Plot_Finetuning_Training_Curves.py \
 
 python scripts/shared/Generate_Finetuning_Parity_Plots.py \
   --repo-root . \
-  --results-root results \
+  --results-root Results_Hyperparameter_Set_3 \
   --run-subdir "$RUN_SUBDIR" \
   --report-dir "$REPORT_ROOT" \
   --out-dir "$PARITY_DIR" \

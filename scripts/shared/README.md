@@ -38,7 +38,7 @@ Use these when running fine-tuning experiments.
 
 | Script | Purpose |
 | --- | --- |
-| `Run_Finetuning_Original_Baseline_Suite.py` | Original baseline fine-tuning suite for the early `results/` namespace. |
+| `Run_Finetuning_Original_Baseline_Suite.py` | Original baseline fine-tuning suite for the `Results_Before_Correction/` namespace. |
 | `Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Pipeline.sh` | Colab pipeline wrapper for 5-seed fine-tuning with Hyperparameter Set 2. |
 | `Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Suite.py` | Python suite for the 5-seed Hyperparameter Set 2 fine-tuning runs. |
 | `Run_Finetuning_Hyperparameter_Set_2_Colab_5Seed_Smoke_Test.sh` | Smoke-test wrapper for the Hyperparameter Set 2 Colab fine-tuning workflow. |

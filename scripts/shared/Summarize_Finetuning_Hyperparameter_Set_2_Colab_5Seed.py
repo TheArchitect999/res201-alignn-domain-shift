@@ -1,12 +1,14 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import os
 import tempfile
 from pathlib import Path
 
 DEFAULT_TAG = "week2_alignn_defaults_colab_5seed"
+DEFAULT_ZERO_SHOT_SUMMARY = "reports/zero_shot/zero_shot_summary.csv"
 DEFAULT_NS = [10, 50, 100, 200, 500, 1000]
 DEFAULT_SEEDS = [0, 1, 2, 3, 4]
 REPORTING_HINT = (
@@ -60,7 +62,7 @@ def collect_finetune_rows(
     for family in families:
         for n_value in ns:
             for seed in seeds:
-                summary_path = repo / "results" / family / f"N{n_value}_seed{seed}" / run_subdir / "summary.json"
+                summary_path = repo / "Results_Hyperparameter_Set_2" / family / f"N{n_value}_seed{seed}" / run_subdir / "summary.json"
                 if not summary_path.exists():
                     continue
                 summary = load_json(summary_path)
@@ -90,18 +92,19 @@ def collect_finetune_rows(
 
 def collect_zero_shot_rows(repo: Path, families: list[str]) -> list[dict]:
     rows: list[dict] = []
-    for family in families:
-        summary_path = repo / "results" / family / "zero_shot" / "summary.json"
-        if not summary_path.exists():
-            continue
-        summary = load_json(summary_path)
-        rows.append(
-            {
-                "family": family,
-                "zero_shot_mae_eV_per_atom": summary["mae_eV_per_atom"],
-                "summary_path": str(summary_path.resolve()),
-            }
-        )
+    summary_path = repo / DEFAULT_ZERO_SHOT_SUMMARY
+    with summary_path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            if row["family"] not in families:
+                continue
+            rows.append(
+                {
+                    "family": row["family"],
+                    "zero_shot_mae_eV_per_atom": float(row["mae_eV_per_atom"]),
+                    "summary_path": DEFAULT_ZERO_SHOT_SUMMARY,
+                }
+            )
     return rows
 
 
@@ -239,14 +242,12 @@ def main() -> int:
     runs_csv = out_dir / "finetune_runs.csv"
     summary_csv = out_dir / "finetune_summary_by_N.csv"
     wide_csv = out_dir / "finetune_summary_wide.csv"
-    zero_csv = out_dir / "zero_shot_summary.csv"
     latex_table = out_dir / "finetune_summary_table.tex"
     manifest_json = out_dir / "week2_summary_manifest.json"
 
     runs_df.to_csv(runs_csv, index=False)
     summary_with_zero.to_csv(summary_csv, index=False)
     wide_df.to_csv(wide_csv, index=False)
-    zero_df.to_csv(zero_csv, index=False)
     write_latex_table(latex_table, summary_df)
 
     zero_lookup = {row["family"]: row["zero_shot_mae_eV_per_atom"] for row in zero_shot_rows}
@@ -268,7 +269,7 @@ def main() -> int:
         "runs_csv": str(runs_csv),
         "summary_csv": str(summary_csv),
         "wide_csv": str(wide_csv),
-        "zero_csv": str(zero_csv),
+        "canonical_zero_shot_summary": DEFAULT_ZERO_SHOT_SUMMARY,
         "latex_table": str(latex_table),
         "plots": {
             family: {

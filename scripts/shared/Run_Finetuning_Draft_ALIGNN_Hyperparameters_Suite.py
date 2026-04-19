@@ -13,6 +13,7 @@ DEFAULT_NS = [10, 50, 100, 200, 500, 1000]
 DEFAULT_SEEDS = [0, 1, 2]
 DEFAULT_FAMILIES = ["oxide", "nitride"]
 DEFAULT_TAG = "week2_alignn_hyperparameters_new_script"
+DEFAULT_RESULTS_ROOT = "Results_Before_Correction"
 
 
 def run_command(cmd: list[str], cwd: Path, log_path: Path | None = None) -> None:
@@ -51,6 +52,7 @@ def load_json(path: Path) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--results-root", default=DEFAULT_RESULTS_ROOT)
     parser.add_argument("--experiment-tag", default=DEFAULT_TAG)
     parser.add_argument("--families", nargs="+", default=DEFAULT_FAMILIES)
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
@@ -89,7 +91,7 @@ def main() -> int:
             for seed in args.seeds:
                 started_at = time.time()
                 run_name = f"{family}:N{n_value}:seed{seed}"
-                run_root = repo / "results" / family / f"N{n_value}_seed{seed}"
+                run_root = repo / args.results_root / family / f"N{n_value}_seed{seed}"
                 dataset_root = run_root / "dataset_root"
                 split_manifest_path = dataset_root / "split_manifest.json"
                 output_dir = run_root / run_subdir
@@ -112,6 +114,8 @@ def main() -> int:
                             str(seed),
                             "--repo-root",
                             ".",
+                            "--results-root",
+                            args.results_root,
                             "--link-mode",
                             args.link_mode,
                         ]

@@ -293,7 +293,7 @@ def write_manifest(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
-    parser.add_argument("--results-root", default="results")
+    parser.add_argument("--results-root", default="Results_Before_Correction")
     parser.add_argument("--run-subdir", default="finetune_last2")
     parser.add_argument("--families", nargs="+", default=["oxide", "nitride"])
     parser.add_argument("--Ns", nargs="+", type=int, default=[10, 50, 100, 200, 500, 1000])

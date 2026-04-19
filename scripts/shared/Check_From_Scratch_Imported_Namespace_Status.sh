@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_ROOT="${1:-.}"
-RESULTS_ROOT="${2:-results_prof_advice}"
+RESULTS_ROOT="${2:-Results_Hyperparameter_Set_1}"
 REPORT_ROOT="${3:-reports/Hyperparameter Set 1}"
 RUN_SUBDIR="${4:-train_alignn_fromscratch}"
 SUMMARY_DIR="${REPORT_ROOT}/Summaries/From Scratch"

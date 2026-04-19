@@ -19,20 +19,7 @@ if ! command -v git >/dev/null 2>&1; then
   exit 1
 fi
 
-if ! command -v git-lfs >/dev/null 2>&1; then
-  if command -v sudo >/dev/null 2>&1; then
-    sudo apt-get update
-    sudo apt-get install -y git-lfs
-  else
-    apt-get update
-    apt-get install -y git-lfs
-  fi
-fi
-
-git lfs install --skip-smudge
-
 rm -rf "$WORKSPACE_DIR"
-export GIT_LFS_SKIP_SMUDGE=1
 git clone --filter=blob:none --depth 1 --branch "$BASE_BRANCH" "$AUTH_REPO_URL" "$WORKSPACE_DIR"
 
 cd "$WORKSPACE_DIR"
@@ -50,13 +37,11 @@ else
 fi
 
 git remote set-url origin "$AUTH_REPO_URL"
-git lfs install --local --skip-smudge
 
 git sparse-checkout init --no-cone
 cat > .git/info/sparse-checkout <<EOF
 /*
 !/*
-/.gitattributes
 /README.md
 /docs/
 /env/
@@ -71,32 +56,42 @@ cat > .git/info/sparse-checkout <<EOF
 !/reports/*
 /reports/${TAG}/
 /reports/${SMOKE_TAG}/
-/results/
-!/results/*
-/results/oxide/
-!/results/oxide/*
-/results/oxide/N*_seed*/
-!/results/oxide/N*_seed*/*
-/results/oxide/N*_seed*/dataset_root/
-/results/oxide/N*_seed*/finetune_last2_${TAG}/summary.json
-/results/oxide/N*_seed*/finetune_last2_${TAG}/history_train.json
-/results/oxide/N*_seed*/finetune_last2_${TAG}/history_val.json
-/results/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/summary.json
-/results/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/history_train.json
-/results/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/history_val.json
-/results/oxide/zero_shot/summary.json
-/results/nitride/
-!/results/nitride/*
-/results/nitride/N*_seed*/
-!/results/nitride/N*_seed*/*
-/results/nitride/N*_seed*/dataset_root/
-/results/nitride/N*_seed*/finetune_last2_${TAG}/summary.json
-/results/nitride/N*_seed*/finetune_last2_${TAG}/history_train.json
-/results/nitride/N*_seed*/finetune_last2_${TAG}/history_val.json
-/results/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/summary.json
-/results/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/history_train.json
-/results/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/history_val.json
-/results/nitride/zero_shot/summary.json
+/Results_Before_Correction/
+!/Results_Before_Correction/*
+/Results_Before_Correction/oxide/
+!/Results_Before_Correction/oxide/*
+/Results_Before_Correction/oxide/zero_shot/
+!/Results_Before_Correction/oxide/zero_shot/*
+/Results_Before_Correction/nitride/
+!/Results_Before_Correction/nitride/*
+/Results_Before_Correction/nitride/zero_shot/
+!/Results_Before_Correction/nitride/zero_shot/*
+/Results_Hyperparameter_Set_2/
+!/Results_Hyperparameter_Set_2/*
+/Results_Hyperparameter_Set_2/oxide/
+!/Results_Hyperparameter_Set_2/oxide/*
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/
+!/Results_Hyperparameter_Set_2/oxide/N*_seed*/*
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/dataset_root/
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${TAG}/summary.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${TAG}/history_train.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${TAG}/history_val.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/summary.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/history_train.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/history_val.json
+/Results_Before_Correction/oxide/zero_shot/summary.json
+/Results_Hyperparameter_Set_2/nitride/
+!/Results_Hyperparameter_Set_2/nitride/*
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/
+!/Results_Hyperparameter_Set_2/nitride/N*_seed*/*
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/dataset_root/
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${TAG}/summary.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${TAG}/history_train.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${TAG}/history_val.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/summary.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/history_train.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/history_val.json
+/Results_Before_Correction/nitride/zero_shot/summary.json
 EOF
 git read-tree -mu HEAD
 

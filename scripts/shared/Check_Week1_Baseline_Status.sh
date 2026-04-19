@@ -12,16 +12,17 @@ echo "[2/5] Checking required week 1 artifact files..."
 required_files=(
   "data_shared/oxide/summaries/summary.json"
   "data_shared/nitride/summaries/summary.json"
-  "results/oxide/zero_shot/summary.json"
-  "results/nitride/zero_shot/summary.json"
-  "results/oxide/N50_seed0/finetune_last2/summary.json"
-  "results/nitride/N50_seed0/finetune_last2/summary.json"
-  "results/oxide/N50_seed0/finetune_last2/best_model.pt"
-  "results/nitride/N50_seed0/finetune_last2/best_model.pt"
-  "results/oxide/N50_seed0/finetune_last2/history_val.json"
-  "results/nitride/N50_seed0/finetune_last2/history_val.json"
-  "results/oxide/N50_seed0/finetune_last2/prediction_results_test_set.csv"
-  "results/nitride/N50_seed0/finetune_last2/prediction_results_test_set.csv"
+  "reports/zero_shot/zero_shot_summary.csv"
+  "Results_Before_Correction/oxide/zero_shot/predictions.csv"
+  "Results_Before_Correction/nitride/zero_shot/predictions.csv"
+  "Results_Before_Correction/oxide/N50_seed0/finetune_last2/summary.json"
+  "Results_Before_Correction/nitride/N50_seed0/finetune_last2/summary.json"
+  "Results_Before_Correction/oxide/N50_seed0/finetune_last2/best_model.pt"
+  "Results_Before_Correction/nitride/N50_seed0/finetune_last2/best_model.pt"
+  "Results_Before_Correction/oxide/N50_seed0/finetune_last2/history_val.json"
+  "Results_Before_Correction/nitride/N50_seed0/finetune_last2/history_val.json"
+  "Results_Before_Correction/oxide/N50_seed0/finetune_last2/prediction_results_test_set.csv"
+  "Results_Before_Correction/nitride/N50_seed0/finetune_last2/prediction_results_test_set.csv"
 )
 
 missing=0
@@ -45,8 +46,8 @@ echo "[3/5] Checking recorded epoch counts..."
 python - <<'PY'
 import json
 paths = [
-    "results/oxide/N50_seed0/finetune_last2/history_val.json",
-    "results/nitride/N50_seed0/finetune_last2/history_val.json",
+    "Results_Before_Correction/oxide/N50_seed0/finetune_last2/history_val.json",
+    "Results_Before_Correction/nitride/N50_seed0/finetune_last2/history_val.json",
 ]
 for path in paths:
     history = json.load(open(path))
@@ -56,12 +57,15 @@ PY
 echo
 echo "[4/5] Printing key week 1 metrics..."
 python - <<'PY'
+import csv
 import json
+with open("reports/zero_shot/zero_shot_summary.csv", newline="", encoding="utf-8") as handle:
+    for row in csv.DictReader(handle):
+        print(f"{row['family']}_zero_shot: {row['mae_eV_per_atom']}")
+
 summary_paths = [
-    ("oxide_zero_shot", "results/oxide/zero_shot/summary.json"),
-    ("nitride_zero_shot", "results/nitride/zero_shot/summary.json"),
-    ("oxide_N50_finetune", "results/oxide/N50_seed0/finetune_last2/summary.json"),
-    ("nitride_N50_finetune", "results/nitride/N50_seed0/finetune_last2/summary.json"),
+    ("oxide_N50_finetune", "Results_Before_Correction/oxide/N50_seed0/finetune_last2/summary.json"),
+    ("nitride_N50_finetune", "Results_Before_Correction/nitride/N50_seed0/finetune_last2/summary.json"),
 ]
 for label, path in summary_paths:
     data = json.load(open(path))

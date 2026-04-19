@@ -2,7 +2,7 @@
 set -euo pipefail
 
 REPO_ROOT="${1:-.}"
-RESULTS_ROOT="${2:-results_prof_advice}"
+RESULTS_ROOT="${2:-Results_Hyperparameter_Set_1}"
 REPORT_ROOT="${3:-reports/Hyperparameter Set 1}"
 RUN_SUBDIR="${4:-finetune_last2}"
 SUMMARY_DIR="${REPORT_ROOT}/Summaries/Finetuning"
@@ -38,7 +38,6 @@ aggregate_paths=(
   "${SUMMARY_DIR}/finetune_runs.csv"
   "${SUMMARY_DIR}/finetune_summary_by_N.csv"
   "${SUMMARY_DIR}/finetune_summary_wide.csv"
-  "${SUMMARY_DIR}/zero_shot_summary.csv"
   "${SUMMARY_DIR}/finetune_summary_table.tex"
   "${SUMMARY_DIR}/progress_manifest.json"
   "${SUMMARY_DIR}/week2_summary_manifest.json"

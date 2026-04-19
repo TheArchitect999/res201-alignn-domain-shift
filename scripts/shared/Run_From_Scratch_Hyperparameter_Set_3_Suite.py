@@ -10,11 +10,13 @@ DEFAULT_SEEDS = [0, 1, 2, 3, 4]
 DEFAULT_RUN_SUBDIR = "train_alignn_fromscratch_epochs100_bs32_lr5e5"
 DEFAULT_CONFIG_DIR = "configs/week3_fromscratch_epochs100_bs32_lr5e5"
 DEFAULT_REPORT_DIR = "reports/week3_fromscratch_epochs100_bs32_lr5e5"
+DEFAULT_RESULTS_ROOT = "Results_Hyperparameter_Set_3"
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
+    parser.add_argument("--results-root", default=DEFAULT_RESULTS_ROOT)
     parser.add_argument("--run-subdir", default=DEFAULT_RUN_SUBDIR)
     parser.add_argument("--config-dir", default=DEFAULT_CONFIG_DIR)
     parser.add_argument("--report-dir", default=DEFAULT_REPORT_DIR)
@@ -41,6 +43,8 @@ def main() -> int:
         "scripts/shared/Run_From_Scratch_Suite.py",
         "--repo-root",
         args.repo_root,
+        "--results-root",
+        args.results_root,
         "--run-subdir",
         args.run_subdir,
         "--config-dir",

@@ -41,7 +41,7 @@ def discover_runs(repo_root: Path, families: list[str], ns: list[int], seeds: li
     for family in families:
         for n in ns:
             for seed in seeds:
-                run_dir = repo_root / "results" / family / f"N{n}_seed{seed}" / run_subdir
+                run_dir = repo_root / "Results_Before_Correction" / family / f"N{n}_seed{seed}" / run_subdir
                 summary_path = run_dir / "summary.json"
                 train_path = run_dir / "history_train.json"
                 val_path = run_dir / "history_val.json"

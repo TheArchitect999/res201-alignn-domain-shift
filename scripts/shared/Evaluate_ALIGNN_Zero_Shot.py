@@ -32,6 +32,21 @@ def load_rows(manifest_csv: Path):
     with manifest_csv.open() as f:
         return list(csv.DictReader(f))
 
+def update_zero_shot_summary(summary_csv: Path, row: dict) -> None:
+    summary_csv.parent.mkdir(parents=True, exist_ok=True)
+    fieldnames = ["family", "model_name", "n_test", "mae_eV_per_atom", "predictions_csv"]
+    rows = []
+    if summary_csv.exists():
+        with summary_csv.open(newline="") as f:
+            rows = list(csv.DictReader(f))
+    rows = [existing for existing in rows if existing["family"] != row["family"]]
+    rows.append(row)
+    rows.sort(key=lambda item: item["family"])
+    with summary_csv.open("w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--family', choices=['oxide','nitride'], required=True)
@@ -43,7 +58,7 @@ def main():
     family_dir = repo / 'data_shared' / args.family
     manifest = family_dir / 'manifests' / 'test.csv'
     structures = family_dir / 'structures'
-    outdir = Path(args.outdir) if args.outdir else repo / 'results' / args.family / 'zero_shot'
+    outdir = Path(args.outdir) if args.outdir else repo / "Results_Before_Correction" / args.family / 'zero_shot'
     outdir.mkdir(parents=True, exist_ok=True)
     rows = load_rows(manifest)
     results = []
@@ -71,9 +86,9 @@ def main():
         'model_name': args.model_name,
         'n_test': len(rows),
         'mae_eV_per_atom': mae,
-        'predictions_csv': str(pred_csv)
+        'predictions_csv': os.path.relpath(pred_csv.resolve(), repo)
     }
-    (outdir / 'summary.json').write_text(json.dumps(summary, indent=2))
+    update_zero_shot_summary(repo / "reports" / "zero_shot" / "zero_shot_summary.csv", summary)
     print(json.dumps(summary, indent=2))
 
 if __name__ == '__main__':

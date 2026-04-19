@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import os
 import tempfile
@@ -9,6 +10,7 @@ from pathlib import Path
 DEFAULT_FAMILIES = ["oxide", "nitride"]
 DEFAULT_NS = [50, 500]
 DEFAULT_SEEDS = [0]
+DEFAULT_ZERO_SHOT_SUMMARY = "reports/zero_shot/zero_shot_summary.csv"
 REPORTING_DEPENDENCY_HINT = (
     "Week 3 summarization requires pandas and matplotlib. "
     "Install the pinned environment from `requirements/res201_train_frozen.txt` "
@@ -116,20 +118,21 @@ def collect_finetune_seed0(
     return pd.DataFrame(rows)
 
 
-def collect_zero_shot(repo: Path, zero_shot_root: str, families: list[str], pd) -> "pd.DataFrame":
+def collect_zero_shot(repo: Path, zero_shot_summary: str, families: list[str], pd) -> "pd.DataFrame":
     rows: list[dict] = []
-    for family in families:
-        summary_path = repo / zero_shot_root / family / "zero_shot" / "summary.json"
-        if not summary_path.exists():
-            continue
-        summary = load_json(summary_path)
-        rows.append(
-            {
-                "family": family,
-                "zero_shot_mae_eV_per_atom": summary["mae_eV_per_atom"],
-                "zero_shot_summary_path": repo_relative(repo, summary_path),
-            }
-        )
+    summary_path = repo / zero_shot_summary
+    with summary_path.open(newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            if row["family"] not in families:
+                continue
+            rows.append(
+                {
+                    "family": row["family"],
+                    "zero_shot_mae_eV_per_atom": float(row["mae_eV_per_atom"]),
+                    "zero_shot_summary_path": repo_relative(repo, summary_path),
+                }
+            )
     return pd.DataFrame(rows)
 
 
@@ -188,9 +191,10 @@ def plot_family_comparison(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--repo-root", default=".")
-    parser.add_argument("--results-root", default="results")
-    parser.add_argument("--finetune-results-root", default="results")
-    parser.add_argument("--zero-shot-root", default="results")
+    parser.add_argument("--results-root", default="Results_Before_Correction")
+    parser.add_argument("--finetune-results-root", default="Results_Before_Correction")
+    parser.add_argument("--zero-shot-root", default="Results_Before_Correction")
+    parser.add_argument("--zero-shot-summary", default=DEFAULT_ZERO_SHOT_SUMMARY)
     parser.add_argument("--families", nargs="+", default=DEFAULT_FAMILIES)
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
     parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
@@ -231,7 +235,7 @@ def main() -> int:
         args.finetune_run_subdir,
         pd,
     )
-    zero_df = collect_zero_shot(repo, args.zero_shot_root, args.families, pd)
+    zero_df = collect_zero_shot(repo, args.zero_shot_summary, args.families, pd)
     summary_df = (
         runs_df.groupby(["family", "N"], as_index=False)
         .agg(
@@ -313,7 +317,7 @@ def main() -> int:
     manifest = {
         "results_root": args.results_root,
         "finetune_results_root": args.finetune_results_root,
-        "zero_shot_root": args.zero_shot_root,
+        "zero_shot_summary": args.zero_shot_summary,
         "run_subdir": args.run_subdir,
         "finetune_run_subdir": args.finetune_run_subdir,
         "runs_csv": repo_relative(repo, runs_csv),

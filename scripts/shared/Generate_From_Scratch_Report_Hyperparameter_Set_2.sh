@@ -11,9 +11,9 @@ TRAINING_DIR="${SET_ROOT}/Training Curves/From Scratch"
 
 python scripts/shared/Summarize_From_Scratch_Reports.py \
   --repo-root . \
-  --results-root results_prof_advice_alignn_recommended \
-  --finetune-results-root results_prof_advice_alignn_recommended \
-  --zero-shot-root results \
+  --results-root Results_Hyperparameter_Set_2 \
+  --finetune-results-root Results_Hyperparameter_Set_2 \
+  --zero-shot-root Results_Before_Correction \
   --run-subdir train_alignn_fromscratch \
   --finetune-run-subdir finetune_last2 \
   --families oxide nitride \
@@ -27,7 +27,7 @@ python scripts/shared/Summarize_From_Scratch_Reports.py \
 
 python scripts/shared/Plot_From_Scratch_Training_Curves.py \
   --repo-root . \
-  --results-root results_prof_advice_alignn_recommended \
+  --results-root Results_Hyperparameter_Set_2 \
   --run-subdir train_alignn_fromscratch \
   --families oxide nitride \
   --Ns 50 500 \

@@ -15,7 +15,7 @@ SET_CONFIGS = [
         "hyperparameters": {"epochs": 50, "batch_size": 16, "learning_rate": 0.0001},
         "week2_dir": "reports/week2_prof_advice",
         "week3_dir": "reports/week3_fromscratch_prof_advice",
-        "results_root": "results_prof_advice",
+        "results_root": "Results_Hyperparameter_Set_1",
         "finetune_run_subdir": "finetune_last2",
         "fromscratch_run_subdir": "train_alignn_fromscratch",
         "finetune_ns": [10, 50, 100, 200, 500, 1000],
@@ -29,7 +29,7 @@ SET_CONFIGS = [
         "hyperparameters": {"epochs": 300, "batch_size": 64, "learning_rate": 0.001},
         "week2_dir": "reports/week2_prof_advice_alignn_recommended",
         "week3_dir": "reports/week3_fromscratch_alignn_recommended",
-        "results_root": "results_prof_advice_alignn_recommended",
+        "results_root": "Results_Hyperparameter_Set_2",
         "finetune_run_subdir": "finetune_last2",
         "fromscratch_run_subdir": "train_alignn_fromscratch",
         "finetune_ns": [10, 50, 100, 200, 500, 1000],
@@ -43,7 +43,7 @@ SET_CONFIGS = [
         "hyperparameters": {"epochs": 100, "batch_size": 32, "learning_rate": 0.00005},
         "week2_dir": "reports/week2_last2_epochs100_bs32_lr5e5",
         "week3_dir": "reports/week3_fromscratch_epochs100_bs32_lr5e5",
-        "results_root": "results",
+        "results_root": "Results_Hyperparameter_Set_3",
         "finetune_run_subdir": "finetune_last2_epochs100_bs32_lr5e5",
         "fromscratch_run_subdir": "train_alignn_fromscratch_epochs100_bs32_lr5e5",
         "finetune_ns": [10, 50, 100, 200, 500, 1000],
@@ -189,7 +189,8 @@ def rewrite_week2_manifest(path: Path, cfg: dict, set_root: Path, repo: Path) ->
     manifest["runs_csv"] = repo_relative(repo, finetune_summary_dir / "finetune_runs.csv")
     manifest["summary_csv"] = repo_relative(repo, finetune_summary_dir / "finetune_summary_by_N.csv")
     manifest["wide_csv"] = repo_relative(repo, finetune_summary_dir / "finetune_summary_wide.csv")
-    manifest["zero_csv"] = repo_relative(repo, finetune_summary_dir / "zero_shot_summary.csv")
+    manifest.pop("zero_csv", None)
+    manifest["canonical_zero_shot_summary"] = "reports/zero_shot/zero_shot_summary.csv"
     manifest["latex_table"] = repo_relative(repo, finetune_summary_dir / "finetune_summary_table.tex")
     manifest["progress_manifest"] = repo_relative(repo, finetune_summary_dir / "progress_manifest.json")
     manifest["plots"] = {
@@ -384,7 +385,6 @@ def reorganize_set(repo: Path, cfg: dict) -> None:
         "finetune_summary_wide.csv",
         "progress_manifest.json",
         "week2_summary_manifest.json",
-        "zero_shot_summary.csv",
         "run_suite_summary.json",
     ]:
         move_file(week2_dir / filename, finetune_summary_dir / filename)

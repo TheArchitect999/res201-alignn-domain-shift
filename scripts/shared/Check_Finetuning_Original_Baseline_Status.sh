@@ -13,7 +13,7 @@ missing=0
 for family in "${FAMILIES[@]}"; do
   for n in "${NS[@]}"; do
     for seed in "${SEEDS[@]}"; do
-      path="results/${family}/N${n}_seed${seed}/finetune_last2/summary.json"
+      path="Results_Before_Correction/${family}/N${n}_seed${seed}/finetune_last2/summary.json"
       if [[ -f "$path" ]]; then
         echo "OK  $path"
       else
@@ -30,7 +30,6 @@ aggregate_paths=(
   "reports/week2/finetune_runs.csv"
   "reports/week2/finetune_summary_by_N.csv"
   "reports/week2/finetune_summary_wide.csv"
-  "reports/week2/zero_shot_summary.csv"
   "reports/week2/finetune_summary_table.tex"
   "reports/week2/oxide_learning_curve.png"
   "reports/week2/oxide_learning_curve.pdf"

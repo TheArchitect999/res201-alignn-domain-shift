@@ -332,7 +332,7 @@ def register_hooks(model: Any, specs: dict[str, HookSpec], capture: dict[str, An
 def load_zero_shot_predictions(root: Path, family: str, subset: str) -> dict[str, dict[str, str]]:
     if subset != "test":
         return {}
-    path = root / "results" / family / "zero_shot" / "predictions.csv"
+    path = root / "Results_Before_Correction" / family / "zero_shot" / "predictions.csv"
     if not path.exists():
         return {}
     with path.open("r", encoding="utf-8", newline="") as handle:
@@ -1363,7 +1363,7 @@ def main() -> None:
                 if args.subset_metadata is None
             ],
             "zero_shot_predictions": [
-                f"results/{family}/zero_shot/predictions.csv"
+                f"Results_Before_Correction/{family}/zero_shot/predictions.csv"
                 for family in args.families
                 if args.dataset_subset == "test"
             ],

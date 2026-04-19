@@ -2,8 +2,8 @@
 
 Canonical imported configs for the professor-hyperparameter experiment namespace.
 
-- `week2_finetune/`: configs matching `results_prof_advice/*/*/finetune_last2/`
-- `week3_fromscratch/`: configs matching `results_prof_advice/*/*/train_alignn_fromscratch/`
+- `week2_finetune/`: configs matching `Results_Hyperparameter_Set_1/*/*/finetune_last2/`
+- `week3_fromscratch/`: configs matching `Results_Hyperparameter_Set_1/*/*/train_alignn_fromscratch/`
 
 These configs correspond to:
 
