@@ -1,0 +1,21 @@
+{
+  "dataset_root": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N200_seed2/dataset_root",
+  "output_dir": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N200_seed2/finetune_last2",
+  "device": "cpu",
+  "n_train": 180,
+  "n_val": 20,
+  "n_test": 242,
+  "epochs": 50,
+  "batch_size": 16,
+  "learning_rate": 0.0001,
+  "unfrozen_groups": [
+    "gcn_layers.3",
+    "fc"
+  ],
+  "train_mae_eV_per_atom": 0.09302730315248482,
+  "val_best_l1": 0.08733267709612846,
+  "test_l1": 0.1542806625366211,
+  "test_mae_eV_per_atom": 0.134121102912059,
+  "prediction_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N200_seed2/finetune_last2/prediction_results_test_set.csv",
+  "elapsed_seconds": 204.6535403728485
+}
