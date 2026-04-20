@@ -78,14 +78,18 @@ not commit `*.mdb`, `id_prop.csv*_data/`, `*_lmdb/`, `*_data_range`, or local
 
 ## Config Layout
 
-- `configs_prof_advice/week2_finetune/`
+- `configs/Hyperparameter_Set_1/week2_finetune/`
   Canonical imported configs for professor-hyperparameter week-2 fine-tuning.
-- `configs_prof_advice/week3_fromscratch/`
+- `configs/Hyperparameter_Set_1/week3_fromscratch/`
   Canonical imported configs for professor-hyperparameter week-3 from-scratch runs.
-- `configs_prof_advice_alignn_recommended/week2_finetune/`
+- `configs/Hyperparameter_Set_2/week2_finetune/`
   Canonical imported configs for ALIGNN-recommended week-2 fine-tuning.
-- `configs_prof_advice_alignn_recommended/week3_fromscratch/`
+- `configs/Hyperparameter_Set_2/week3_fromscratch/`
   Canonical imported configs for ALIGNN-recommended week-3 from-scratch runs.
+- `configs/week2_last2_epochs100_bs32_lr5e5/`
+  Canonical configs for `Results_Hyperparameter_Set_3` fine-tuning.
+- `configs/week3_fromscratch_epochs100_bs32_lr5e5/`
+  Canonical configs for `Results_Hyperparameter_Set_3` from-scratch runs.
 
 ## Provenance Reports
 

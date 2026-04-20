@@ -40,7 +40,7 @@ that exist in the main working folder.
 - `Results_Hyperparameter_Set_1/`: 5-seed professor-hyperparameter fine-tune and from-scratch runs
 - `Results_Hyperparameter_Set_2/`: 5-seed ALIGNN-recommended fine-tune and from-scratch runs
 - `Results_Hyperparameter_Set_3/`: 5-seed 100-epoch/batch-32/lr-5e-5 fine-tune and from-scratch runs split out from the old `results/` tree
-- `configs_prof_advice/` and `configs_prof_advice_alignn_recommended/`: matching canonical configs for the imported namespaces
+- `configs/`: canonical run configs, organized to mirror the result namespaces
 - `jv_formation_energy_peratom_alignn/`: pretrained checkpoint assets used by the training scripts
 - `env/`: reproducible environment setup scripts
 - `scripts/`: dataset, training, plotting, and inventory utilities

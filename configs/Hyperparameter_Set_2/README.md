@@ -1,6 +1,7 @@
-# `configs_prof_advice_alignn_recommended`
+# `configs/Hyperparameter_Set_2`
 
-Canonical imported configs for the ALIGNN-recommended experiment namespace.
+Canonical imported configs for `Results_Hyperparameter_Set_2`, the ALIGNN-
+recommended experiment namespace.
 
 - `week2_finetune/`: configs matching `Results_Hyperparameter_Set_2/*/*/finetune_last2/`
 - `week3_fromscratch/`: configs matching `Results_Hyperparameter_Set_2/*/*/train_alignn_fromscratch/`

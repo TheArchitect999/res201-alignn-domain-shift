@@ -190,8 +190,8 @@
     },
     "parity_manifest": "reports/Hyperparameter Set 1/Parity Plots/parity_plot_manifest.json",
     "configs": [
-      "configs_prof_advice/week2_finetune",
-      "configs_prof_advice/week3_fromscratch"
+      "configs/Hyperparameter_Set_1/week2_finetune",
+      "configs/Hyperparameter_Set_1/week3_fromscratch"
     ]
   },
   "alternative_namespaces": [

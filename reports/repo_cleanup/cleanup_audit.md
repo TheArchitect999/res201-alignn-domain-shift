@@ -9,7 +9,7 @@ Pre-deletion audit for the current local `main` branch.
 - Pretrained model payload: `jv_formation_energy_peratom_alignn/`.
 - Experiment namespaces: `Results_Before_Correction/`, `Results_Hyperparameter_Set_1/`, `Results_Hyperparameter_Set_2/`, `Results_Hyperparameter_Set_3/`.
 - Report bundles: `reports/week2/`, `reports/Hyperparameter Set 1/`, `reports/Hyperparameter Set 2/`, `reports/Hyperparameter Set 3/`, `reports/week4_embedding_analysis/`, and `reports/provenance/`.
-- Automation and configuration: `scripts/`, `configs/`, `configs_prof_advice/`, `configs_prof_advice_alignn_recommended/`, `env/`.
+- Automation and configuration: `scripts/`, `configs/`, `env/`.
 
 ## Exact Duplicate Scan
 
