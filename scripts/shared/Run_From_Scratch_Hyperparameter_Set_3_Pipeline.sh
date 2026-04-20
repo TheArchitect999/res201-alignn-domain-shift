@@ -8,7 +8,7 @@ PUSH_AFTER_RUN="${PUSH_AFTER_RUN:-1}"
 PUSH_FINAL_REPORTS="${PUSH_FINAL_REPORTS:-1}"
 
 RUN_SUBDIR="train_alignn_fromscratch_epochs100_bs32_lr5e5"
-CONFIG_DIR="configs/week3_fromscratch_epochs100_bs32_lr5e5"
+CONFIG_DIR="configs/Hyperparameter_Set_3/week3_fromscratch"
 REPORT_ROOT="reports/Hyperparameter Set 3"
 SUMMARY_DIR="${REPORT_ROOT}/Summaries/From Scratch"
 PLOT_DIR="${REPORT_ROOT}/Comparison Plots"

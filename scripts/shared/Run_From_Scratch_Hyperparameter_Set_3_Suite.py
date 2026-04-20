@@ -8,7 +8,7 @@ DEFAULT_FAMILIES = ["oxide", "nitride"]
 DEFAULT_NS = [50, 500]
 DEFAULT_SEEDS = [0, 1, 2, 3, 4]
 DEFAULT_RUN_SUBDIR = "train_alignn_fromscratch_epochs100_bs32_lr5e5"
-DEFAULT_CONFIG_DIR = "configs/week3_fromscratch_epochs100_bs32_lr5e5"
+DEFAULT_CONFIG_DIR = "configs/Hyperparameter_Set_3/week3_fromscratch"
 DEFAULT_REPORT_DIR = "reports/week3_fromscratch_epochs100_bs32_lr5e5"
 DEFAULT_RESULTS_ROOT = "Results_Hyperparameter_Set_3"
 

@@ -11,10 +11,9 @@ paths are organized to mirror the result namespaces where practical.
 - `Hyperparameter_Set_2/`: configs for `Results_Hyperparameter_Set_2`.
   These use the ALIGNN-recommended hyperparameters: `epochs=300`,
   `batch_size=64`, `learning_rate=0.001`.
-- `week2_last2_epochs100_bs32_lr5e5/`: fine-tuning configs for
-  `Results_Hyperparameter_Set_3`.
-- `week3_fromscratch_epochs100_bs32_lr5e5/`: from-scratch configs for
-  `Results_Hyperparameter_Set_3`.
+- `Hyperparameter_Set_3/`: configs for `Results_Hyperparameter_Set_3`.
+  These use the corrected low-learning-rate hyperparameters: `epochs=100`,
+  `batch_size=32`, `learning_rate=0.00005`.
 
 The remaining flat JSON files in this directory are historical before-correction
 or early debugging configs. Keep them for provenance, but prefer the namespaced

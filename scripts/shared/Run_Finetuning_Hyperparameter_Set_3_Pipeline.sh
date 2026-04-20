@@ -8,7 +8,7 @@ PUSH_AFTER_RUN="${PUSH_AFTER_RUN:-1}"
 PUSH_FINAL_REPORTS="${PUSH_FINAL_REPORTS:-1}"
 
 RUN_SUBDIR="finetune_last2_epochs100_bs32_lr5e5"
-CONFIG_DIR="configs/week2_last2_epochs100_bs32_lr5e5"
+CONFIG_DIR="configs/Hyperparameter_Set_3/week2_finetune"
 REPORT_ROOT="reports/Hyperparameter Set 3"
 SUMMARY_DIR="${REPORT_ROOT}/Summaries/Finetuning"
 LEARNING_DIR="${REPORT_ROOT}/Learning Curves"

@@ -9,10 +9,10 @@ This runbook describes the new non-destructive experiment entrypoints added for 
 The new scripts do not overwrite existing experiment outputs on `main`. They write to fresh directories:
 
 - fine-tune results: `Results_Hyperparameter_Set_3/<family>/N<N>_seed<seed>/finetune_last2_epochs100_bs32_lr5e5/`
-- fine-tune configs: `configs/week2_last2_epochs100_bs32_lr5e5/`
+- fine-tune configs: `configs/Hyperparameter_Set_3/week2_finetune/`
 - fine-tune reports: `reports/week2_last2_epochs100_bs32_lr5e5/`
 - from-scratch results: `Results_Hyperparameter_Set_3/<family>/N<N>_seed<seed>/train_alignn_fromscratch_epochs100_bs32_lr5e5/`
-- from-scratch configs: `configs/week3_fromscratch_epochs100_bs32_lr5e5/`
+- from-scratch configs: `configs/Hyperparameter_Set_3/week3_fromscratch/`
 - from-scratch reports: `reports/week3_fromscratch_epochs100_bs32_lr5e5/`
 
 The consolidated week-3 from-scratch report bundle on `main` was generated against zero-shot references only and is reproducible with:

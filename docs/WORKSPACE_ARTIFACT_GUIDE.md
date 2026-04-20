@@ -86,10 +86,10 @@ not commit `*.mdb`, `id_prop.csv*_data/`, `*_lmdb/`, `*_data_range`, or local
   Canonical imported configs for ALIGNN-recommended week-2 fine-tuning.
 - `configs/Hyperparameter_Set_2/week3_fromscratch/`
   Canonical imported configs for ALIGNN-recommended week-3 from-scratch runs.
-- `configs/week2_last2_epochs100_bs32_lr5e5/`
-  Canonical configs for `Results_Hyperparameter_Set_3` fine-tuning.
-- `configs/week3_fromscratch_epochs100_bs32_lr5e5/`
-  Canonical configs for `Results_Hyperparameter_Set_3` from-scratch runs.
+- `configs/Hyperparameter_Set_3/week2_finetune/`
+  Canonical configs for corrected low-learning-rate week-2 fine-tuning.
+- `configs/Hyperparameter_Set_3/week3_fromscratch/`
+  Canonical configs for corrected low-learning-rate week-3 from-scratch runs.
 
 ## Provenance Reports
 

@@ -9,7 +9,7 @@ DEFAULT_FAMILIES = ["oxide", "nitride"]
 DEFAULT_NS = [10, 50, 100, 200, 500, 1000]
 DEFAULT_SEEDS = [0, 1, 2, 3, 4]
 DEFAULT_RUN_SUBDIR = "finetune_last2_epochs100_bs32_lr5e5"
-DEFAULT_CONFIG_DIR = "configs/week2_last2_epochs100_bs32_lr5e5"
+DEFAULT_CONFIG_DIR = "configs/Hyperparameter_Set_3/week2_finetune"
 DEFAULT_REPORT_DIR = "reports/week2_last2_epochs100_bs32_lr5e5"
 DEFAULT_RESULTS_ROOT = "Results_Hyperparameter_Set_3"
 
