@@ -1,0 +1,5 @@
+{
+  "dataset_root": "/content/res201-alignn-domain-shift/results/nitride/N50_seed1/dataset_root",
+  "n_total_params": 4026753,
+  "train_protocol": "from_scratch"
+}

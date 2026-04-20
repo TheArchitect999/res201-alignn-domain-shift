@@ -1,0 +1,82 @@
+$ /home/FaizanAhmed/ENTER/envs/res201_train/bin/python scripts/shared/finetune_last2_alignn.py --config /mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/configs/nitride_week2_N500_seed0.finetune_last2.json --output-dir /mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N500_seed0/finetune_last2 --dataset-root /mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N500_seed0/dataset_root --pretrained-checkpoint /mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/jv_formation_energy_peratom_alignn/checkpoint_300.pt --pretrained-config /mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/jv_formation_energy_peratom_alignn/config.json --device cpu
+data range 4.42212 -2.79107
+line_graph True
+  0%|          | 0/450 [00:00<?, ?it/s]  3%|▎         | 15/450 [00:00<00:03, 144.98it/s]  7%|▋         | 31/450 [00:00<00:02, 141.83it/s] 10%|█         | 46/450 [00:00<00:02, 143.55it/s] 14%|█▎        | 61/450 [00:00<00:02, 133.25it/s] 18%|█▊        | 80/450 [00:00<00:02, 150.21it/s] 21%|██▏       | 96/450 [00:00<00:02, 151.96it/s] 25%|██▍       | 112/450 [00:00<00:02, 145.78it/s] 28%|██▊       | 127/450 [00:00<00:02, 141.01it/s] 32%|███▏      | 142/450 [00:01<00:02, 137.83it/s] 35%|███▌      | 158/450 [00:01<00:02, 142.80it/s] 38%|███▊      | 173/450 [00:01<00:02, 114.50it/s] 42%|████▏     | 190/450 [00:01<00:02, 126.08it/s] 46%|████▌     | 205/450 [00:01<00:01, 132.16it/s] 49%|████▉     | 220/450 [00:01<00:01, 136.21it/s] 53%|█████▎    | 239/450 [00:01<00:01, 150.79it/s] 57%|█████▋    | 255/450 [00:01<00:01, 137.32it/s] 60%|██████    | 270/450 [00:01<00:01, 139.32it/s] 64%|██████▍   | 287/450 [00:02<00:01, 145.26it/s] 67%|██████▋   | 302/450 [00:02<00:01, 145.44it/s] 71%|███████   | 319/450 [00:02<00:00, 150.23it/s] 75%|███████▍  | 337/450 [00:02<00:00, 156.85it/s] 78%|███████▊  | 353/450 [00:02<00:00, 150.44it/s] 83%|████████▎ | 372/450 [00:02<00:00, 160.45it/s] 86%|████████▋ | 389/450 [00:02<00:00, 152.15it/s] 90%|█████████ | 405/450 [00:02<00:00, 127.52it/s] 94%|█████████▎| 421/450 [00:03<00:00, 132.18it/s] 97%|█████████▋| 437/450 [00:03<00:00, 136.44it/s]100%|██████████| 450/450 [00:03<00:00, 141.55it/s]
+data range 3.38383 -2.10521
+line_graph True
+  0%|          | 0/50 [00:00<?, ?it/s] 34%|███▍      | 17/50 [00:00<00:00, 164.21it/s] 68%|██████▊   | 34/50 [00:00<00:00, 137.64it/s]100%|██████████| 50/50 [00:00<00:00, 145.95it/s]100%|██████████| 50/50 [00:00<00:00, 145.71it/s]
+data range 2.75603 -2.21927
+line_graph True
+  0%|          | 0/242 [00:00<?, ?it/s]  6%|▌         | 14/242 [00:00<00:01, 134.74it/s] 12%|█▏        | 28/242 [00:00<00:01, 125.81it/s] 19%|█▊        | 45/242 [00:00<00:01, 143.81it/s] 26%|██▌       | 63/242 [00:00<00:01, 154.91it/s] 33%|███▎      | 79/242 [00:00<00:01, 153.62it/s] 39%|███▉      | 95/242 [00:00<00:00, 148.69it/s] 45%|████▌     | 110/242 [00:00<00:00, 145.60it/s] 52%|█████▏    | 127/242 [00:00<00:00, 152.49it/s] 60%|██████    | 146/242 [00:00<00:00, 160.39it/s] 67%|██████▋   | 163/242 [00:01<00:00, 159.09it/s] 74%|███████▍  | 179/242 [00:01<00:00, 129.76it/s] 80%|████████  | 194/242 [00:01<00:00, 134.41it/s] 86%|████████▋ | 209/242 [00:01<00:00, 127.38it/s] 94%|█████████▍| 228/242 [00:01<00:00, 143.33it/s]100%|██████████| 242/242 [00:01<00:00, 145.65it/s]
+{"epoch": 1, "train_loss": 0.6137752846397203, "val_loss": 0.5247184857726097}
+{"epoch": 2, "train_loss": 0.6388926454659166, "val_loss": 0.5468611046671867}
+{"epoch": 3, "train_loss": 0.6108197048306465, "val_loss": 0.6754770427942276}
+{"epoch": 4, "train_loss": 0.6700309504722727, "val_loss": 0.6837626844644547}
+{"epoch": 5, "train_loss": 0.5690256711737863, "val_loss": 0.5885005742311478}
+{"epoch": 6, "train_loss": 0.5930423780248083, "val_loss": 0.6487524062395096}
+{"epoch": 7, "train_loss": 0.5071204011810237, "val_loss": 0.45022422820329666}
+{"epoch": 8, "train_loss": 0.4951399174229852, "val_loss": 0.5274381265044212}
+{"epoch": 9, "train_loss": 0.43249951405771847, "val_loss": 0.5036310628056526}
+{"epoch": 10, "train_loss": 0.4005253646394302, "val_loss": 0.35465141385793686}
+{"epoch": 11, "train_loss": 0.39126214359340994, "val_loss": 0.3584023118019104}
+{"epoch": 12, "train_loss": 0.33275169134140015, "val_loss": 0.30351347476243973}
+{"epoch": 13, "train_loss": 0.2793622276392476, "val_loss": 0.2376900650560856}
+{"epoch": 14, "train_loss": 0.27938704115563423, "val_loss": 0.27201303094625473}
+{"epoch": 15, "train_loss": 0.25668498000194284, "val_loss": 0.2152170017361641}
+{"epoch": 16, "train_loss": 0.2427087146146544, "val_loss": 0.0986837837845087}
+{"epoch": 17, "train_loss": 0.21244295943399955, "val_loss": 0.19128401204943657}
+{"epoch": 18, "train_loss": 0.21384154028933625, "val_loss": 0.1406577117741108}
+{"epoch": 19, "train_loss": 0.18945988601651684, "val_loss": 0.09706359729170799}
+{"epoch": 20, "train_loss": 0.22911084520405736, "val_loss": 0.11027953214943409}
+{"epoch": 21, "train_loss": 0.20569309900546895, "val_loss": 0.08830239623785019}
+{"epoch": 22, "train_loss": 0.17341376481385068, "val_loss": 0.11429719626903534}
+{"epoch": 23, "train_loss": 0.19730205988061839, "val_loss": 0.1474813111126423}
+{"epoch": 24, "train_loss": 0.1985166861579336, "val_loss": 0.07281317189335823}
+{"epoch": 25, "train_loss": 0.2129711382861795, "val_loss": 0.14249296113848686}
+{"epoch": 26, "train_loss": 0.18583174178312564, "val_loss": 0.12064483761787415}
+{"epoch": 27, "train_loss": 0.22509071616263227, "val_loss": 0.17176586762070656}
+{"epoch": 28, "train_loss": 0.23028711846162533, "val_loss": 0.08402177505195141}
+{"epoch": 29, "train_loss": 0.17047492825779423, "val_loss": 0.08780666813254356}
+{"epoch": 30, "train_loss": 0.18393671422682958, "val_loss": 0.08010187558829784}
+{"epoch": 31, "train_loss": 0.16836523316029844, "val_loss": 0.10466642491519451}
+{"epoch": 32, "train_loss": 0.16530874577061883, "val_loss": 0.07100469805300236}
+{"epoch": 33, "train_loss": 0.1695510336551173, "val_loss": 0.06927319057285786}
+{"epoch": 34, "train_loss": 0.19066248936899777, "val_loss": 0.08004426397383213}
+{"epoch": 35, "train_loss": 0.18762295590392475, "val_loss": 0.09199221059679985}
+{"epoch": 36, "train_loss": 0.21806904956184583, "val_loss": 0.0989051591604948}
+{"epoch": 37, "train_loss": 0.18623789528320575, "val_loss": 0.08368796668946743}
+{"epoch": 38, "train_loss": 0.15400501982919101, "val_loss": 0.1256625223904848}
+{"epoch": 39, "train_loss": 0.16415691889565567, "val_loss": 0.08700263127684593}
+{"epoch": 40, "train_loss": 0.17279896140098572, "val_loss": 0.08674603328108788}
+{"epoch": 41, "train_loss": 0.1583469651382545, "val_loss": 0.13139793276786804}
+{"epoch": 42, "train_loss": 0.19210769261779456, "val_loss": 0.06985007040202618}
+{"epoch": 43, "train_loss": 0.16821670724913992, "val_loss": 0.06797443330287933}
+{"epoch": 44, "train_loss": 0.16095170789751514, "val_loss": 0.07621731795370579}
+{"epoch": 45, "train_loss": 0.19068096912112728, "val_loss": 0.10899537242949009}
+{"epoch": 46, "train_loss": 0.17351493573394314, "val_loss": 0.10210876539349556}
+{"epoch": 47, "train_loss": 0.16753852804159297, "val_loss": 0.07400239631533623}
+{"epoch": 48, "train_loss": 0.19778708599764724, "val_loss": 0.07133947499096394}
+{"epoch": 49, "train_loss": 0.16693799428898712, "val_loss": 0.0952910203486681}
+{"epoch": 50, "train_loss": 0.17457272407823596, "val_loss": 0.07654969953000546}
+{
+  "dataset_root": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N500_seed0/dataset_root",
+  "output_dir": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N500_seed0/finetune_last2",
+  "device": "cpu",
+  "n_train": 450,
+  "n_val": 50,
+  "n_test": 242,
+  "epochs": 50,
+  "batch_size": 16,
+  "learning_rate": 0.0001,
+  "unfrozen_groups": [
+    "gcn_layers.3",
+    "fc"
+  ],
+  "train_mae_eV_per_atom": 0.07486418377021134,
+  "val_best_l1": 0.06797443330287933,
+  "test_l1": 0.1267317794263363,
+  "test_mae_eV_per_atom": 0.11103363031105808,
+  "prediction_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/nitride/N500_seed0/finetune_last2/prediction_results_test_set.csv",
+  "elapsed_seconds": 456.00628685951233
+}
+
