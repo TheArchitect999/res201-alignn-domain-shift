@@ -92,7 +92,7 @@ No completed or partial embedding-analysis script/artifact set was found. Search
 
 ## Ambiguities And Risks
 
-- Some docs still reference old report paths such as `reports/week2_prof_advice/` and `reports/week3_fromscratch_prof_advice/`; the current organized report bundle is `reports/Hyperparameter Set 1/`.
+- Historical provenance logs and one-shot migration scripts may still contain older Colab-era report path strings. Current README and workspace-orientation docs point to `reports/Hyperparameter Set 1/`, `reports/Hyperparameter Set 2/`, and `reports/Hyperparameter Set 3/`.
 - `jv_formation_energy_peratom_alignn/config.json` contains pretrained training hyperparameters matching Hyperparameter Set 2 (`epochs=300`, `batch_size=64`, `learning_rate=0.001`). Those describe the local pretrained checkpoint/config, not the canonical project-brief fine-tuning namespace.
 - The local zero-shot `summary.json` files contain historical absolute paths in metadata. The repo-relative prediction CSVs under `Results_Before_Correction/{oxide,nitride}/zero_shot/` are the canonical files to use.
 - The project PDF in `Project_Task/` could not be text-extracted with available local tools during this audit. The project-brief hyperparameter interpretation here is based on repo reports and docs that identify the professor-advice setting as `epochs=50`, `batch_size=16`, and `learning_rate=0.0001`.

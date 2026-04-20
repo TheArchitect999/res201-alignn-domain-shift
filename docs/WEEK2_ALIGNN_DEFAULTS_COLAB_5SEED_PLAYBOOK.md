@@ -2,9 +2,9 @@
 
 This playbook documents the Colab-first workflow for the tagged five-seed fine-tuning sweep:
 
-- tag: `week2_alignn_defaults_colab_5seed`
-- branch: `colab/week2-alignn-defaults-5seed`
-- run subdir: `finetune_last2_week2_alignn_defaults_colab_5seed`
+- tag: `week2`
+- branch: `main`
+- run subdir: `finetune_last2`
 - families: `oxide`, `nitride`
 - training sizes: `10, 50, 100, 200, 500, 1000`
 - seeds: `0, 1, 2, 3, 4`
@@ -34,7 +34,7 @@ bash env/bootstrap_res201_colab_week2_alignn_defaults_5seed.sh \
 What the bootstrap does:
 
 - clones `main` with `--filter=blob:none`
-- checks out `colab/week2-alignn-defaults-5seed`
+- checks out `main`
 - applies a sparse checkout that keeps:
   - source scripts
   - `data_shared/`
@@ -119,9 +119,9 @@ Checkpoint selection:
 The suite commits and pushes only after a run finishes successfully. Each per-run push stages:
 
 - `Results_Hyperparameter_Set_2/<family>/N<N>_seed<seed>/dataset_root/`
-- `Results_Hyperparameter_Set_2/<family>/N<N>_seed<seed>/finetune_last2_week2_alignn_defaults_colab_5seed/`
-- `configs/week2_alignn_defaults_colab_5seed/...`
-- `reports/week2_alignn_defaults_colab_5seed/progress_manifest.json`
+- `Results_Hyperparameter_Set_2/<family>/N<N>_seed<seed>/finetune_last2/`
+- `configs/Hyperparameter_Set_2/week2_finetune/...`
+- `reports/Hyperparameter Set 2/Summaries/Finetuning/progress_manifest.json`
 
 Partial failed runs are never pushed.
 
@@ -158,7 +158,7 @@ The checker expects:
 
 ## Expected Output Roots
 
-- configs: `configs/week2_alignn_defaults_colab_5seed/`
-- per-run outputs: `Results_Hyperparameter_Set_2/<family>/N<N>_seed<seed>/finetune_last2_week2_alignn_defaults_colab_5seed/`
-- reports: `reports/week2_alignn_defaults_colab_5seed/`
-- training-curve reports: `reports/week2_alignn_defaults_colab_5seed/training_curves/`
+- configs: `configs/Hyperparameter_Set_2/week2_finetune/`
+- per-run outputs: `Results_Hyperparameter_Set_2/<family>/N<N>_seed<seed>/finetune_last2/`
+- reports: `reports/Hyperparameter Set 2/Summaries/Finetuning/`
+- training-curve reports: `reports/Hyperparameter Set 2/Training Curves/Finetuning/`

@@ -14,10 +14,12 @@ paths are organized to mirror the result namespaces where practical.
 - `Hyperparameter_Set_3/`: configs for `Results_Hyperparameter_Set_3`.
   These use the corrected low-learning-rate hyperparameters: `epochs=100`,
   `batch_size=32`, `learning_rate=0.00005`.
+- `configs_before_correction/`: preserved configs for
+  `Results_Before_Correction` and the early Week 1 debugging runs.
 
-The remaining flat JSON files in this directory are historical before-correction
-or early debugging configs. Keep them for provenance, but prefer the namespaced
-folders above for current experiment navigation.
+There should be no flat JSON files directly in this directory. Add durable run
+configs to the matching namespace above so config paths stay aligned with result
+paths.
 
 ## Cache Note
 

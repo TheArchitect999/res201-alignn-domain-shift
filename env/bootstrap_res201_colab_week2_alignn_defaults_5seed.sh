@@ -4,9 +4,9 @@ set -euo pipefail
 REPO_URL="${1:?usage: bash env/bootstrap_res201_colab_week2_alignn_defaults_5seed.sh <repo-url> [workspace-dir] [base-branch] [target-branch]}"
 WORKSPACE_DIR="${2:-/content/res201-alignn-domain-shift}"
 BASE_BRANCH="${3:-main}"
-TARGET_BRANCH="${4:-colab/week2-alignn-defaults-5seed}"
-TAG="week2_alignn_defaults_colab_5seed"
-SMOKE_TAG="week2_alignn_defaults_colab_5seed_smoke"
+TARGET_BRANCH="${4:-main}"
+TAG="week2"
+SMOKE_TAG="week2_smoke"
 
 if [[ -n "${GITHUB_TOKEN:-}" && "$REPO_URL" == https://* ]]; then
   AUTH_REPO_URL="https://${GITHUB_TOKEN}@${REPO_URL#https://}"
@@ -50,12 +50,10 @@ cat > .git/info/sparse-checkout <<EOF
 /data_shared/
 /configs/
 !/configs/*
-/configs/${TAG}/
-/configs/${SMOKE_TAG}/
+/configs/Hyperparameter_Set_2/
 /reports/
 !/reports/*
-/reports/${TAG}/
-/reports/${SMOKE_TAG}/
+/reports/Hyperparameter Set 2/
 /Results_Before_Correction/
 !/Results_Before_Correction/*
 /Results_Before_Correction/oxide/
@@ -73,24 +71,24 @@ cat > .git/info/sparse-checkout <<EOF
 /Results_Hyperparameter_Set_2/oxide/N*_seed*/
 !/Results_Hyperparameter_Set_2/oxide/N*_seed*/*
 /Results_Hyperparameter_Set_2/oxide/N*_seed*/dataset_root/
-/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${TAG}/summary.json
-/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${TAG}/history_train.json
-/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${TAG}/history_val.json
-/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/summary.json
-/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/history_train.json
-/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_${SMOKE_TAG}/history_val.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2/summary.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2/history_train.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2/history_val.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_smoke/summary.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_smoke/history_train.json
+/Results_Hyperparameter_Set_2/oxide/N*_seed*/finetune_last2_smoke/history_val.json
 /Results_Before_Correction/oxide/zero_shot/summary.json
 /Results_Hyperparameter_Set_2/nitride/
 !/Results_Hyperparameter_Set_2/nitride/*
 /Results_Hyperparameter_Set_2/nitride/N*_seed*/
 !/Results_Hyperparameter_Set_2/nitride/N*_seed*/*
 /Results_Hyperparameter_Set_2/nitride/N*_seed*/dataset_root/
-/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${TAG}/summary.json
-/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${TAG}/history_train.json
-/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${TAG}/history_val.json
-/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/summary.json
-/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/history_train.json
-/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_${SMOKE_TAG}/history_val.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2/summary.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2/history_train.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2/history_val.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_smoke/summary.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_smoke/history_train.json
+/Results_Hyperparameter_Set_2/nitride/N*_seed*/finetune_last2_smoke/history_val.json
 /Results_Before_Correction/nitride/zero_shot/summary.json
 EOF
 git read-tree -mu HEAD

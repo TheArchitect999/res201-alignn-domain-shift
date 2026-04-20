@@ -213,8 +213,8 @@ It writes a TrainingConfig-compatible JSON for the currently installed ALIGNN ve
 
 The generated Week 1 configs are:
 \begin{itemize}
-  \item \texttt{configs/oxide\_week1\_N50\_seed0.finetune\_last2.json}
-  \item \texttt{configs/nitride\_week1\_N50\_seed0.finetune\_last2.json}
+  \item \texttt{configs/configs\_before\_correction/oxide\_week1\_N50\_seed0.finetune\_last2.json}
+  \item \texttt{configs/configs\_before\_correction/nitride\_week1\_N50\_seed0.finetune\_last2.json}
 \end{itemize}
 
 \subsection{$N=50$ Fine-Tuning Training Procedure}
@@ -239,7 +239,7 @@ The Week 1 wrapper performs the following:
 Representative commands used:
 \begin{lstlisting}[language=bash]
 python scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py \
-  --config configs/oxide_week1_N50_seed0.finetune_last2.json \
+  --config configs/configs_before_correction/oxide_week1_N50_seed0.finetune_last2.json \
   --output-dir Results_Before_Correction/oxide/N50_seed0/finetune_last2 \
   --dataset-root Results_Before_Correction/oxide/N50_seed0/dataset_root \
   --pretrained-checkpoint jv_formation_energy_peratom_alignn/checkpoint_300.pt \
@@ -247,7 +247,7 @@ python scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py \
   --device cpu
 
 python scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py \
-  --config configs/nitride_week1_N50_seed0.finetune_last2.json \
+  --config configs/configs_before_correction/nitride_week1_N50_seed0.finetune_last2.json \
   --output-dir Results_Before_Correction/nitride/N50_seed0/finetune_last2 \
   --dataset-root Results_Before_Correction/nitride/N50_seed0/dataset_root \
   --pretrained-checkpoint jv_formation_energy_peratom_alignn/checkpoint_300.pt \
@@ -494,8 +494,8 @@ git add .gitignore
 git add scripts/shared/Check_Week1_Baseline_Status.sh
 git add scripts/shared/Fine_Tune_Last_Two_ALIGNN_Layers.py
 git add scripts/shared/Write_Week1_ALIGNN_Config.py
-git add configs/oxide_week1_N50_seed0.finetune_last2.json
-git add configs/nitride_week1_N50_seed0.finetune_last2.json
+git add configs/configs_before_correction/oxide_week1_N50_seed0.finetune_last2.json
+git add configs/configs_before_correction/nitride_week1_N50_seed0.finetune_last2.json
 git add reports/zero_shot/zero_shot_summary.csv
 git add Results_Before_Correction/oxide/zero_shot/predictions.csv
 git add Results_Before_Correction/nitride/zero_shot/predictions.csv

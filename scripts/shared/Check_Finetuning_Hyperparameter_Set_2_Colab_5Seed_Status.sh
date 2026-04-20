@@ -2,10 +2,22 @@
 set -euo pipefail
 
 REPO_ROOT="${1:-.}"
-TAG="${2:-week2_alignn_defaults_colab_5seed}"
-RUN_SUBDIR="finetune_last2_${TAG}"
-REPORT_DIR="reports/${TAG}"
-TRAINING_CURVE_DIR="${REPORT_DIR}/training_curves"
+TAG="${2:-week2}"
+if [[ "$TAG" == "week2" ]]; then
+  DEFAULT_RUN_SUBDIR="finetune_last2"
+  DEFAULT_REPORT_DIR="reports/Hyperparameter Set 2/Summaries/Finetuning"
+  DEFAULT_LEARNING_CURVE_DIR="reports/Hyperparameter Set 2/Learning Curves"
+  DEFAULT_TRAINING_CURVE_DIR="reports/Hyperparameter Set 2/Training Curves/Finetuning"
+else
+  DEFAULT_RUN_SUBDIR="finetune_last2_${TAG}"
+  DEFAULT_REPORT_DIR="reports/${TAG}"
+  DEFAULT_LEARNING_CURVE_DIR="${DEFAULT_REPORT_DIR}"
+  DEFAULT_TRAINING_CURVE_DIR="${DEFAULT_REPORT_DIR}/training_curves"
+fi
+RUN_SUBDIR="${3:-$DEFAULT_RUN_SUBDIR}"
+REPORT_DIR="${4:-$DEFAULT_REPORT_DIR}"
+TRAINING_CURVE_DIR="${5:-$DEFAULT_TRAINING_CURVE_DIR}"
+LEARNING_CURVE_DIR="${6:-$DEFAULT_LEARNING_CURVE_DIR}"
 
 cd "$REPO_ROOT"
 
@@ -36,13 +48,12 @@ aggregate_paths=(
   "${REPORT_DIR}/finetune_summary_by_N.csv"
   "${REPORT_DIR}/finetune_summary_wide.csv"
   "${REPORT_DIR}/finetune_summary_table.tex"
-  "${REPORT_DIR}/oxide_learning_curve.png"
-  "${REPORT_DIR}/oxide_learning_curve.pdf"
-  "${REPORT_DIR}/nitride_learning_curve.png"
-  "${REPORT_DIR}/nitride_learning_curve.pdf"
-  "${REPORT_DIR}/run_suite_summary.json"
   "${REPORT_DIR}/week2_summary_manifest.json"
   "${REPORT_DIR}/progress_manifest.json"
+  "${LEARNING_CURVE_DIR}/Oxide Learning Curve - Hyperparameter Set 2.png"
+  "${LEARNING_CURVE_DIR}/Oxide Learning Curve - Hyperparameter Set 2.pdf"
+  "${LEARNING_CURVE_DIR}/Nitride Learning Curve - Hyperparameter Set 2.png"
+  "${LEARNING_CURVE_DIR}/Nitride Learning Curve - Hyperparameter Set 2.pdf"
   "${TRAINING_CURVE_DIR}/training_curve_manifest.csv"
   "${TRAINING_CURVE_DIR}/training_curve_manifest.json"
   "${TRAINING_CURVE_DIR}/README.md"
@@ -62,15 +73,15 @@ done
 
 echo
 echo "[3/4] Validating aggregate CSV contents..."
-if ! TAG_ENV="$TAG" python - <<'PY'
+if ! TAG_ENV="$TAG" REPORT_DIR="$REPORT_DIR" TRAINING_CURVE_DIR="$TRAINING_CURVE_DIR" python - <<'PY'
 import csv
 import os
 import sys
 from pathlib import Path
 
 tag = os.environ["TAG_ENV"]
-report_dir = Path("reports") / tag
-training_curve_dir = report_dir / "training_curves"
+report_dir = Path(os.environ["REPORT_DIR"])
+training_curve_dir = Path(os.environ["TRAINING_CURVE_DIR"])
 families = ["oxide", "nitride"]
 ns = [10, 50, 100, 200, 500, 1000]
 expected_runs = 5

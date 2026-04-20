@@ -6,7 +6,6 @@ Frozen copies of the original Colab-named report bundles imported from
 These bundles are retained for provenance and cross-checking. The canonical report
 locations for day-to-day use are:
 
-- `reports/week2_prof_advice/`
-- `reports/week2_prof_advice_alignn_recommended/`
-- `reports/week3_fromscratch_prof_advice/`
-- `reports/week3_fromscratch_alignn_recommended/`
+- `reports/Hyperparameter Set 1/`
+- `reports/Hyperparameter Set 2/`
+- `reports/Hyperparameter Set 3/`

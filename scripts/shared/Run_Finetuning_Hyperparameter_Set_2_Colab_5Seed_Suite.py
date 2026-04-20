@@ -9,11 +9,11 @@ import tempfile
 import time
 from pathlib import Path
 
-DEFAULT_TAG = "week2_alignn_defaults_colab_5seed"
+DEFAULT_TAG = "week2"
 DEFAULT_FAMILIES = ["oxide", "nitride"]
 DEFAULT_NS = [10, 50, 100, 200, 500, 1000]
 DEFAULT_SEEDS = [0, 1, 2, 3, 4]
-DEFAULT_BRANCH = "colab/week2-alignn-defaults-5seed"
+DEFAULT_BRANCH = "main"
 DEFAULT_RESULTS_ROOT = "Results_Hyperparameter_Set_2"
 OOM_STRINGS = (
     "cuda error: out of memory",
@@ -242,9 +242,17 @@ def main() -> int:
     repo = Path(args.repo_root).resolve()
     python = sys.executable
     tag = args.experiment_tag
-    run_subdir = args.run_subdir or f"finetune_last2_{tag}"
-    config_dir = repo / (args.config_dir or f"configs/{tag}")
-    report_dir = repo / (args.report_dir or f"reports/{tag}")
+    if tag == "week2":
+        default_run_subdir = "finetune_last2"
+        default_config_dir = "configs/Hyperparameter_Set_2/week2_finetune"
+        default_report_dir = "reports/Hyperparameter Set 2/Summaries/Finetuning"
+    else:
+        default_run_subdir = f"finetune_last2_{tag}"
+        default_config_dir = f"configs/{tag}"
+        default_report_dir = f"reports/{tag}"
+    run_subdir = args.run_subdir or default_run_subdir
+    config_dir = repo / (args.config_dir or default_config_dir)
+    report_dir = repo / (args.report_dir or default_report_dir)
     progress_path = report_dir / "progress_manifest.json"
     checkpoint_path = (repo / args.pretrained_checkpoint).resolve()
     pretrained_config_path = (repo / args.pretrained_config).resolve()

@@ -32,7 +32,8 @@ workspace.
   Stores the preserved pre-correction namespace. This is the canonical home for
   baseline zero-shot prediction CSVs, original `finetune_last2/` runs, and shared
   run-level `dataset_root/` directories. The single canonical zero-shot summary
-  table lives at `reports/zero_shot/zero_shot_summary.csv`.
+  table lives at `reports/zero_shot/zero_shot_summary.csv`. Matching preserved
+  configs live under `configs/configs_before_correction/`.
 - `Results_Hyperparameter_Set_1/`
   5-seed experiment namespace for professor-hyperparameter runs.
 - `Results_Hyperparameter_Set_2/`
@@ -71,9 +72,9 @@ not commit `*.mdb`, `id_prop.csv*_data/`, `*_lmdb/`, `*_data_range`, or local
 
 | Namespace | Experiment type | Hyperparameters | Seeds covered | Canonical report folder |
 | --- | --- | --- | --- | --- |
-| `Results_Before_Correction/` | Pre-correction baseline experiments | Historical values from the original before-correction workflow | Original baseline coverage plus canonical zero-shot prediction CSVs | `reports/week2/`, `reports/week3_fromscratch_baseline/` |
-| `Results_Hyperparameter_Set_1/` | Fine-tune and from-scratch imported from Colab | `epochs=50`, `batch_size=16`, `learning_rate=0.0001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/week2_prof_advice/`, `reports/week3_fromscratch_prof_advice/` |
-| `Results_Hyperparameter_Set_2/` | Fine-tune and from-scratch imported from Colab | `epochs=300`, `batch_size=64`, `learning_rate=0.001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/week2_prof_advice_alignn_recommended/`, `reports/week3_fromscratch_alignn_recommended/` |
+| `Results_Before_Correction/` | Pre-correction baseline experiments | Historical values from the original before-correction workflow | Original baseline coverage plus canonical zero-shot prediction CSVs | `reports/week2/`, `reports/zero_shot/` |
+| `Results_Hyperparameter_Set_1/` | Fine-tune and from-scratch imported from Colab | `epochs=50`, `batch_size=16`, `learning_rate=0.0001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/Hyperparameter Set 1/` |
+| `Results_Hyperparameter_Set_2/` | Fine-tune and from-scratch imported from Colab | `epochs=300`, `batch_size=64`, `learning_rate=0.001` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/Hyperparameter Set 2/` |
 | `Results_Hyperparameter_Set_3/` | Corrected low-learning-rate fine-tune and from-scratch runs | `epochs=100`, `batch_size=32`, `learning_rate=0.00005` | Fine-tune: `0..4`; from-scratch (`N=50,500`): `0..4` | `reports/Hyperparameter Set 3/` |
 
 ## Config Layout
@@ -90,6 +91,8 @@ not commit `*.mdb`, `id_prop.csv*_data/`, `*_lmdb/`, `*_data_range`, or local
   Canonical configs for corrected low-learning-rate week-2 fine-tuning.
 - `configs/Hyperparameter_Set_3/week3_fromscratch/`
   Canonical configs for corrected low-learning-rate week-3 from-scratch runs.
+- `configs/configs_before_correction/`
+  Preserved before-correction and early Week 1 debugging configs.
 
 ## Provenance Reports
 

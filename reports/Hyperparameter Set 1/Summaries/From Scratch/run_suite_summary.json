@@ -4,6 +4,6 @@
   "expected_runs": 20,
   "actual_runs": 20,
   "complete": true,
-  "report_dir": "reports/week3_fromscratch_prof_advice",
-  "summary_csv": "reports/week3_fromscratch_prof_advice/fromscratch_summary.csv"
+  "report_dir": "reports/Hyperparameter Set 1/Summaries/From Scratch",
+  "summary_csv": "reports/Hyperparameter Set 1/Summaries/From Scratch/fromscratch_summary.csv"
 }

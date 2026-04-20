@@ -33,7 +33,7 @@ The selected namespace includes per-run prediction CSVs, per-run summaries, and 
 ## Documentation Inconsistencies
 
 - Current organized report directories are `reports/Hyperparameter Set 1/`, `reports/Hyperparameter Set 2/`, and `reports/Hyperparameter Set 3/`.
-- Some repo docs still mention older paths such as `reports/week2_prof_advice/`, `reports/week2_prof_advice_alignn_recommended/`, and `reports/week3_fromscratch_prof_advice/`.
+- Historical provenance logs and one-shot migration scripts may still contain older Colab-era report path strings. Current README and workspace-orientation docs point to the organized report bundles above.
 - The local pretrained config at `jv_formation_energy_peratom_alignn/config.json` has training hyperparameters matching Hyperparameter Set 2 (`epochs=300`, `batch_size=64`, `learning_rate=0.001`). That config is still the authoritative architecture/config for loading the local pretrained checkpoint, but it should not be read as the canonical fine-tuning namespace for this analysis.
 - The project PDF under `Project_Task/` could not be text-extracted with available local tools during this audit. The project-brief interpretation is therefore based on local repo reports and docs that name the professor-advice setting.
 

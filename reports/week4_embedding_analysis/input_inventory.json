@@ -282,7 +282,7 @@
     ]
   },
   "ambiguities_and_risks": [
-    "Some docs reference old report paths such as reports/week2_prof_advice/ and reports/week3_fromscratch_prof_advice/; current organized report paths are reports/Hyperparameter Set 1/, reports/Hyperparameter Set 2/, and reports/Hyperparameter Set 3/.",
+    "Historical provenance logs and one-shot migration scripts may still contain older Colab-era report path strings; current README and workspace-orientation docs point to reports/Hyperparameter Set 1/, reports/Hyperparameter Set 2/, and reports/Hyperparameter Set 3/.",
     "The pretrained config hyperparameters match Hyperparameter Set 2, but those describe the local pretrained bundle, not the canonical project-brief fine-tuning namespace.",
     "The project PDF in Project_Task/ could not be text-extracted with available local tools in this audit; the official-brief interpretation is based on repo reports/docs.",
     "Multiple complete namespaces exist. The canonical decision is a recommendation for error-linked analysis, not an invalidation of comparison namespaces.",

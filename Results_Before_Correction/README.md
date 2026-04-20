@@ -9,6 +9,7 @@ Contents:
 - `oxide/zero_shot/predictions.csv` and `nitride/zero_shot/predictions.csv`: canonical zero-shot prediction outputs used throughout the project.
 - `oxide/N*_seed*/dataset_root/` and `nitride/N*_seed*/dataset_root/`: shared materialized run splits inherited from the original workspace.
 - `oxide/N*_seed*/finetune_last2/` and `nitride/N*_seed*/finetune_last2/`: before-correction partial fine-tuning artifacts.
+- `../configs/configs_before_correction/`: matching preserved run configs.
 
 Expected coverage:
 

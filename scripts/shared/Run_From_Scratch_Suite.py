@@ -11,9 +11,9 @@ from pathlib import Path
 
 DEFAULT_FAMILIES = ["oxide", "nitride"]
 DEFAULT_NS = [50, 500]
-DEFAULT_SEEDS = [0]
+DEFAULT_SEEDS = [0, 1, 2, 3, 4]
 DEFAULT_BRANCH = "main"
-DEFAULT_RESULTS_ROOT = "Results_Before_Correction"
+DEFAULT_RESULTS_ROOT = "Results_Hyperparameter_Set_2"
 OOM_STRINGS = (
     "cuda error: out of memory",
     "cuda out of memory",
@@ -174,8 +174,8 @@ def main() -> int:
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--link-mode", choices=["copy", "hardlink", "symlink"], default="hardlink")
     parser.add_argument("--run-subdir", default="train_alignn_fromscratch")
-    parser.add_argument("--config-dir", default="configs/week3_fromscratch_baseline")
-    parser.add_argument("--report-dir", default="reports/week3_fromscratch_baseline")
+    parser.add_argument("--config-dir", default="configs/Hyperparameter_Set_2/week3_fromscratch")
+    parser.add_argument("--report-dir", default="reports/Hyperparameter Set 2/Summaries/From Scratch")
     parser.add_argument("--force", action="store_true")
     parser.add_argument("--continue-on-error", action="store_true")
     parser.add_argument("--git-push-after-run", action="store_true")

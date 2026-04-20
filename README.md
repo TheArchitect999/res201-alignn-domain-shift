@@ -10,6 +10,7 @@ that exist in the main working folder.
 - canonical oxide and nitride family datasets under `data_shared/`
 - the pretrained ALIGNN checkpoint and paired config under `jv_formation_energy_peratom_alignn/`
 - preserved zero-shot predictions and before-correction fine-tuning outputs under `Results_Before_Correction/`
+- before-correction run configs under `configs/configs_before_correction/`
 - the canonical zero-shot summary table under `reports/zero_shot/`
 - 5-seed professor-hyperparameter experiments under `Results_Hyperparameter_Set_1/`
 - 5-seed ALIGNN-recommended experiments under `Results_Hyperparameter_Set_2/`
@@ -23,7 +24,7 @@ that exist in the main working folder.
 
 - Generated cache files are intentionally not versioned. This includes ALIGNN/DGL
   LMDB folders (`id_prop.csv*_data/`, `*_lmdb/`, `*.mdb`) and local download or
-  plotting caches under `cache/` and `artifacts/embedding_analysis/cache/`.
+  plotting caches under `cache/` and embedding-analysis cache folders.
   They can be recreated from the canonical datasets, manifests, configs, and scripts
   when a workflow is rerun.
 - Historical project documents still use the course timeline names "Stage 2" and
@@ -40,7 +41,7 @@ that exist in the main working folder.
 - `Results_Hyperparameter_Set_1/`: 5-seed professor-hyperparameter fine-tune and from-scratch runs
 - `Results_Hyperparameter_Set_2/`: 5-seed ALIGNN-recommended fine-tune and from-scratch runs
 - `Results_Hyperparameter_Set_3/`: 5-seed 100-epoch/batch-32/lr-5e-5 fine-tune and from-scratch runs split out from the old `results/` tree
-- `configs/`: canonical run configs, organized to mirror the result namespaces
+- `configs/`: canonical run configs, organized to mirror the result namespaces, including `configs/configs_before_correction/` for preserved pre-correction configs
 - `jv_formation_energy_peratom_alignn/`: pretrained checkpoint assets used by the training scripts
 - `env/`: reproducible environment setup scripts
 - `scripts/`: dataset, training, plotting, and inventory utilities
@@ -68,10 +69,9 @@ hyperparameter set:
 
 Canonical imported report folders mirror the same split:
 
-- `reports/week2_prof_advice/`
-- `reports/week2_prof_advice_alignn_recommended/`
-- `reports/week3_fromscratch_prof_advice/`
-- `reports/week3_fromscratch_alignn_recommended/`
+- `reports/Hyperparameter Set 1/`
+- `reports/Hyperparameter Set 2/`
+- `reports/Hyperparameter Set 3/`
 
 Original Colab-named report bundles are preserved under `reports/provenance/colab/`
 for auditability and historical reference.

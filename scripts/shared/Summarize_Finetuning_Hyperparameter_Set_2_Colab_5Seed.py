@@ -7,7 +7,7 @@ import os
 import tempfile
 from pathlib import Path
 
-DEFAULT_TAG = "week2_alignn_defaults_colab_5seed"
+DEFAULT_TAG = "week2"
 DEFAULT_ZERO_SHOT_SUMMARY = "reports/zero_shot/zero_shot_summary.csv"
 DEFAULT_NS = [10, 50, 100, 200, 500, 1000]
 DEFAULT_SEEDS = [0, 1, 2, 3, 4]
@@ -189,14 +189,25 @@ def main() -> int:
     parser.add_argument("--Ns", nargs="+", type=int, default=DEFAULT_NS)
     parser.add_argument("--seeds", nargs="+", type=int, default=DEFAULT_SEEDS)
     parser.add_argument("--out-dir", default=None)
+    parser.add_argument("--plot-dir", default=None)
     args = parser.parse_args()
 
     pd, plt = load_reporting_modules()
 
     repo = Path(args.repo_root).resolve()
-    run_subdir = args.run_subdir or f"finetune_last2_{args.experiment_tag}"
-    out_dir = (repo / (args.out_dir or f"reports/{args.experiment_tag}")).resolve()
+    if args.experiment_tag == "week2":
+        default_run_subdir = "finetune_last2"
+        default_out_dir = "reports/Hyperparameter Set 2/Summaries/Finetuning"
+        default_plot_dir = "reports/Hyperparameter Set 2/Learning Curves"
+    else:
+        default_run_subdir = f"finetune_last2_{args.experiment_tag}"
+        default_out_dir = f"reports/{args.experiment_tag}"
+        default_plot_dir = default_out_dir
+    run_subdir = args.run_subdir or default_run_subdir
+    out_dir = (repo / (args.out_dir or default_out_dir)).resolve()
+    plot_dir = (repo / (args.plot_dir or default_plot_dir)).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
+    plot_dir.mkdir(parents=True, exist_ok=True)
 
     finetune_rows = collect_finetune_rows(repo, args.families, args.Ns, args.seeds, run_subdir)
     zero_shot_rows = collect_zero_shot_rows(repo, args.families)
@@ -251,14 +262,23 @@ def main() -> int:
     write_latex_table(latex_table, summary_df)
 
     zero_lookup = {row["family"]: row["zero_shot_mae_eV_per_atom"] for row in zero_shot_rows}
+    plot_paths = {}
     for family in args.families:
+        if args.experiment_tag == "week2":
+            plot_stem = f"{family.capitalize()} Learning Curve - Hyperparameter Set 2"
+        else:
+            plot_stem = f"{family}_learning_curve"
+        plot_paths[family] = {
+            "png": plot_dir / f"{plot_stem}.png",
+            "pdf": plot_dir / f"{plot_stem}.pdf",
+        }
         plot_family_curve(
             plt,
             family,
             summary_df,
             zero_lookup.get(family),
-            out_dir / f"{family}_learning_curve.png",
-            out_dir / f"{family}_learning_curve.pdf",
+            plot_paths[family]["png"],
+            plot_paths[family]["pdf"],
             seed_count=len(args.seeds),
             experiment_tag=args.experiment_tag,
         )
@@ -273,8 +293,8 @@ def main() -> int:
         "latex_table": str(latex_table),
         "plots": {
             family: {
-                "png": str((out_dir / f"{family}_learning_curve.png").resolve()),
-                "pdf": str((out_dir / f"{family}_learning_curve.pdf").resolve()),
+                "png": str(plot_paths[family]["png"].resolve()),
+                "pdf": str(plot_paths[family]["pdf"].resolve()),
             }
             for family in args.families
         },

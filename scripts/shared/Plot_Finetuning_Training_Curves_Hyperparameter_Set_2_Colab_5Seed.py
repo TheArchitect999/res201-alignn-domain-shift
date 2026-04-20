@@ -7,7 +7,7 @@ import os
 import tempfile
 from pathlib import Path
 
-DEFAULT_TAG = "week2_alignn_defaults_colab_5seed"
+DEFAULT_TAG = "week2"
 DEFAULT_NS = [10, 50, 100, 200, 500, 1000]
 DEFAULT_SEEDS = [0, 1, 2, 3, 4]
 REPORTING_HINT = (
@@ -327,8 +327,14 @@ def main() -> None:
 
     np, plt = load_plot_modules()
     repo_root = Path(args.repo_root).resolve()
-    run_subdir = args.run_subdir or f"finetune_last2_{args.experiment_tag}"
-    out_dir = (repo_root / (args.out_dir or f"reports/{args.experiment_tag}/training_curves")).resolve()
+    if args.experiment_tag == "week2":
+        default_run_subdir = "finetune_last2"
+        default_out_dir = "reports/Hyperparameter Set 2/Training Curves/Finetuning"
+    else:
+        default_run_subdir = f"finetune_last2_{args.experiment_tag}"
+        default_out_dir = f"reports/{args.experiment_tag}/training_curves"
+    run_subdir = args.run_subdir or default_run_subdir
+    out_dir = (repo_root / (args.out_dir or default_out_dir)).resolve()
     out_dir.mkdir(parents=True, exist_ok=True)
 
     runs = discover_runs(repo_root, args.families, args.Ns, args.seeds, run_subdir, np)
