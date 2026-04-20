@@ -50,8 +50,8 @@
       "data_shared/nitride/manifests/test.csv"
     ],
     "zero_shot_predictions": [
-      "results/oxide/zero_shot/predictions.csv",
-      "results/nitride/zero_shot/predictions.csv"
+      "Results_Before_Correction/oxide/zero_shot/predictions.csv",
+      "Results_Before_Correction/nitride/zero_shot/predictions.csv"
     ]
   },
   "parquet_status": {

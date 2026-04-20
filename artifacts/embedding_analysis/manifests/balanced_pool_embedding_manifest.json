@@ -62,8 +62,8 @@
     "manifests": [],
     "subset_metadata": "artifacts/embedding_analysis/subsets/balanced_pool_set/metadata.csv",
     "zero_shot_predictions": [
-      "results/oxide/zero_shot/predictions.csv",
-      "results/nitride/zero_shot/predictions.csv"
+      "Results_Before_Correction/oxide/zero_shot/predictions.csv",
+      "Results_Before_Correction/nitride/zero_shot/predictions.csv"
     ]
   },
   "output_name": "balanced_pool",
