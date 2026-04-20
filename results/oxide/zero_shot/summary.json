@@ -1,7 +1,0 @@
-{
-  "family": "oxide",
-  "model_name": "jv_formation_energy_peratom_alignn",
-  "n_test": 1484,
-  "mae_eV_per_atom": 0.03418360680813096,
-  "predictions_csv": "/mnt/c/Users/lenovo/Desktop/res201-alignn-domain-shift/results/oxide/zero_shot/predictions.csv"
-}

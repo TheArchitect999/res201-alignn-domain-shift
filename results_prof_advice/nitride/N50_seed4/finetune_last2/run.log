@@ -1,137 +1,0 @@
-$ /usr/bin/python3 scripts/shared/finetune_last2_alignn.py --config /content/res201-alignn-domain-shift/configs/nitride_week2_N50_seed4.finetune_last2.json --output-dir /content/res201-alignn-domain-shift/results/nitride/N50_seed4/finetune_last2 --dataset-root /content/res201-alignn-domain-shift/results/nitride/N50_seed4/dataset_root --pretrained-checkpoint /content/res201-alignn-domain-shift/jv_formation_energy_peratom_alignn/checkpoint_300.pt --pretrained-config /content/res201-alignn-domain-shift/jv_formation_energy_peratom_alignn/config.json --device cuda
-data range 3.80193 -2.11365
-line_graph True
-  0%|          | 0/45 [00:00<?, ?it/s]  9%|▉         | 4/45 [00:00<00:01, 37.50it/s] 18%|█▊        | 8/45 [00:00<00:01, 26.63it/s] 33%|███▎      | 15/45 [00:00<00:00, 40.63it/s] 49%|████▉     | 22/45 [00:00<00:00, 50.03it/s] 64%|██████▍   | 29/45 [00:00<00:00, 53.19it/s] 80%|████████  | 36/45 [00:00<00:00, 57.54it/s] 96%|█████████▌| 43/45 [00:00<00:00, 60.89it/s]100%|██████████| 45/45 [00:00<00:00, 51.76it/s]
-data range 2.04369 -2.26889
-line_graph True
-  0%|          | 0/5 [00:00<?, ?it/s]100%|██████████| 5/5 [00:00<00:00, 79.72it/s]
-data range 2.75603 -2.21927
-line_graph True
-  0%|          | 0/242 [00:00<?, ?it/s]  2%|▏         | 6/242 [00:00<00:04, 58.25it/s]  5%|▍         | 12/242 [00:00<00:04, 57.45it/s]  7%|▋         | 18/242 [00:00<00:04, 55.36it/s] 10%|█         | 25/242 [00:00<00:03, 58.79it/s] 13%|█▎        | 32/242 [00:00<00:03, 60.81it/s] 17%|█▋        | 40/242 [00:00<00:03, 66.02it/s] 19%|█▉        | 47/242 [00:00<00:03, 63.75it/s] 23%|██▎       | 55/242 [00:00<00:02, 68.39it/s] 26%|██▌       | 62/242 [00:00<00:02, 68.20it/s] 29%|██▉       | 70/242 [00:01<00:02, 67.37it/s] 32%|███▏      | 77/242 [00:01<00:02, 65.65it/s] 35%|███▌      | 85/242 [00:01<00:02, 66.43it/s] 38%|███▊      | 92/242 [00:01<00:02, 61.04it/s] 41%|████      | 99/242 [00:01<00:02, 62.63it/s] 44%|████▍     | 106/242 [00:01<00:02, 57.81it/s] 48%|████▊     | 115/242 [00:01<00:02, 63.33it/s] 50%|█████     | 122/242 [00:01<00:01, 64.70it/s] 54%|█████▎    | 130/242 [00:02<00:01, 66.56it/s] 57%|█████▋    | 138/242 [00:02<00:01, 70.00it/s] 60%|██████    | 146/242 [00:02<00:01, 53.77it/s] 63%|██████▎   | 153/242 [00:02<00:01, 57.22it/s] 67%|██████▋   | 161/242 [00:02<00:01, 60.34it/s] 69%|██████▉   | 168/242 [00:02<00:01, 59.00it/s] 72%|███████▏  | 175/242 [00:02<00:01, 61.41it/s] 75%|███████▌  | 182/242 [00:02<00:00, 62.58it/s] 78%|███████▊  | 189/242 [00:03<00:00, 64.53it/s] 81%|████████  | 196/242 [00:03<00:00, 54.55it/s] 83%|████████▎ | 202/242 [00:03<00:00, 54.29it/s] 86%|████████▋ | 209/242 [00:03<00:00, 57.56it/s] 90%|█████████ | 218/242 [00:03<00:00, 63.25it/s] 94%|█████████▍| 227/242 [00:03<00:00, 69.83it/s] 97%|█████████▋| 235/242 [00:03<00:00, 71.22it/s]100%|██████████| 242/242 [00:03<00:00, 63.36it/s]
-{"epoch": 1, "train_loss": 0.1576521893342336, "val_loss": 0.014504349790513515}
-{"epoch": 2, "train_loss": 0.1645298550526301, "val_loss": 0.019758719950914383}
-{"epoch": 3, "train_loss": 0.15099392334620157, "val_loss": 0.028548752889037132}
-{"epoch": 4, "train_loss": 0.13899988432725272, "val_loss": 0.04100481793284416}
-{"epoch": 5, "train_loss": 0.16367242485284805, "val_loss": 0.05684903264045715}
-{"epoch": 6, "train_loss": 0.13719895482063293, "val_loss": 0.07351917773485184}
-{"epoch": 7, "train_loss": 0.14884831756353378, "val_loss": 0.09003806859254837}
-{"epoch": 8, "train_loss": 0.12874011943737665, "val_loss": 0.10499837249517441}
-{"epoch": 9, "train_loss": 0.12572181969881058, "val_loss": 0.11885569244623184}
-{"epoch": 10, "train_loss": 0.12512764086325964, "val_loss": 0.12885645031929016}
-{"epoch": 11, "train_loss": 0.12599445134401321, "val_loss": 0.1405530422925949}
-{"epoch": 12, "train_loss": 0.1139683797955513, "val_loss": 0.14418363571166992}
-{"epoch": 13, "train_loss": 0.11821359147628148, "val_loss": 0.14621533453464508}
-{"epoch": 14, "train_loss": 0.10999674101670583, "val_loss": 0.1448974609375}
-{"epoch": 15, "train_loss": 0.11021428803602855, "val_loss": 0.14156626164913177}
-{"epoch": 16, "train_loss": 0.09138689438501994, "val_loss": 0.13726156949996948}
-{"epoch": 17, "train_loss": 0.10593553632497787, "val_loss": 0.1329057216644287}
-{"epoch": 18, "train_loss": 0.09496146937211354, "val_loss": 0.1316072791814804}
-{"epoch": 19, "train_loss": 0.0827179712553819, "val_loss": 0.13059186935424805}
-{"epoch": 20, "train_loss": 0.06822406003872554, "val_loss": 0.12241822481155396}
-{"epoch": 21, "train_loss": 0.07504129161437352, "val_loss": 0.11530639976263046}
-{"epoch": 22, "train_loss": 0.06687403966983159, "val_loss": 0.10757064819335938}
-{"epoch": 23, "train_loss": 0.07652782152096431, "val_loss": 0.10316940397024155}
-{"epoch": 24, "train_loss": 0.0622803196310997, "val_loss": 0.10014555603265762}
-{"epoch": 25, "train_loss": 0.06611353034774463, "val_loss": 0.09865186363458633}
-{"epoch": 26, "train_loss": 0.07971424857775371, "val_loss": 0.09560993313789368}
-{"epoch": 27, "train_loss": 0.05869642272591591, "val_loss": 0.09440651535987854}
-{"epoch": 28, "train_loss": 0.05665052185455958, "val_loss": 0.08801405876874924}
-{"epoch": 29, "train_loss": 0.05138732368747393, "val_loss": 0.08457470685243607}
-{"epoch": 30, "train_loss": 0.05571399194498857, "val_loss": 0.07949873805046082}
-{"epoch": 31, "train_loss": 0.07397019118070602, "val_loss": 0.07846914231777191}
-{"epoch": 32, "train_loss": 0.06229580690463384, "val_loss": 0.07497861981391907}
-{"epoch": 33, "train_loss": 0.05402415245771408, "val_loss": 0.0754767432808876}
-{"epoch": 34, "train_loss": 0.052132428934176765, "val_loss": 0.07865064591169357}
-{"epoch": 35, "train_loss": 0.08639134963353474, "val_loss": 0.08379945904016495}
-{"epoch": 36, "train_loss": 0.057872203489144645, "val_loss": 0.0777469053864479}
-{"epoch": 37, "train_loss": 0.06259418527285258, "val_loss": 0.07873955368995667}
-{"epoch": 38, "train_loss": 0.06567120552062988, "val_loss": 0.07724271714687347}
-{"epoch": 39, "train_loss": 0.04663144486645857, "val_loss": 0.07318169623613358}
-{"epoch": 40, "train_loss": 0.04655090222756068, "val_loss": 0.07204790413379669}
-{"epoch": 41, "train_loss": 0.05678580577174822, "val_loss": 0.07217132300138474}
-{"epoch": 42, "train_loss": 0.051808336128791176, "val_loss": 0.07251525670289993}
-{"epoch": 43, "train_loss": 0.05100836604833603, "val_loss": 0.07094302773475647}
-{"epoch": 44, "train_loss": 0.03454516641795635, "val_loss": 0.06987366825342178}
-{"epoch": 45, "train_loss": 0.07746874665220578, "val_loss": 0.07009585946798325}
-{"epoch": 46, "train_loss": 0.05272063985466957, "val_loss": 0.07177729159593582}
-{"epoch": 47, "train_loss": 0.06215648104747137, "val_loss": 0.07573209702968597}
-{"epoch": 48, "train_loss": 0.05725099643071493, "val_loss": 0.07162728905677795}
-{"epoch": 49, "train_loss": 0.05423051367203394, "val_loss": 0.06888635456562042}
-{"epoch": 50, "train_loss": 0.045057304203510284, "val_loss": 0.06933095306158066}
-{
-  "dataset_root": "/content/res201-alignn-domain-shift/results/nitride/N50_seed4/dataset_root",
-  "output_dir": "/content/res201-alignn-domain-shift/results/nitride/N50_seed4/finetune_last2",
-  "device": "cuda",
-  "n_train": 45,
-  "n_val": 5,
-  "n_test": 242,
-  "epochs": 50,
-  "batch_size": 16,
-  "final_batch_size": 16,
-  "learning_rate": 0.0001,
-  "unfrozen_groups": [
-    "fc",
-    "gcn_layers.3"
-  ],
-  "trainable_parameter_names": [
-    "gcn_layers.3.src_gate.weight",
-    "gcn_layers.3.src_gate.bias",
-    "gcn_layers.3.dst_gate.weight",
-    "gcn_layers.3.dst_gate.bias",
-    "gcn_layers.3.edge_gate.weight",
-    "gcn_layers.3.edge_gate.bias",
-    "gcn_layers.3.bn_edges.weight",
-    "gcn_layers.3.bn_edges.bias",
-    "gcn_layers.3.src_update.weight",
-    "gcn_layers.3.src_update.bias",
-    "gcn_layers.3.dst_update.weight",
-    "gcn_layers.3.dst_update.bias",
-    "gcn_layers.3.bn_nodes.weight",
-    "gcn_layers.3.bn_nodes.bias",
-    "fc.weight",
-    "fc.bias"
-  ],
-  "best_epoch": 1,
-  "train_mae_eV_per_atom": 0.008343567668149868,
-  "val_best_l1": 0.014504349790513515,
-  "test_l1": 0.08534098463132977,
-  "test_mae_eV_per_atom": 0.07116951574071133,
-  "prediction_csv": "/content/res201-alignn-domain-shift/results/nitride/N50_seed4/finetune_last2/prediction_results_test_set.csv",
-  "elapsed_seconds": 18.490474224090576,
-  "batchnorm_invariant_report": {
-    "frozen_batchnorms_unchanged": [
-      "atom_embedding.layer.1",
-      "edge_embedding.1.layer.1",
-      "edge_embedding.2.layer.1",
-      "angle_embedding.1.layer.1",
-      "angle_embedding.2.layer.1",
-      "alignn_layers.0.node_update.bn_edges",
-      "alignn_layers.0.node_update.bn_nodes",
-      "alignn_layers.0.edge_update.bn_edges",
-      "alignn_layers.0.edge_update.bn_nodes",
-      "alignn_layers.1.node_update.bn_edges",
-      "alignn_layers.1.node_update.bn_nodes",
-      "alignn_layers.1.edge_update.bn_edges",
-      "alignn_layers.1.edge_update.bn_nodes",
-      "alignn_layers.2.node_update.bn_edges",
-      "alignn_layers.2.node_update.bn_nodes",
-      "alignn_layers.2.edge_update.bn_edges",
-      "alignn_layers.2.edge_update.bn_nodes",
-      "alignn_layers.3.node_update.bn_edges",
-      "alignn_layers.3.node_update.bn_nodes",
-      "alignn_layers.3.edge_update.bn_edges",
-      "alignn_layers.3.edge_update.bn_nodes",
-      "gcn_layers.0.bn_edges",
-      "gcn_layers.0.bn_nodes",
-      "gcn_layers.1.bn_edges",
-      "gcn_layers.1.bn_nodes",
-      "gcn_layers.2.bn_edges",
-      "gcn_layers.2.bn_nodes"
-    ],
-    "train_batchnorms_updated": [
-      "gcn_layers.3.bn_edges",
-      "gcn_layers.3.bn_nodes"
-    ]
-  }
-}
-

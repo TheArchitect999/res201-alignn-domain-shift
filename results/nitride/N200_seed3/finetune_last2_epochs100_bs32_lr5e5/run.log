@@ -1,187 +1,0 @@
-$ /usr/bin/python3 scripts/shared/finetune_last2_alignn.py --config /content/res201-alignn-domain-shift/configs/week2_last2_epochs100_bs32_lr5e5/nitride_week2_last2_epochs100_bs32_lr5e5_N200_seed3.finetune_last2.json --output-dir /content/res201-alignn-domain-shift/results/nitride/N200_seed3/finetune_last2_epochs100_bs32_lr5e5 --dataset-root /content/res201-alignn-domain-shift/results/nitride/N200_seed3/dataset_root --pretrained-checkpoint /content/res201-alignn-domain-shift/jv_formation_energy_peratom_alignn/checkpoint_300.pt --pretrained-config /content/res201-alignn-domain-shift/jv_formation_energy_peratom_alignn/config.json --device cuda
-data range 3.61212 -2.23925
-line_graph True
-  0%|          | 0/180 [00:00<?, ?it/s]  4%|▍         | 7/180 [00:00<00:02, 64.94it/s]  8%|▊         | 14/180 [00:00<00:03, 42.99it/s] 11%|█         | 19/180 [00:00<00:04, 37.33it/s] 16%|█▌        | 28/180 [00:00<00:02, 51.06it/s] 20%|██        | 36/180 [00:00<00:02, 58.47it/s] 24%|██▍       | 43/180 [00:00<00:02, 58.50it/s] 28%|██▊       | 50/180 [00:00<00:02, 59.75it/s] 32%|███▏      | 57/180 [00:01<00:02, 60.80it/s] 36%|███▌      | 64/180 [00:01<00:01, 58.39it/s] 40%|████      | 72/180 [00:01<00:01, 61.66it/s] 44%|████▍     | 79/180 [00:01<00:01, 63.21it/s] 48%|████▊     | 86/180 [00:01<00:01, 62.64it/s] 52%|█████▏    | 93/180 [00:01<00:01, 64.32it/s] 56%|█████▌    | 100/180 [00:01<00:01, 63.74it/s] 60%|██████    | 108/180 [00:01<00:01, 66.40it/s] 64%|██████▍   | 115/180 [00:01<00:01, 64.82it/s] 68%|██████▊   | 122/180 [00:02<00:00, 63.80it/s] 72%|███████▏  | 129/180 [00:02<00:00, 55.79it/s] 76%|███████▌  | 137/180 [00:02<00:00, 59.52it/s] 81%|████████  | 145/180 [00:02<00:00, 62.91it/s] 85%|████████▌ | 153/180 [00:02<00:00, 66.83it/s] 89%|████████▉ | 161/180 [00:02<00:00, 69.91it/s] 94%|█████████▍| 169/180 [00:02<00:00, 67.33it/s] 98%|█████████▊| 176/180 [00:02<00:00, 65.93it/s]100%|██████████| 180/180 [00:02<00:00, 61.33it/s]
-data range 2.51983 -2.15468
-line_graph True
-  0%|          | 0/20 [00:00<?, ?it/s] 35%|███▌      | 7/20 [00:00<00:00, 69.27it/s] 70%|███████   | 14/20 [00:00<00:00, 54.75it/s]100%|██████████| 20/20 [00:00<00:00, 57.84it/s]
-data range 2.75603 -2.21927
-line_graph True
-  0%|          | 0/242 [00:00<?, ?it/s]  2%|▏         | 6/242 [00:00<00:03, 59.98it/s]  5%|▍         | 12/242 [00:00<00:03, 58.95it/s]  7%|▋         | 18/242 [00:00<00:05, 39.07it/s] 10%|█         | 25/242 [00:00<00:04, 47.03it/s] 13%|█▎        | 32/242 [00:00<00:03, 52.57it/s] 17%|█▋        | 41/242 [00:00<00:03, 61.46it/s] 20%|█▉        | 48/242 [00:00<00:03, 61.21it/s] 23%|██▎       | 56/242 [00:00<00:02, 66.00it/s] 26%|██▌       | 63/242 [00:01<00:02, 66.60it/s] 29%|██▉       | 70/242 [00:01<00:02, 65.87it/s] 32%|███▏      | 77/242 [00:01<00:02, 65.31it/s] 35%|███▌      | 85/242 [00:01<00:02, 67.40it/s] 38%|███▊      | 92/242 [00:01<00:02, 61.44it/s] 41%|████      | 99/242 [00:01<00:02, 62.70it/s] 44%|████▍     | 106/242 [00:01<00:02, 57.97it/s] 48%|████▊     | 115/242 [00:01<00:01, 64.02it/s] 50%|█████     | 122/242 [00:01<00:01, 65.42it/s] 53%|█████▎    | 129/242 [00:02<00:01, 64.44it/s] 57%|█████▋    | 137/242 [00:02<00:01, 68.16it/s] 60%|█████▉    | 145/242 [00:02<00:01, 70.02it/s] 63%|██████▎   | 153/242 [00:02<00:01, 68.31it/s] 67%|██████▋   | 161/242 [00:02<00:01, 68.52it/s] 69%|██████▉   | 168/242 [00:02<00:01, 64.56it/s] 72%|███████▏  | 175/242 [00:02<00:01, 65.57it/s] 75%|███████▌  | 182/242 [00:02<00:00, 65.74it/s] 78%|███████▊  | 189/242 [00:02<00:00, 66.86it/s] 81%|████████  | 196/242 [00:03<00:00, 55.45it/s] 83%|████████▎ | 202/242 [00:03<00:00, 54.72it/s] 86%|████████▋ | 209/242 [00:03<00:00, 56.91it/s] 90%|████████▉ | 217/242 [00:03<00:00, 61.56it/s] 93%|█████████▎| 226/242 [00:03<00:00, 68.43it/s] 97%|█████████▋| 234/242 [00:03<00:00, 68.20it/s]100%|██████████| 242/242 [00:03<00:00, 63.35it/s]
-{"epoch": 1, "train_loss": 0.14996766299009323, "val_loss": 0.035856038331985474}
-{"epoch": 2, "train_loss": 0.15341379990180334, "val_loss": 0.057140350341796875}
-{"epoch": 3, "train_loss": 0.14024693146348, "val_loss": 0.08448205143213272}
-{"epoch": 4, "train_loss": 0.14858509972691536, "val_loss": 0.11530311405658722}
-{"epoch": 5, "train_loss": 0.1521076112985611, "val_loss": 0.14396639168262482}
-{"epoch": 6, "train_loss": 0.14470949272314707, "val_loss": 0.16235136985778809}
-{"epoch": 7, "train_loss": 0.1462300345301628, "val_loss": 0.17449608445167542}
-{"epoch": 8, "train_loss": 0.14137680331865946, "val_loss": 0.17727673053741455}
-{"epoch": 9, "train_loss": 0.14230873559912047, "val_loss": 0.18254239857196808}
-{"epoch": 10, "train_loss": 0.14655267695585886, "val_loss": 0.1866462230682373}
-{"epoch": 11, "train_loss": 0.1314163270095984, "val_loss": 0.18587833642959595}
-{"epoch": 12, "train_loss": 0.13169503708680472, "val_loss": 0.18259023129940033}
-{"epoch": 13, "train_loss": 0.12894506255785623, "val_loss": 0.17978432774543762}
-{"epoch": 14, "train_loss": 0.12891447047392526, "val_loss": 0.17828404903411865}
-{"epoch": 15, "train_loss": 0.12463613227009773, "val_loss": 0.17456279695034027}
-{"epoch": 16, "train_loss": 0.12538248424728712, "val_loss": 0.1723214089870453}
-{"epoch": 17, "train_loss": 0.12051621451973915, "val_loss": 0.16831807792186737}
-{"epoch": 18, "train_loss": 0.11732676501075427, "val_loss": 0.16846942901611328}
-{"epoch": 19, "train_loss": 0.1112800973157088, "val_loss": 0.16275270283222198}
-{"epoch": 20, "train_loss": 0.1075680876771609, "val_loss": 0.15733014047145844}
-{"epoch": 21, "train_loss": 0.10540570691227913, "val_loss": 0.15514163672924042}
-{"epoch": 22, "train_loss": 0.09871784473458926, "val_loss": 0.14837200939655304}
-{"epoch": 23, "train_loss": 0.0871610368291537, "val_loss": 0.14291366934776306}
-{"epoch": 24, "train_loss": 0.08110025152564049, "val_loss": 0.13610093295574188}
-{"epoch": 25, "train_loss": 0.07782982538143794, "val_loss": 0.12952665984630585}
-{"epoch": 26, "train_loss": 0.08505698914329211, "val_loss": 0.1282556802034378}
-{"epoch": 27, "train_loss": 0.07843791941801707, "val_loss": 0.12439312785863876}
-{"epoch": 28, "train_loss": 0.07266171214481194, "val_loss": 0.12046846002340317}
-{"epoch": 29, "train_loss": 0.06786779810984929, "val_loss": 0.11696205288171768}
-{"epoch": 30, "train_loss": 0.06102955589691798, "val_loss": 0.10932107269763947}
-{"epoch": 31, "train_loss": 0.06251349362234275, "val_loss": 0.10693807899951935}
-{"epoch": 32, "train_loss": 0.06515350503226121, "val_loss": 0.10525365173816681}
-{"epoch": 33, "train_loss": 0.057158960650364556, "val_loss": 0.10392196476459503}
-{"epoch": 34, "train_loss": 0.059814839313427605, "val_loss": 0.10021747648715973}
-{"epoch": 35, "train_loss": 0.05340509116649628, "val_loss": 0.09977785497903824}
-{"epoch": 36, "train_loss": 0.053471031288305916, "val_loss": 0.09815194457769394}
-{"epoch": 37, "train_loss": 0.06218029993275801, "val_loss": 0.09648114442825317}
-{"epoch": 38, "train_loss": 0.049605401853720345, "val_loss": 0.09686576575040817}
-{"epoch": 39, "train_loss": 0.059058996538321175, "val_loss": 0.09674098342657089}
-{"epoch": 40, "train_loss": 0.054818847527106605, "val_loss": 0.09505366533994675}
-{"epoch": 41, "train_loss": 0.05262229467431704, "val_loss": 0.09546345472335815}
-{"epoch": 42, "train_loss": 0.04549107297013203, "val_loss": 0.09597180783748627}
-{"epoch": 43, "train_loss": 0.0523431779195865, "val_loss": 0.09579836577177048}
-{"epoch": 44, "train_loss": 0.04759662784636021, "val_loss": 0.09346254169940948}
-{"epoch": 45, "train_loss": 0.05313750791052977, "val_loss": 0.09220515936613083}
-{"epoch": 46, "train_loss": 0.04408543432752291, "val_loss": 0.09125366061925888}
-{"epoch": 47, "train_loss": 0.04550786937276522, "val_loss": 0.08987398445606232}
-{"epoch": 48, "train_loss": 0.04138118028640747, "val_loss": 0.09105023741722107}
-{"epoch": 49, "train_loss": 0.05155013749996821, "val_loss": 0.08875255286693573}
-{"epoch": 50, "train_loss": 0.04183197176704804, "val_loss": 0.08853370696306229}
-{"epoch": 51, "train_loss": 0.04318848438560963, "val_loss": 0.08959247916936874}
-{"epoch": 52, "train_loss": 0.04755515449990829, "val_loss": 0.08711510896682739}
-{"epoch": 53, "train_loss": 0.04804233772059282, "val_loss": 0.08647548407316208}
-{"epoch": 54, "train_loss": 0.04725720485051473, "val_loss": 0.08680927008390427}
-{"epoch": 55, "train_loss": 0.04564520095785459, "val_loss": 0.08741462230682373}
-{"epoch": 56, "train_loss": 0.04750223644077778, "val_loss": 0.08503790199756622}
-{"epoch": 57, "train_loss": 0.043561361730098724, "val_loss": 0.08634477853775024}
-{"epoch": 58, "train_loss": 0.03903990828742584, "val_loss": 0.08525754511356354}
-{"epoch": 59, "train_loss": 0.040718662862976394, "val_loss": 0.08524280041456223}
-{"epoch": 60, "train_loss": 0.050159611428777374, "val_loss": 0.08512701839208603}
-{"epoch": 61, "train_loss": 0.04058551415801048, "val_loss": 0.08495944738388062}
-{"epoch": 62, "train_loss": 0.03879869977633158, "val_loss": 0.08556000888347626}
-{"epoch": 63, "train_loss": 0.037277391801277794, "val_loss": 0.08422796428203583}
-{"epoch": 64, "train_loss": 0.042303712417682014, "val_loss": 0.08416765183210373}
-{"epoch": 65, "train_loss": 0.04954353657861551, "val_loss": 0.08345895260572433}
-{"epoch": 66, "train_loss": 0.03659503689656655, "val_loss": 0.08444531261920929}
-{"epoch": 67, "train_loss": 0.03238820191472769, "val_loss": 0.084898941218853}
-{"epoch": 68, "train_loss": 0.03704864655931791, "val_loss": 0.08539168536663055}
-{"epoch": 69, "train_loss": 0.04125106645127138, "val_loss": 0.08381011337041855}
-{"epoch": 70, "train_loss": 0.034305185390015445, "val_loss": 0.08231252431869507}
-{"epoch": 71, "train_loss": 0.047404459988077484, "val_loss": 0.0833476334810257}
-{"epoch": 72, "train_loss": 0.034067921650906406, "val_loss": 0.0853598415851593}
-{"epoch": 73, "train_loss": 0.03708785337706407, "val_loss": 0.08558326214551926}
-{"epoch": 74, "train_loss": 0.037727658015986286, "val_loss": 0.0845489650964737}
-{"epoch": 75, "train_loss": 0.03571575755874316, "val_loss": 0.08285554498434067}
-{"epoch": 76, "train_loss": 0.0395956685145696, "val_loss": 0.08074309676885605}
-{"epoch": 77, "train_loss": 0.03527761436998844, "val_loss": 0.08247262984514236}
-{"epoch": 78, "train_loss": 0.04169519462933143, "val_loss": 0.08312436938285828}
-{"epoch": 79, "train_loss": 0.038456058440109096, "val_loss": 0.08323009312152863}
-{"epoch": 80, "train_loss": 0.034653849278887115, "val_loss": 0.08456593751907349}
-{"epoch": 81, "train_loss": 0.04124583366016547, "val_loss": 0.08554707467556}
-{"epoch": 82, "train_loss": 0.033869778737425804, "val_loss": 0.08284219354391098}
-{"epoch": 83, "train_loss": 0.037200862231353916, "val_loss": 0.08223619312047958}
-{"epoch": 84, "train_loss": 0.03579423141976198, "val_loss": 0.083017997443676}
-{"epoch": 85, "train_loss": 0.031309210074444614, "val_loss": 0.08191981166601181}
-{"epoch": 86, "train_loss": 0.027349642477929592, "val_loss": 0.08255758136510849}
-{"epoch": 87, "train_loss": 0.0382454264909029, "val_loss": 0.08067823946475983}
-{"epoch": 88, "train_loss": 0.03316543282320102, "val_loss": 0.08065617829561234}
-{"epoch": 89, "train_loss": 0.0379796971877416, "val_loss": 0.07917731255292892}
-{"epoch": 90, "train_loss": 0.03169085116436084, "val_loss": 0.08062776178121567}
-{"epoch": 91, "train_loss": 0.036877136367062725, "val_loss": 0.08130817115306854}
-{"epoch": 92, "train_loss": 0.03618408398081859, "val_loss": 0.0813545510172844}
-{"epoch": 93, "train_loss": 0.03626831496755282, "val_loss": 0.07995712012052536}
-{"epoch": 94, "train_loss": 0.0348018038397034, "val_loss": 0.079847551882267}
-{"epoch": 95, "train_loss": 0.0390441802640756, "val_loss": 0.08115440607070923}
-{"epoch": 96, "train_loss": 0.043926721749206386, "val_loss": 0.08157851547002792}
-{"epoch": 97, "train_loss": 0.030892277446885903, "val_loss": 0.08083688467741013}
-{"epoch": 98, "train_loss": 0.03009738555798928, "val_loss": 0.08256053924560547}
-{"epoch": 99, "train_loss": 0.03531770687550306, "val_loss": 0.08229853957891464}
-{"epoch": 100, "train_loss": 0.03992029093205929, "val_loss": 0.08073065429925919}
-{
-  "dataset_root": "/content/res201-alignn-domain-shift/results/nitride/N200_seed3/dataset_root",
-  "output_dir": "/content/res201-alignn-domain-shift/results/nitride/N200_seed3/finetune_last2_epochs100_bs32_lr5e5",
-  "device": "cuda",
-  "n_train": 180,
-  "n_val": 20,
-  "n_test": 242,
-  "epochs": 100,
-  "batch_size": 32,
-  "final_batch_size": 32,
-  "learning_rate": 5e-05,
-  "unfrozen_groups": [
-    "fc",
-    "gcn_layers.3"
-  ],
-  "trainable_parameter_names": [
-    "gcn_layers.3.src_gate.weight",
-    "gcn_layers.3.src_gate.bias",
-    "gcn_layers.3.dst_gate.weight",
-    "gcn_layers.3.dst_gate.bias",
-    "gcn_layers.3.edge_gate.weight",
-    "gcn_layers.3.edge_gate.bias",
-    "gcn_layers.3.bn_edges.weight",
-    "gcn_layers.3.bn_edges.bias",
-    "gcn_layers.3.src_update.weight",
-    "gcn_layers.3.src_update.bias",
-    "gcn_layers.3.dst_update.weight",
-    "gcn_layers.3.dst_update.bias",
-    "gcn_layers.3.bn_nodes.weight",
-    "gcn_layers.3.bn_nodes.bias",
-    "fc.weight",
-    "fc.bias"
-  ],
-  "best_epoch": 1,
-  "train_mae_eV_per_atom": 0.01648120067548007,
-  "val_best_l1": 0.035856038331985474,
-  "test_l1": 0.07721858285367489,
-  "test_mae_eV_per_atom": 0.07411063829637017,
-  "prediction_csv": "/content/res201-alignn-domain-shift/results/nitride/N200_seed3/finetune_last2_epochs100_bs32_lr5e5/prediction_results_test_set.csv",
-  "elapsed_seconds": 59.55344080924988,
-  "batchnorm_invariant_report": {
-    "frozen_batchnorms_unchanged": [
-      "atom_embedding.layer.1",
-      "edge_embedding.1.layer.1",
-      "edge_embedding.2.layer.1",
-      "angle_embedding.1.layer.1",
-      "angle_embedding.2.layer.1",
-      "alignn_layers.0.node_update.bn_edges",
-      "alignn_layers.0.node_update.bn_nodes",
-      "alignn_layers.0.edge_update.bn_edges",
-      "alignn_layers.0.edge_update.bn_nodes",
-      "alignn_layers.1.node_update.bn_edges",
-      "alignn_layers.1.node_update.bn_nodes",
-      "alignn_layers.1.edge_update.bn_edges",
-      "alignn_layers.1.edge_update.bn_nodes",
-      "alignn_layers.2.node_update.bn_edges",
-      "alignn_layers.2.node_update.bn_nodes",
-      "alignn_layers.2.edge_update.bn_edges",
-      "alignn_layers.2.edge_update.bn_nodes",
-      "alignn_layers.3.node_update.bn_edges",
-      "alignn_layers.3.node_update.bn_nodes",
-      "alignn_layers.3.edge_update.bn_edges",
-      "alignn_layers.3.edge_update.bn_nodes",
-      "gcn_layers.0.bn_edges",
-      "gcn_layers.0.bn_nodes",
-      "gcn_layers.1.bn_edges",
-      "gcn_layers.1.bn_nodes",
-      "gcn_layers.2.bn_edges",
-      "gcn_layers.2.bn_nodes"
-    ],
-    "train_batchnorms_updated": [
-      "gcn_layers.3.bn_edges",
-      "gcn_layers.3.bn_nodes"
-    ]
-  }
-}
-
