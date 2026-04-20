@@ -1,0 +1,628 @@
+$ /usr/bin/python3 scripts/shared/train_alignn_fromscratch.py --config /content/res201-alignn-domain-shift/configs/week3_fromscratch_baseline/nitride_week3_fromscratch_N50_seed1.json --output-dir /content/res201-alignn-domain-shift/results/nitride/N50_seed1/train_alignn_fromscratch_alignn_recommended --dataset-root /content/res201-alignn-domain-shift/results/nitride/N50_seed1/dataset_root --device cuda
+data range 1.93661 -2.01655
+line_graph True
+  0% 0/45 [00:00<?, ?it/s] 16% 7/45 [00:00<00:00, 68.70it/s] 33% 15/45 [00:00<00:00, 68.08it/s] 49% 22/45 [00:00<00:00, 40.83it/s] 64% 29/45 [00:00<00:00, 48.22it/s] 78% 35/45 [00:00<00:00, 48.59it/s] 96% 43/45 [00:00<00:00, 56.19it/s]100% 45/45 [00:00<00:00, 54.05it/s]
+data range 3.32181 -1.39724
+line_graph True
+  0% 0/5 [00:00<?, ?it/s]100% 5/5 [00:00<00:00, 75.47it/s]
+data range 2.75603 -2.21927
+line_graph True
+  0% 0/242 [00:00<?, ?it/s]  2% 6/242 [00:00<00:04, 58.77it/s]  5% 12/242 [00:00<00:03, 57.77it/s]  7% 18/242 [00:00<00:04, 55.36it/s] 10% 24/242 [00:00<00:03, 56.57it/s] 12% 30/242 [00:00<00:03, 57.04it/s] 16% 39/242 [00:00<00:03, 65.44it/s] 19% 46/242 [00:00<00:03, 63.00it/s] 22% 54/242 [00:00<00:02, 66.75it/s] 26% 62/242 [00:00<00:02, 67.59it/s] 29% 70/242 [00:01<00:02, 66.65it/s] 32% 77/242 [00:01<00:02, 65.83it/s] 35% 85/242 [00:01<00:02, 67.83it/s] 38% 92/242 [00:01<00:02, 62.31it/s] 41% 99/242 [00:01<00:02, 63.68it/s] 44% 106/242 [00:01<00:02, 45.73it/s] 48% 115/242 [00:01<00:02, 53.45it/s] 50% 122/242 [00:02<00:02, 56.85it/s] 54% 130/242 [00:02<00:01, 60.64it/s] 57% 138/242 [00:02<00:01, 65.44it/s] 60% 146/242 [00:02<00:01, 66.34it/s] 63% 153/242 [00:02<00:01, 67.00it/s] 67% 161/242 [00:02<00:01, 67.97it/s] 69% 168/242 [00:02<00:01, 64.08it/s] 72% 175/242 [00:02<00:01, 65.03it/s] 75% 182/242 [00:02<00:00, 65.36it/s] 78% 189/242 [00:03<00:00, 66.44it/s] 81% 196/242 [00:03<00:00, 55.27it/s] 83% 202/242 [00:03<00:00, 54.63it/s] 86% 209/242 [00:03<00:00, 57.72it/s] 90% 217/242 [00:03<00:00, 63.46it/s] 93% 225/242 [00:03<00:00, 67.63it/s] 96% 232/242 [00:03<00:00, 67.12it/s]100% 242/242 [00:03<00:00, 73.69it/s]100% 242/242 [00:03<00:00, 63.03it/s]
+Epoch 1/300 [############################] 1/1 batch_loss=1.1509 lr=4.0299e-05
+{"event": "epoch_complete", "epoch": 1, "train_loss": 1.150912880897522, "val_loss": 1.28358793258667, "epoch_seconds": 0.6028196811676025}
+Epoch 2/300 [############################] 1/1 batch_loss=0.8638 lr=4.11957e-05
+{"event": "epoch_complete", "epoch": 2, "train_loss": 0.8637807369232178, "val_loss": 1.2812787294387817, "epoch_seconds": 0.24628496170043945}
+Epoch 3/300 [############################] 1/1 batch_loss=0.6844 lr=4.26889e-05
+{"event": "epoch_complete", "epoch": 3, "train_loss": 0.6844156980514526, "val_loss": 1.2738864421844482, "epoch_seconds": 0.2398090362548828}
+Epoch 4/300 [############################] 1/1 batch_loss=0.6228 lr=4.47767e-05
+{"event": "epoch_complete", "epoch": 4, "train_loss": 0.6228225231170654, "val_loss": 1.265323281288147, "epoch_seconds": 0.23967862129211426}
+Epoch 5/300 [############################] 1/1 batch_loss=0.5573 lr=4.74566e-05
+{"event": "epoch_complete", "epoch": 5, "train_loss": 0.55726557970047, "val_loss": 1.2572005987167358, "epoch_seconds": 0.24088740348815918}
+Epoch 6/300 [############################] 1/1 batch_loss=0.5219 lr=5.07253e-05
+{"event": "epoch_complete", "epoch": 6, "train_loss": 0.5218661427497864, "val_loss": 1.249782919883728, "epoch_seconds": 0.2397289276123047}
+Epoch 7/300 [############################] 1/1 batch_loss=0.5086 lr=5.45786e-05
+{"event": "epoch_complete", "epoch": 7, "train_loss": 0.5085618495941162, "val_loss": 1.2493730783462524, "epoch_seconds": 0.2396402359008789}
+Epoch 8/300 [############################] 1/1 batch_loss=0.5047 lr=5.90118e-05
+{"event": "epoch_complete", "epoch": 8, "train_loss": 0.5046782493591309, "val_loss": 1.2531263828277588, "epoch_seconds": 0.1974020004272461}
+Epoch 9/300 [############################] 1/1 batch_loss=0.4920 lr=6.40193e-05
+{"event": "epoch_complete", "epoch": 9, "train_loss": 0.49198538064956665, "val_loss": 1.2552083730697632, "epoch_seconds": 0.19725823402404785}
+Epoch 10/300 [############################] 1/1 batch_loss=0.4597 lr=6.95949e-05
+{"event": "epoch_complete", "epoch": 10, "train_loss": 0.45972588658332825, "val_loss": 1.256507158279419, "epoch_seconds": 0.1975386142730713}
+Epoch 11/300 [############################] 1/1 batch_loss=0.4185 lr=7.57316e-05
+{"event": "epoch_complete", "epoch": 11, "train_loss": 0.41850316524505615, "val_loss": 1.2570289373397827, "epoch_seconds": 0.19714784622192383}
+Epoch 12/300 [############################] 1/1 batch_loss=0.3892 lr=8.24219e-05
+{"event": "epoch_complete", "epoch": 12, "train_loss": 0.3892345130443573, "val_loss": 1.2577723264694214, "epoch_seconds": 0.19756722450256348}
+Epoch 13/300 [############################] 1/1 batch_loss=0.3459 lr=8.96573e-05
+{"event": "epoch_complete", "epoch": 13, "train_loss": 0.3459017276763916, "val_loss": 1.2597877979278564, "epoch_seconds": 0.1964426040649414}
+Epoch 14/300 [############################] 1/1 batch_loss=0.2964 lr=9.74289e-05
+{"event": "epoch_complete", "epoch": 14, "train_loss": 0.2964198589324951, "val_loss": 1.2652748823165894, "epoch_seconds": 0.20270538330078125}
+Epoch 15/300 [############################] 1/1 batch_loss=0.3127 lr=0.000105727
+{"event": "epoch_complete", "epoch": 15, "train_loss": 0.3126984238624573, "val_loss": 1.2698487043380737, "epoch_seconds": 0.19692158699035645}
+Epoch 16/300 [############################] 1/1 batch_loss=0.3047 lr=0.000114541
+{"event": "epoch_complete", "epoch": 16, "train_loss": 0.3047148883342743, "val_loss": 1.2731589078903198, "epoch_seconds": 0.19601869583129883}
+Epoch 17/300 [############################] 1/1 batch_loss=0.2916 lr=0.00012386
+{"event": "epoch_complete", "epoch": 17, "train_loss": 0.291629433631897, "val_loss": 1.2740644216537476, "epoch_seconds": 0.19736838340759277}
+Epoch 18/300 [############################] 1/1 batch_loss=0.2391 lr=0.000133673
+{"event": "epoch_complete", "epoch": 18, "train_loss": 0.23911285400390625, "val_loss": 1.2726986408233643, "epoch_seconds": 0.1964397430419922}
+Epoch 19/300 [############################] 1/1 batch_loss=0.2022 lr=0.000143968
+{"event": "epoch_complete", "epoch": 19, "train_loss": 0.20218776166439056, "val_loss": 1.2715734243392944, "epoch_seconds": 0.1968376636505127}
+Epoch 20/300 [############################] 1/1 batch_loss=0.1972 lr=0.00015473
+{"event": "epoch_complete", "epoch": 20, "train_loss": 0.19718022644519806, "val_loss": 1.2713066339492798, "epoch_seconds": 0.19844388961791992}
+Epoch 21/300 [############################] 1/1 batch_loss=0.2323 lr=0.000165948
+{"event": "epoch_complete", "epoch": 21, "train_loss": 0.2322719693183899, "val_loss": 1.2715429067611694, "epoch_seconds": 0.19870638847351074}
+Epoch 22/300 [############################] 1/1 batch_loss=0.2463 lr=0.000177607
+{"event": "epoch_complete", "epoch": 22, "train_loss": 0.24628974497318268, "val_loss": 1.2705328464508057, "epoch_seconds": 0.2003943920135498}
+Epoch 23/300 [############################] 1/1 batch_loss=0.2425 lr=0.000189692
+{"event": "epoch_complete", "epoch": 23, "train_loss": 0.2424568235874176, "val_loss": 1.272699236869812, "epoch_seconds": 0.19751834869384766}
+Epoch 24/300 [############################] 1/1 batch_loss=0.2630 lr=0.000202189
+{"event": "epoch_complete", "epoch": 24, "train_loss": 0.2629878520965576, "val_loss": 1.2719860076904297, "epoch_seconds": 0.19669270515441895}
+Epoch 25/300 [############################] 1/1 batch_loss=0.2506 lr=0.000215082
+{"event": "epoch_complete", "epoch": 25, "train_loss": 0.2506401538848877, "val_loss": 1.268750786781311, "epoch_seconds": 0.19957280158996582}
+Epoch 26/300 [############################] 1/1 batch_loss=0.2542 lr=0.000228355
+{"event": "epoch_complete", "epoch": 26, "train_loss": 0.25419384241104126, "val_loss": 1.265647292137146, "epoch_seconds": 0.19721627235412598}
+Epoch 27/300 [############################] 1/1 batch_loss=0.2527 lr=0.000241991
+{"event": "epoch_complete", "epoch": 27, "train_loss": 0.25268664956092834, "val_loss": 1.2644948959350586, "epoch_seconds": 0.3498053550720215}
+Epoch 28/300 [############################] 1/1 batch_loss=0.2107 lr=0.000255974
+{"event": "epoch_complete", "epoch": 28, "train_loss": 0.21070708334445953, "val_loss": 1.2653963565826416, "epoch_seconds": 0.1977834701538086}
+Epoch 29/300 [############################] 1/1 batch_loss=0.2022 lr=0.000270285
+{"event": "epoch_complete", "epoch": 29, "train_loss": 0.20222105085849762, "val_loss": 1.2912070751190186, "epoch_seconds": 0.19687986373901367}
+Epoch 30/300 [############################] 1/1 batch_loss=0.2275 lr=0.000284908
+{"event": "epoch_complete", "epoch": 30, "train_loss": 0.2274894416332245, "val_loss": 1.2967844009399414, "epoch_seconds": 0.1962881088256836}
+Epoch 31/300 [############################] 1/1 batch_loss=0.1947 lr=0.000299823
+{"event": "epoch_complete", "epoch": 31, "train_loss": 0.19469325244426727, "val_loss": 1.2761895656585693, "epoch_seconds": 0.19708824157714844}
+Epoch 32/300 [############################] 1/1 batch_loss=0.2134 lr=0.000315013
+{"event": "epoch_complete", "epoch": 32, "train_loss": 0.21335378289222717, "val_loss": 1.2680137157440186, "epoch_seconds": 0.19664788246154785}
+Epoch 33/300 [############################] 1/1 batch_loss=0.1958 lr=0.000330458
+{"event": "epoch_complete", "epoch": 33, "train_loss": 0.1958453506231308, "val_loss": 1.265642523765564, "epoch_seconds": 0.19569158554077148}
+Epoch 34/300 [############################] 1/1 batch_loss=0.1857 lr=0.000346139
+{"event": "epoch_complete", "epoch": 34, "train_loss": 0.1856572926044464, "val_loss": 1.2742522954940796, "epoch_seconds": 0.1966075897216797}
+Epoch 35/300 [############################] 1/1 batch_loss=0.1623 lr=0.000362037
+{"event": "epoch_complete", "epoch": 35, "train_loss": 0.16230058670043945, "val_loss": 1.2889060974121094, "epoch_seconds": 0.19895076751708984}
+Epoch 36/300 [############################] 1/1 batch_loss=0.1812 lr=0.000378132
+{"event": "epoch_complete", "epoch": 36, "train_loss": 0.18122200667858124, "val_loss": 1.2782028913497925, "epoch_seconds": 0.1977076530456543}
+Epoch 37/300 [############################] 1/1 batch_loss=0.1805 lr=0.000394404
+{"event": "epoch_complete", "epoch": 37, "train_loss": 0.1805209070444107, "val_loss": 1.2787646055221558, "epoch_seconds": 0.19833827018737793}
+Epoch 38/300 [############################] 1/1 batch_loss=0.1786 lr=0.000410832
+{"event": "epoch_complete", "epoch": 38, "train_loss": 0.17858704924583435, "val_loss": 1.2675303220748901, "epoch_seconds": 0.19718146324157715}
+Epoch 39/300 [############################] 1/1 batch_loss=0.1951 lr=0.000427395
+{"event": "epoch_complete", "epoch": 39, "train_loss": 0.1950787901878357, "val_loss": 1.2485930919647217, "epoch_seconds": 0.2484126091003418}
+Epoch 40/300 [############################] 1/1 batch_loss=0.2233 lr=0.000444075
+{"event": "epoch_complete", "epoch": 40, "train_loss": 0.2232770323753357, "val_loss": 1.2362467050552368, "epoch_seconds": 0.2428607940673828}
+Epoch 41/300 [############################] 1/1 batch_loss=0.1974 lr=0.000460849
+{"event": "epoch_complete", "epoch": 41, "train_loss": 0.19740280508995056, "val_loss": 1.2708172798156738, "epoch_seconds": 0.19908428192138672}
+Epoch 42/300 [############################] 1/1 batch_loss=0.2437 lr=0.000477696
+{"event": "epoch_complete", "epoch": 42, "train_loss": 0.24373601377010345, "val_loss": 1.2877405881881714, "epoch_seconds": 0.19817185401916504}
+Epoch 43/300 [############################] 1/1 batch_loss=0.2281 lr=0.000494597
+{"event": "epoch_complete", "epoch": 43, "train_loss": 0.22810955345630646, "val_loss": 1.1986076831817627, "epoch_seconds": 0.2388169765472412}
+Epoch 44/300 [############################] 1/1 batch_loss=0.2080 lr=0.000511529
+{"event": "epoch_complete", "epoch": 44, "train_loss": 0.20798657834529877, "val_loss": 1.1785928010940552, "epoch_seconds": 0.2453920841217041}
+Epoch 45/300 [############################] 1/1 batch_loss=0.3125 lr=0.000528471
+{"event": "epoch_complete", "epoch": 45, "train_loss": 0.31249523162841797, "val_loss": 1.2321385145187378, "epoch_seconds": 0.20786356925964355}
+Epoch 46/300 [############################] 1/1 batch_loss=0.2518 lr=0.000545403
+{"event": "epoch_complete", "epoch": 46, "train_loss": 0.25184234976768494, "val_loss": 1.303252100944519, "epoch_seconds": 0.20684504508972168}
+Epoch 47/300 [############################] 1/1 batch_loss=0.2514 lr=0.000562304
+{"event": "epoch_complete", "epoch": 47, "train_loss": 0.2513757646083832, "val_loss": 1.3068660497665405, "epoch_seconds": 0.20107078552246094}
+Epoch 48/300 [############################] 1/1 batch_loss=0.2382 lr=0.000579151
+{"event": "epoch_complete", "epoch": 48, "train_loss": 0.23816218972206116, "val_loss": 1.2433620691299438, "epoch_seconds": 0.20019841194152832}
+Epoch 49/300 [############################] 1/1 batch_loss=0.1968 lr=0.000595925
+{"event": "epoch_complete", "epoch": 49, "train_loss": 0.19680877029895782, "val_loss": 1.2579249143600464, "epoch_seconds": 0.21512913703918457}
+Epoch 50/300 [############################] 1/1 batch_loss=0.2634 lr=0.000612605
+{"event": "epoch_complete", "epoch": 50, "train_loss": 0.2634038031101227, "val_loss": 1.304022192955017, "epoch_seconds": 0.20582246780395508}
+Epoch 51/300 [############################] 1/1 batch_loss=0.2355 lr=0.000629168
+{"event": "epoch_complete", "epoch": 51, "train_loss": 0.23546931147575378, "val_loss": 1.3231706619262695, "epoch_seconds": 0.2053053379058838}
+Epoch 52/300 [############################] 1/1 batch_loss=0.1720 lr=0.000645596
+{"event": "epoch_complete", "epoch": 52, "train_loss": 0.17202839255332947, "val_loss": 1.2455915212631226, "epoch_seconds": 0.2073347568511963}
+Epoch 53/300 [############################] 1/1 batch_loss=0.2298 lr=0.000661868
+{"event": "epoch_complete", "epoch": 53, "train_loss": 0.22977590560913086, "val_loss": 1.2359052896499634, "epoch_seconds": 0.20117712020874023}
+Epoch 54/300 [############################] 1/1 batch_loss=0.1852 lr=0.000677963
+{"event": "epoch_complete", "epoch": 54, "train_loss": 0.18515771627426147, "val_loss": 1.221631646156311, "epoch_seconds": 0.20559382438659668}
+Epoch 55/300 [############################] 1/1 batch_loss=0.1395 lr=0.000693861
+{"event": "epoch_complete", "epoch": 55, "train_loss": 0.13954883813858032, "val_loss": 1.1391650438308716, "epoch_seconds": 0.24132728576660156}
+Epoch 56/300 [############################] 1/1 batch_loss=0.1989 lr=0.000709542
+{"event": "epoch_complete", "epoch": 56, "train_loss": 0.19890891015529633, "val_loss": 1.1168330907821655, "epoch_seconds": 0.24110698699951172}
+Epoch 57/300 [############################] 1/1 batch_loss=0.1810 lr=0.000724987
+{"event": "epoch_complete", "epoch": 57, "train_loss": 0.18095949292182922, "val_loss": 1.1218912601470947, "epoch_seconds": 0.20426583290100098}
+Epoch 58/300 [############################] 1/1 batch_loss=0.1709 lr=0.000740177
+{"event": "epoch_complete", "epoch": 58, "train_loss": 0.17085140943527222, "val_loss": 1.2541574239730835, "epoch_seconds": 0.20025086402893066}
+Epoch 59/300 [############################] 1/1 batch_loss=0.1577 lr=0.000755092
+{"event": "epoch_complete", "epoch": 59, "train_loss": 0.15767346322536469, "val_loss": 1.3698734045028687, "epoch_seconds": 0.19865703582763672}
+Epoch 60/300 [############################] 1/1 batch_loss=0.1839 lr=0.000769715
+{"event": "epoch_complete", "epoch": 60, "train_loss": 0.18394367396831512, "val_loss": 1.3688057661056519, "epoch_seconds": 0.34212350845336914}
+Epoch 61/300 [############################] 1/1 batch_loss=0.1943 lr=0.000784026
+{"event": "epoch_complete", "epoch": 61, "train_loss": 0.19425185024738312, "val_loss": 1.2628488540649414, "epoch_seconds": 0.19834494590759277}
+Epoch 62/300 [############################] 1/1 batch_loss=0.2058 lr=0.000798009
+{"event": "epoch_complete", "epoch": 62, "train_loss": 0.2057926058769226, "val_loss": 1.2482457160949707, "epoch_seconds": 0.20427966117858887}
+Epoch 63/300 [############################] 1/1 batch_loss=0.1963 lr=0.000811645
+{"event": "epoch_complete", "epoch": 63, "train_loss": 0.19625452160835266, "val_loss": 1.173593521118164, "epoch_seconds": 0.1993083953857422}
+Epoch 64/300 [############################] 1/1 batch_loss=0.1490 lr=0.000824918
+{"event": "epoch_complete", "epoch": 64, "train_loss": 0.14904458820819855, "val_loss": 1.1803629398345947, "epoch_seconds": 0.19872546195983887}
+Epoch 65/300 [############################] 1/1 batch_loss=0.1894 lr=0.000837811
+{"event": "epoch_complete", "epoch": 65, "train_loss": 0.1893692910671234, "val_loss": 1.2024399042129517, "epoch_seconds": 0.1979198455810547}
+Epoch 66/300 [############################] 1/1 batch_loss=0.1563 lr=0.000850308
+{"event": "epoch_complete", "epoch": 66, "train_loss": 0.1563228815793991, "val_loss": 1.0984783172607422, "epoch_seconds": 0.2411665916442871}
+Epoch 67/300 [############################] 1/1 batch_loss=0.2022 lr=0.000862393
+{"event": "epoch_complete", "epoch": 67, "train_loss": 0.20219582319259644, "val_loss": 1.1390539407730103, "epoch_seconds": 0.20079636573791504}
+Epoch 68/300 [############################] 1/1 batch_loss=0.1782 lr=0.000874052
+{"event": "epoch_complete", "epoch": 68, "train_loss": 0.17817461490631104, "val_loss": 1.3001062870025635, "epoch_seconds": 0.20564818382263184}
+Epoch 69/300 [############################] 1/1 batch_loss=0.2231 lr=0.00088527
+{"event": "epoch_complete", "epoch": 69, "train_loss": 0.22307756543159485, "val_loss": 1.3066625595092773, "epoch_seconds": 0.19904494285583496}
+Epoch 70/300 [############################] 1/1 batch_loss=0.1874 lr=0.000896032
+{"event": "epoch_complete", "epoch": 70, "train_loss": 0.1873859465122223, "val_loss": 1.225480079650879, "epoch_seconds": 0.19855070114135742}
+Epoch 71/300 [############################] 1/1 batch_loss=0.1827 lr=0.000906327
+{"event": "epoch_complete", "epoch": 71, "train_loss": 0.1826801598072052, "val_loss": 1.2400234937667847, "epoch_seconds": 0.19997787475585938}
+Epoch 72/300 [############################] 1/1 batch_loss=0.1649 lr=0.00091614
+{"event": "epoch_complete", "epoch": 72, "train_loss": 0.1648542433977127, "val_loss": 1.2684736251831055, "epoch_seconds": 0.20110201835632324}
+Epoch 73/300 [############################] 1/1 batch_loss=0.1718 lr=0.000925459
+{"event": "epoch_complete", "epoch": 73, "train_loss": 0.17181356251239777, "val_loss": 1.2637985944747925, "epoch_seconds": 0.1989762783050537}
+Epoch 74/300 [############################] 1/1 batch_loss=0.1772 lr=0.000934273
+{"event": "epoch_complete", "epoch": 74, "train_loss": 0.17720693349838257, "val_loss": 1.193395972251892, "epoch_seconds": 0.19929146766662598}
+Epoch 75/300 [############################] 1/1 batch_loss=0.1643 lr=0.000942571
+{"event": "epoch_complete", "epoch": 75, "train_loss": 0.1643396019935608, "val_loss": 1.2357221841812134, "epoch_seconds": 0.19957208633422852}
+Epoch 76/300 [############################] 1/1 batch_loss=0.1604 lr=0.000950343
+{"event": "epoch_complete", "epoch": 76, "train_loss": 0.16043871641159058, "val_loss": 1.1585036516189575, "epoch_seconds": 0.20057988166809082}
+Epoch 77/300 [############################] 1/1 batch_loss=0.1715 lr=0.000957578
+{"event": "epoch_complete", "epoch": 77, "train_loss": 0.17152246832847595, "val_loss": 1.2022103071212769, "epoch_seconds": 0.2011241912841797}
+Epoch 78/300 [############################] 1/1 batch_loss=0.1624 lr=0.000964268
+{"event": "epoch_complete", "epoch": 78, "train_loss": 0.16244205832481384, "val_loss": 1.199183464050293, "epoch_seconds": 0.20094847679138184}
+Epoch 79/300 [############################] 1/1 batch_loss=0.1574 lr=0.000970405
+{"event": "epoch_complete", "epoch": 79, "train_loss": 0.15740182995796204, "val_loss": 1.2702264785766602, "epoch_seconds": 0.20298385620117188}
+Epoch 80/300 [############################] 1/1 batch_loss=0.1506 lr=0.000975981
+{"event": "epoch_complete", "epoch": 80, "train_loss": 0.15062260627746582, "val_loss": 1.2169479131698608, "epoch_seconds": 0.2062830924987793}
+Epoch 81/300 [############################] 1/1 batch_loss=0.1525 lr=0.000980988
+{"event": "epoch_complete", "epoch": 81, "train_loss": 0.1524907350540161, "val_loss": 1.1865688562393188, "epoch_seconds": 0.20264601707458496}
+Epoch 82/300 [############################] 1/1 batch_loss=0.1236 lr=0.000985421
+{"event": "epoch_complete", "epoch": 82, "train_loss": 0.12359322607517242, "val_loss": 1.2269032001495361, "epoch_seconds": 0.20286035537719727}
+Epoch 83/300 [############################] 1/1 batch_loss=0.1760 lr=0.000989275
+{"event": "epoch_complete", "epoch": 83, "train_loss": 0.17599131166934967, "val_loss": 1.2590503692626953, "epoch_seconds": 0.1999495029449463}
+Epoch 84/300 [############################] 1/1 batch_loss=0.1503 lr=0.000992543
+{"event": "epoch_complete", "epoch": 84, "train_loss": 0.15032494068145752, "val_loss": 1.2241357564926147, "epoch_seconds": 0.20220065116882324}
+Epoch 85/300 [############################] 1/1 batch_loss=0.1462 lr=0.000995223
+{"event": "epoch_complete", "epoch": 85, "train_loss": 0.14618656039237976, "val_loss": 1.199446439743042, "epoch_seconds": 0.20429158210754395}
+Epoch 86/300 [############################] 1/1 batch_loss=0.1251 lr=0.000997311
+{"event": "epoch_complete", "epoch": 86, "train_loss": 0.1250624656677246, "val_loss": 1.3822075128555298, "epoch_seconds": 0.20148706436157227}
+Epoch 87/300 [############################] 1/1 batch_loss=0.1634 lr=0.000998804
+{"event": "epoch_complete", "epoch": 87, "train_loss": 0.16344113647937775, "val_loss": 1.3023078441619873, "epoch_seconds": 0.20102238655090332}
+Epoch 88/300 [############################] 1/1 batch_loss=0.1620 lr=0.000999701
+{"event": "epoch_complete", "epoch": 88, "train_loss": 0.1620238572359085, "val_loss": 1.1440083980560303, "epoch_seconds": 0.19955229759216309}
+Epoch 89/300 [############################] 1/1 batch_loss=0.1350 lr=0.001
+{"event": "epoch_complete", "epoch": 89, "train_loss": 0.13499636948108673, "val_loss": 1.2176541090011597, "epoch_seconds": 0.2013072967529297}
+Epoch 90/300 [############################] 1/1 batch_loss=0.1145 lr=0.000999944
+{"event": "epoch_complete", "epoch": 90, "train_loss": 0.11450602859258652, "val_loss": 1.1865490674972534, "epoch_seconds": 0.20049190521240234}
+Epoch 91/300 [############################] 1/1 batch_loss=0.1436 lr=0.000999776
+{"event": "epoch_complete", "epoch": 91, "train_loss": 0.14361684024333954, "val_loss": 1.1870324611663818, "epoch_seconds": 0.2020273208618164}
+Epoch 92/300 [############################] 1/1 batch_loss=0.1319 lr=0.000999497
+{"event": "epoch_complete", "epoch": 92, "train_loss": 0.1318713277578354, "val_loss": 1.126492977142334, "epoch_seconds": 0.20382428169250488}
+Epoch 93/300 [############################] 1/1 batch_loss=0.1387 lr=0.000999105
+{"event": "epoch_complete", "epoch": 93, "train_loss": 0.13868719339370728, "val_loss": 1.2100346088409424, "epoch_seconds": 0.35014891624450684}
+Epoch 94/300 [############################] 1/1 batch_loss=0.1392 lr=0.000998602
+{"event": "epoch_complete", "epoch": 94, "train_loss": 0.1392461508512497, "val_loss": 1.243747353553772, "epoch_seconds": 0.19984674453735352}
+Epoch 95/300 [############################] 1/1 batch_loss=0.1270 lr=0.000997987
+{"event": "epoch_complete", "epoch": 95, "train_loss": 0.12696640193462372, "val_loss": 1.2153276205062866, "epoch_seconds": 0.2009110450744629}
+Epoch 96/300 [############################] 1/1 batch_loss=0.1318 lr=0.000997261
+{"event": "epoch_complete", "epoch": 96, "train_loss": 0.13175182044506073, "val_loss": 1.20420503616333, "epoch_seconds": 0.2019643783569336}
+Epoch 97/300 [############################] 1/1 batch_loss=0.1069 lr=0.000996423
+{"event": "epoch_complete", "epoch": 97, "train_loss": 0.10688480734825134, "val_loss": 1.2155592441558838, "epoch_seconds": 0.20116877555847168}
+Epoch 98/300 [############################] 1/1 batch_loss=0.1312 lr=0.000995475
+{"event": "epoch_complete", "epoch": 98, "train_loss": 0.13116447627544403, "val_loss": 1.2401942014694214, "epoch_seconds": 0.2031104564666748}
+Epoch 99/300 [############################] 1/1 batch_loss=0.1718 lr=0.000994415
+{"event": "epoch_complete", "epoch": 99, "train_loss": 0.17181438207626343, "val_loss": 1.2580070495605469, "epoch_seconds": 0.2039186954498291}
+Epoch 100/300 [############################] 1/1 batch_loss=0.1527 lr=0.000993245
+{"event": "epoch_complete", "epoch": 100, "train_loss": 0.15270335972309113, "val_loss": 1.1874052286148071, "epoch_seconds": 0.20406675338745117}
+Epoch 101/300 [############################] 1/1 batch_loss=0.1322 lr=0.000991965
+{"event": "epoch_complete", "epoch": 101, "train_loss": 0.13216108083724976, "val_loss": 1.2188729047775269, "epoch_seconds": 0.2040233612060547}
+Epoch 102/300 [############################] 1/1 batch_loss=0.1509 lr=0.000990574
+{"event": "epoch_complete", "epoch": 102, "train_loss": 0.15088462829589844, "val_loss": 1.2125821113586426, "epoch_seconds": 0.20221304893493652}
+Epoch 103/300 [############################] 1/1 batch_loss=0.1812 lr=0.000989074
+{"event": "epoch_complete", "epoch": 103, "train_loss": 0.1812383532524109, "val_loss": 1.211896300315857, "epoch_seconds": 0.211289644241333}
+Epoch 104/300 [############################] 1/1 batch_loss=0.1753 lr=0.000987464
+{"event": "epoch_complete", "epoch": 104, "train_loss": 0.1753276288509369, "val_loss": 1.264692783355713, "epoch_seconds": 0.20273876190185547}
+Epoch 105/300 [############################] 1/1 batch_loss=0.1631 lr=0.000985745
+{"event": "epoch_complete", "epoch": 105, "train_loss": 0.16312801837921143, "val_loss": 1.1753660440444946, "epoch_seconds": 0.20236897468566895}
+Epoch 106/300 [############################] 1/1 batch_loss=0.1106 lr=0.000983917
+{"event": "epoch_complete", "epoch": 106, "train_loss": 0.11062484234571457, "val_loss": 1.2332485914230347, "epoch_seconds": 0.20088911056518555}
+Epoch 107/300 [############################] 1/1 batch_loss=0.1265 lr=0.000981982
+{"event": "epoch_complete", "epoch": 107, "train_loss": 0.12654103338718414, "val_loss": 1.3508909940719604, "epoch_seconds": 0.20090889930725098}
+Epoch 108/300 [############################] 1/1 batch_loss=0.1344 lr=0.000979938
+{"event": "epoch_complete", "epoch": 108, "train_loss": 0.13435441255569458, "val_loss": 1.361093282699585, "epoch_seconds": 0.2127692699432373}
+Epoch 109/300 [############################] 1/1 batch_loss=0.1263 lr=0.000977786
+{"event": "epoch_complete", "epoch": 109, "train_loss": 0.1263049691915512, "val_loss": 1.2903568744659424, "epoch_seconds": 0.2133159637451172}
+Epoch 110/300 [############################] 1/1 batch_loss=0.1164 lr=0.000975528
+{"event": "epoch_complete", "epoch": 110, "train_loss": 0.1164386123418808, "val_loss": 1.215427041053772, "epoch_seconds": 0.20795059204101562}
+Epoch 111/300 [############################] 1/1 batch_loss=0.1391 lr=0.000973164
+{"event": "epoch_complete", "epoch": 111, "train_loss": 0.13911506533622742, "val_loss": 1.1808394193649292, "epoch_seconds": 0.20416808128356934}
+Epoch 112/300 [############################] 1/1 batch_loss=0.1149 lr=0.000970693
+{"event": "epoch_complete", "epoch": 112, "train_loss": 0.11491546779870987, "val_loss": 1.1975303888320923, "epoch_seconds": 0.2131359577178955}
+Epoch 113/300 [############################] 1/1 batch_loss=0.1190 lr=0.000968118
+{"event": "epoch_complete", "epoch": 113, "train_loss": 0.11899308115243912, "val_loss": 1.1903963088989258, "epoch_seconds": 0.2027888298034668}
+Epoch 114/300 [############################] 1/1 batch_loss=0.1205 lr=0.000965437
+{"event": "epoch_complete", "epoch": 114, "train_loss": 0.1204732283949852, "val_loss": 1.2054697275161743, "epoch_seconds": 0.20432710647583008}
+Epoch 115/300 [############################] 1/1 batch_loss=0.1348 lr=0.000962652
+{"event": "epoch_complete", "epoch": 115, "train_loss": 0.13482804596424103, "val_loss": 1.2210267782211304, "epoch_seconds": 0.20318222045898438}
+Epoch 116/300 [############################] 1/1 batch_loss=0.1101 lr=0.000959764
+{"event": "epoch_complete", "epoch": 116, "train_loss": 0.1101403459906578, "val_loss": 1.1913646459579468, "epoch_seconds": 0.20362520217895508}
+Epoch 117/300 [############################] 1/1 batch_loss=0.0982 lr=0.000956773
+{"event": "epoch_complete", "epoch": 117, "train_loss": 0.0981590524315834, "val_loss": 1.1733745336532593, "epoch_seconds": 0.20189237594604492}
+Epoch 118/300 [############################] 1/1 batch_loss=0.1317 lr=0.00095368
+{"event": "epoch_complete", "epoch": 118, "train_loss": 0.13174030184745789, "val_loss": 1.1881226301193237, "epoch_seconds": 0.2080695629119873}
+Epoch 119/300 [############################] 1/1 batch_loss=0.1274 lr=0.000950485
+{"event": "epoch_complete", "epoch": 119, "train_loss": 0.12739500403404236, "val_loss": 1.2202786207199097, "epoch_seconds": 0.20205974578857422}
+Epoch 120/300 [############################] 1/1 batch_loss=0.1225 lr=0.000947189
+{"event": "epoch_complete", "epoch": 120, "train_loss": 0.12252036482095718, "val_loss": 1.1745702028274536, "epoch_seconds": 0.20077228546142578}
+Epoch 121/300 [############################] 1/1 batch_loss=0.1559 lr=0.000943793
+{"event": "epoch_complete", "epoch": 121, "train_loss": 0.1558530032634735, "val_loss": 1.2410351037979126, "epoch_seconds": 0.20099544525146484}
+Epoch 122/300 [############################] 1/1 batch_loss=0.1500 lr=0.000940298
+{"event": "epoch_complete", "epoch": 122, "train_loss": 0.15000171959400177, "val_loss": 1.1959326267242432, "epoch_seconds": 0.20054078102111816}
+Epoch 123/300 [############################] 1/1 batch_loss=0.1264 lr=0.000936704
+{"event": "epoch_complete", "epoch": 123, "train_loss": 0.12642115354537964, "val_loss": 1.1921154260635376, "epoch_seconds": 0.1989426612854004}
+Epoch 124/300 [############################] 1/1 batch_loss=0.0990 lr=0.000933013
+{"event": "epoch_complete", "epoch": 124, "train_loss": 0.09900727868080139, "val_loss": 1.2337566614151, "epoch_seconds": 0.20055007934570312}
+Epoch 125/300 [############################] 1/1 batch_loss=0.1126 lr=0.000929225
+{"event": "epoch_complete", "epoch": 125, "train_loss": 0.11257470399141312, "val_loss": 1.2355461120605469, "epoch_seconds": 0.34038662910461426}
+Epoch 126/300 [############################] 1/1 batch_loss=0.1353 lr=0.00092534
+{"event": "epoch_complete", "epoch": 126, "train_loss": 0.13525255024433136, "val_loss": 1.1908358335494995, "epoch_seconds": 0.20318841934204102}
+Epoch 127/300 [############################] 1/1 batch_loss=0.0965 lr=0.000921361
+{"event": "epoch_complete", "epoch": 127, "train_loss": 0.0964919850230217, "val_loss": 1.1884292364120483, "epoch_seconds": 0.20055317878723145}
+Epoch 128/300 [############################] 1/1 batch_loss=0.0923 lr=0.000917287
+{"event": "epoch_complete", "epoch": 128, "train_loss": 0.09229139238595963, "val_loss": 1.1929931640625, "epoch_seconds": 0.2007763385772705}
+Epoch 129/300 [############################] 1/1 batch_loss=0.1081 lr=0.00091312
+{"event": "epoch_complete", "epoch": 129, "train_loss": 0.1080583706498146, "val_loss": 1.1922321319580078, "epoch_seconds": 0.19863080978393555}
+Epoch 130/300 [############################] 1/1 batch_loss=0.0856 lr=0.00090886
+{"event": "epoch_complete", "epoch": 130, "train_loss": 0.08559029549360275, "val_loss": 1.1799304485321045, "epoch_seconds": 0.2078568935394287}
+Epoch 131/300 [############################] 1/1 batch_loss=0.0772 lr=0.000904509
+{"event": "epoch_complete", "epoch": 131, "train_loss": 0.07720421254634857, "val_loss": 1.155096411705017, "epoch_seconds": 0.20195364952087402}
+Epoch 132/300 [############################] 1/1 batch_loss=0.0838 lr=0.000900067
+{"event": "epoch_complete", "epoch": 132, "train_loss": 0.08379767090082169, "val_loss": 1.1714226007461548, "epoch_seconds": 0.2018430233001709}
+Epoch 133/300 [############################] 1/1 batch_loss=0.0905 lr=0.000895536
+{"event": "epoch_complete", "epoch": 133, "train_loss": 0.09051722288131714, "val_loss": 1.218613624572754, "epoch_seconds": 0.2048189640045166}
+Epoch 134/300 [############################] 1/1 batch_loss=0.1185 lr=0.000890916
+{"event": "epoch_complete", "epoch": 134, "train_loss": 0.11853541433811188, "val_loss": 1.2686560153961182, "epoch_seconds": 0.20186233520507812}
+Epoch 135/300 [############################] 1/1 batch_loss=0.1068 lr=0.000886209
+{"event": "epoch_complete", "epoch": 135, "train_loss": 0.10675984621047974, "val_loss": 1.2564241886138916, "epoch_seconds": 0.2020106315612793}
+Epoch 136/300 [############################] 1/1 batch_loss=0.1102 lr=0.000881415
+{"event": "epoch_complete", "epoch": 136, "train_loss": 0.11022597551345825, "val_loss": 1.2279906272888184, "epoch_seconds": 0.20006942749023438}
+Epoch 137/300 [############################] 1/1 batch_loss=0.1081 lr=0.000876536
+{"event": "epoch_complete", "epoch": 137, "train_loss": 0.10805661976337433, "val_loss": 1.2200297117233276, "epoch_seconds": 0.2001481056213379}
+Epoch 138/300 [############################] 1/1 batch_loss=0.0961 lr=0.000871573
+{"event": "epoch_complete", "epoch": 138, "train_loss": 0.09605994820594788, "val_loss": 1.20506751537323, "epoch_seconds": 0.20043325424194336}
+Epoch 139/300 [############################] 1/1 batch_loss=0.0895 lr=0.000866526
+{"event": "epoch_complete", "epoch": 139, "train_loss": 0.08953507989645004, "val_loss": 1.1885918378829956, "epoch_seconds": 0.2012624740600586}
+Epoch 140/300 [############################] 1/1 batch_loss=0.0849 lr=0.000861398
+{"event": "epoch_complete", "epoch": 140, "train_loss": 0.08489705622196198, "val_loss": 1.1952093839645386, "epoch_seconds": 0.20346713066101074}
+Epoch 141/300 [############################] 1/1 batch_loss=0.0884 lr=0.000856189
+{"event": "epoch_complete", "epoch": 141, "train_loss": 0.08839857578277588, "val_loss": 1.2241034507751465, "epoch_seconds": 0.20678997039794922}
+Epoch 142/300 [############################] 1/1 batch_loss=0.0659 lr=0.0008509
+{"event": "epoch_complete", "epoch": 142, "train_loss": 0.06591469794511795, "val_loss": 1.2341949939727783, "epoch_seconds": 0.20162081718444824}
+Epoch 143/300 [############################] 1/1 batch_loss=0.0893 lr=0.000845532
+{"event": "epoch_complete", "epoch": 143, "train_loss": 0.08927179872989655, "val_loss": 1.1941291093826294, "epoch_seconds": 0.20215415954589844}
+Epoch 144/300 [############################] 1/1 batch_loss=0.0830 lr=0.000840087
+{"event": "epoch_complete", "epoch": 144, "train_loss": 0.08298689872026443, "val_loss": 1.1624609231948853, "epoch_seconds": 0.20132827758789062}
+Epoch 145/300 [############################] 1/1 batch_loss=0.0786 lr=0.000834566
+{"event": "epoch_complete", "epoch": 145, "train_loss": 0.07862559705972672, "val_loss": 1.1848644018173218, "epoch_seconds": 0.20287585258483887}
+Epoch 146/300 [############################] 1/1 batch_loss=0.0853 lr=0.00082897
+{"event": "epoch_complete", "epoch": 146, "train_loss": 0.08530417084693909, "val_loss": 1.214322566986084, "epoch_seconds": 0.2033240795135498}
+Epoch 147/300 [############################] 1/1 batch_loss=0.0855 lr=0.000823301
+{"event": "epoch_complete", "epoch": 147, "train_loss": 0.08551125973463058, "val_loss": 1.220098853111267, "epoch_seconds": 0.20246601104736328}
+Epoch 148/300 [############################] 1/1 batch_loss=0.0734 lr=0.000817559
+{"event": "epoch_complete", "epoch": 148, "train_loss": 0.07339365780353546, "val_loss": 1.1945055723190308, "epoch_seconds": 0.2084062099456787}
+Epoch 149/300 [############################] 1/1 batch_loss=0.0858 lr=0.000811746
+{"event": "epoch_complete", "epoch": 149, "train_loss": 0.08579786121845245, "val_loss": 1.1784892082214355, "epoch_seconds": 0.20213866233825684}
+Epoch 150/300 [############################] 1/1 batch_loss=0.0928 lr=0.000805863
+{"event": "epoch_complete", "epoch": 150, "train_loss": 0.09279277920722961, "val_loss": 1.146206259727478, "epoch_seconds": 0.20199060440063477}
+Epoch 151/300 [############################] 1/1 batch_loss=0.0773 lr=0.000799912
+{"event": "epoch_complete", "epoch": 151, "train_loss": 0.0772789940237999, "val_loss": 1.1547324657440186, "epoch_seconds": 0.20189785957336426}
+Epoch 152/300 [############################] 1/1 batch_loss=0.0828 lr=0.000793893
+{"event": "epoch_complete", "epoch": 152, "train_loss": 0.08280224353075027, "val_loss": 1.1811909675598145, "epoch_seconds": 0.2020883560180664}
+Epoch 153/300 [############################] 1/1 batch_loss=0.0654 lr=0.000787809
+{"event": "epoch_complete", "epoch": 153, "train_loss": 0.0653851330280304, "val_loss": 1.1904350519180298, "epoch_seconds": 0.20285677909851074}
+Epoch 154/300 [############################] 1/1 batch_loss=0.0740 lr=0.000781661
+{"event": "epoch_complete", "epoch": 154, "train_loss": 0.07403522729873657, "val_loss": 1.205499529838562, "epoch_seconds": 0.20188093185424805}
+Epoch 155/300 [############################] 1/1 batch_loss=0.0640 lr=0.000775449
+{"event": "epoch_complete", "epoch": 155, "train_loss": 0.06398287415504456, "val_loss": 1.197749376296997, "epoch_seconds": 0.20240521430969238}
+Epoch 156/300 [############################] 1/1 batch_loss=0.0623 lr=0.000769176
+{"event": "epoch_complete", "epoch": 156, "train_loss": 0.06229078024625778, "val_loss": 1.179522156715393, "epoch_seconds": 0.2034449577331543}
+Epoch 157/300 [############################] 1/1 batch_loss=0.0825 lr=0.000762843
+{"event": "epoch_complete", "epoch": 157, "train_loss": 0.08253210783004761, "val_loss": 1.1748325824737549, "epoch_seconds": 0.348844051361084}
+Epoch 158/300 [############################] 1/1 batch_loss=0.0648 lr=0.000756451
+{"event": "epoch_complete", "epoch": 158, "train_loss": 0.06483158469200134, "val_loss": 1.1727492809295654, "epoch_seconds": 0.20641517639160156}
+Epoch 159/300 [############################] 1/1 batch_loss=0.0829 lr=0.000750001
+{"event": "epoch_complete", "epoch": 159, "train_loss": 0.08287069946527481, "val_loss": 1.1780271530151367, "epoch_seconds": 0.20217347145080566}
+Epoch 160/300 [############################] 1/1 batch_loss=0.0688 lr=0.000743495
+{"event": "epoch_complete", "epoch": 160, "train_loss": 0.06877002865076065, "val_loss": 1.1833502054214478, "epoch_seconds": 0.202667236328125}
+Epoch 161/300 [############################] 1/1 batch_loss=0.0674 lr=0.000736935
+{"event": "epoch_complete", "epoch": 161, "train_loss": 0.0673520639538765, "val_loss": 1.1887396574020386, "epoch_seconds": 0.20725250244140625}
+Epoch 162/300 [############################] 1/1 batch_loss=0.0726 lr=0.000730322
+{"event": "epoch_complete", "epoch": 162, "train_loss": 0.07260221242904663, "val_loss": 1.1708201169967651, "epoch_seconds": 0.2016620635986328}
+Epoch 163/300 [############################] 1/1 batch_loss=0.0650 lr=0.000723658
+{"event": "epoch_complete", "epoch": 163, "train_loss": 0.06495247781276703, "val_loss": 1.1580246686935425, "epoch_seconds": 0.20560932159423828}
+Epoch 164/300 [############################] 1/1 batch_loss=0.0488 lr=0.000716943
+{"event": "epoch_complete", "epoch": 164, "train_loss": 0.048802636563777924, "val_loss": 1.1603140830993652, "epoch_seconds": 0.20222830772399902}
+Epoch 165/300 [############################] 1/1 batch_loss=0.0545 lr=0.00071018
+{"event": "epoch_complete", "epoch": 165, "train_loss": 0.05445778742432594, "val_loss": 1.1633127927780151, "epoch_seconds": 0.20367884635925293}
+Epoch 166/300 [############################] 1/1 batch_loss=0.0508 lr=0.00070337
+{"event": "epoch_complete", "epoch": 166, "train_loss": 0.050753287971019745, "val_loss": 1.1728835105895996, "epoch_seconds": 0.20456504821777344}
+Epoch 167/300 [############################] 1/1 batch_loss=0.0609 lr=0.000696514
+{"event": "epoch_complete", "epoch": 167, "train_loss": 0.060929812490940094, "val_loss": 1.1851125955581665, "epoch_seconds": 0.2089824676513672}
+Epoch 168/300 [############################] 1/1 batch_loss=0.0574 lr=0.000689614
+{"event": "epoch_complete", "epoch": 168, "train_loss": 0.057406067848205566, "val_loss": 1.1917297840118408, "epoch_seconds": 0.2223360538482666}
+Epoch 169/300 [############################] 1/1 batch_loss=0.0724 lr=0.000682672
+{"event": "epoch_complete", "epoch": 169, "train_loss": 0.0724070817232132, "val_loss": 1.1909023523330688, "epoch_seconds": 0.20305562019348145}
+Epoch 170/300 [############################] 1/1 batch_loss=0.0524 lr=0.000675689
+{"event": "epoch_complete", "epoch": 170, "train_loss": 0.052387651056051254, "val_loss": 1.1864453554153442, "epoch_seconds": 0.2155928611755371}
+Epoch 171/300 [############################] 1/1 batch_loss=0.0687 lr=0.000668666
+{"event": "epoch_complete", "epoch": 171, "train_loss": 0.06872953474521637, "val_loss": 1.174664855003357, "epoch_seconds": 0.20032143592834473}
+Epoch 172/300 [############################] 1/1 batch_loss=0.0711 lr=0.000661606
+{"event": "epoch_complete", "epoch": 172, "train_loss": 0.07106464356184006, "val_loss": 1.1717607975006104, "epoch_seconds": 0.20121526718139648}
+Epoch 173/300 [############################] 1/1 batch_loss=0.0547 lr=0.00065451
+{"event": "epoch_complete", "epoch": 173, "train_loss": 0.05469106137752533, "val_loss": 1.1685826778411865, "epoch_seconds": 0.20361828804016113}
+Epoch 174/300 [############################] 1/1 batch_loss=0.0708 lr=0.000647379
+{"event": "epoch_complete", "epoch": 174, "train_loss": 0.07081834971904755, "val_loss": 1.164928674697876, "epoch_seconds": 0.20253348350524902}
+Epoch 175/300 [############################] 1/1 batch_loss=0.0685 lr=0.000640215
+{"event": "epoch_complete", "epoch": 175, "train_loss": 0.06846404075622559, "val_loss": 1.1725393533706665, "epoch_seconds": 0.2017533779144287}
+Epoch 176/300 [############################] 1/1 batch_loss=0.0637 lr=0.00063302
+{"event": "epoch_complete", "epoch": 176, "train_loss": 0.06369737535715103, "val_loss": 1.1757649183273315, "epoch_seconds": 0.1997537612915039}
+Epoch 177/300 [############################] 1/1 batch_loss=0.0580 lr=0.000625795
+{"event": "epoch_complete", "epoch": 177, "train_loss": 0.0580470934510231, "val_loss": 1.1952455043792725, "epoch_seconds": 0.2009105682373047}
+Epoch 178/300 [############################] 1/1 batch_loss=0.0726 lr=0.000618542
+{"event": "epoch_complete", "epoch": 178, "train_loss": 0.07255364209413528, "val_loss": 1.2143503427505493, "epoch_seconds": 0.2126452922821045}
+Epoch 179/300 [############################] 1/1 batch_loss=0.0862 lr=0.000611262
+{"event": "epoch_complete", "epoch": 179, "train_loss": 0.08624942600727081, "val_loss": 1.2165164947509766, "epoch_seconds": 0.20341038703918457}
+Epoch 180/300 [############################] 1/1 batch_loss=0.0728 lr=0.000603957
+{"event": "epoch_complete", "epoch": 180, "train_loss": 0.07282165437936783, "val_loss": 1.1865466833114624, "epoch_seconds": 0.20278215408325195}
+Epoch 181/300 [############################] 1/1 batch_loss=0.0540 lr=0.00059663
+{"event": "epoch_complete", "epoch": 181, "train_loss": 0.05395069345831871, "val_loss": 1.1456873416900635, "epoch_seconds": 0.19856572151184082}
+Epoch 182/300 [############################] 1/1 batch_loss=0.0753 lr=0.00058928
+{"event": "epoch_complete", "epoch": 182, "train_loss": 0.07531961798667908, "val_loss": 1.1361912488937378, "epoch_seconds": 0.20273351669311523}
+Epoch 183/300 [############################] 1/1 batch_loss=0.0700 lr=0.000581911
+{"event": "epoch_complete", "epoch": 183, "train_loss": 0.07004477083683014, "val_loss": 1.1591442823410034, "epoch_seconds": 0.20085430145263672}
+Epoch 184/300 [############################] 1/1 batch_loss=0.0526 lr=0.000574523
+{"event": "epoch_complete", "epoch": 184, "train_loss": 0.052639711648225784, "val_loss": 1.1888885498046875, "epoch_seconds": 0.2015693187713623}
+Epoch 185/300 [############################] 1/1 batch_loss=0.0562 lr=0.000567118
+{"event": "epoch_complete", "epoch": 185, "train_loss": 0.05619935691356659, "val_loss": 1.1987074613571167, "epoch_seconds": 0.20458054542541504}
+Epoch 186/300 [############################] 1/1 batch_loss=0.0640 lr=0.000559699
+{"event": "epoch_complete", "epoch": 186, "train_loss": 0.06402116268873215, "val_loss": 1.1912158727645874, "epoch_seconds": 0.2004389762878418}
+Epoch 187/300 [############################] 1/1 batch_loss=0.0498 lr=0.000552266
+{"event": "epoch_complete", "epoch": 187, "train_loss": 0.049771685153245926, "val_loss": 1.1621164083480835, "epoch_seconds": 0.205491304397583}
+Epoch 188/300 [############################] 1/1 batch_loss=0.0531 lr=0.000544821
+{"event": "epoch_complete", "epoch": 188, "train_loss": 0.0531221404671669, "val_loss": 1.1361712217330933, "epoch_seconds": 0.2030656337738037}
+Epoch 189/300 [############################] 1/1 batch_loss=0.0528 lr=0.000537367
+{"event": "epoch_complete", "epoch": 189, "train_loss": 0.052759602665901184, "val_loss": 1.1450178623199463, "epoch_seconds": 0.34810328483581543}
+Epoch 190/300 [############################] 1/1 batch_loss=0.0584 lr=0.000529904
+{"event": "epoch_complete", "epoch": 190, "train_loss": 0.05844386667013168, "val_loss": 1.1564284563064575, "epoch_seconds": 0.19943833351135254}
+Epoch 191/300 [############################] 1/1 batch_loss=0.0525 lr=0.000522434
+{"event": "epoch_complete", "epoch": 191, "train_loss": 0.05253290757536888, "val_loss": 1.1767956018447876, "epoch_seconds": 0.20558810234069824}
+Epoch 192/300 [############################] 1/1 batch_loss=0.0461 lr=0.00051496
+{"event": "epoch_complete", "epoch": 192, "train_loss": 0.04605155065655708, "val_loss": 1.2009505033493042, "epoch_seconds": 0.2012939453125}
+Epoch 193/300 [############################] 1/1 batch_loss=0.0440 lr=0.000507482
+{"event": "epoch_complete", "epoch": 193, "train_loss": 0.043951015919446945, "val_loss": 1.2206319570541382, "epoch_seconds": 0.20174455642700195}
+Epoch 194/300 [############################] 1/1 batch_loss=0.0295 lr=0.000500002
+{"event": "epoch_complete", "epoch": 194, "train_loss": 0.029495706781744957, "val_loss": 1.2256252765655518, "epoch_seconds": 0.1999509334564209}
+Epoch 195/300 [############################] 1/1 batch_loss=0.0393 lr=0.000492522
+{"event": "epoch_complete", "epoch": 195, "train_loss": 0.03934730589389801, "val_loss": 1.2157480716705322, "epoch_seconds": 0.19884490966796875}
+Epoch 196/300 [############################] 1/1 batch_loss=0.0473 lr=0.000485044
+{"event": "epoch_complete", "epoch": 196, "train_loss": 0.04733262583613396, "val_loss": 1.2103188037872314, "epoch_seconds": 0.20333170890808105}
+Epoch 197/300 [############################] 1/1 batch_loss=0.0445 lr=0.00047757
+{"event": "epoch_complete", "epoch": 197, "train_loss": 0.044496484100818634, "val_loss": 1.1987814903259277, "epoch_seconds": 0.19994735717773438}
+Epoch 198/300 [############################] 1/1 batch_loss=0.0459 lr=0.0004701
+{"event": "epoch_complete", "epoch": 198, "train_loss": 0.04585526883602142, "val_loss": 1.1837656497955322, "epoch_seconds": 0.19942617416381836}
+Epoch 199/300 [############################] 1/1 batch_loss=0.0364 lr=0.000462637
+{"event": "epoch_complete", "epoch": 199, "train_loss": 0.03642131760716438, "val_loss": 1.1700921058654785, "epoch_seconds": 0.19881749153137207}
+Epoch 200/300 [############################] 1/1 batch_loss=0.0370 lr=0.000455183
+{"event": "epoch_complete", "epoch": 200, "train_loss": 0.037034571170806885, "val_loss": 1.1636850833892822, "epoch_seconds": 0.19966697692871094}
+Epoch 201/300 [############################] 1/1 batch_loss=0.0418 lr=0.000447738
+{"event": "epoch_complete", "epoch": 201, "train_loss": 0.04175431653857231, "val_loss": 1.1683523654937744, "epoch_seconds": 0.1995987892150879}
+Epoch 202/300 [############################] 1/1 batch_loss=0.0350 lr=0.000440305
+{"event": "epoch_complete", "epoch": 202, "train_loss": 0.035011351108551025, "val_loss": 1.1775591373443604, "epoch_seconds": 0.20073151588439941}
+Epoch 203/300 [############################] 1/1 batch_loss=0.0280 lr=0.000432886
+{"event": "epoch_complete", "epoch": 203, "train_loss": 0.028000811114907265, "val_loss": 1.1788561344146729, "epoch_seconds": 0.20175385475158691}
+Epoch 204/300 [############################] 1/1 batch_loss=0.0309 lr=0.000425481
+{"event": "epoch_complete", "epoch": 204, "train_loss": 0.030870692804455757, "val_loss": 1.1873024702072144, "epoch_seconds": 0.20216846466064453}
+Epoch 205/300 [############################] 1/1 batch_loss=0.0288 lr=0.000418093
+{"event": "epoch_complete", "epoch": 205, "train_loss": 0.028762295842170715, "val_loss": 1.1858357191085815, "epoch_seconds": 0.19983172416687012}
+Epoch 206/300 [############################] 1/1 batch_loss=0.0305 lr=0.000410724
+{"event": "epoch_complete", "epoch": 206, "train_loss": 0.03051047958433628, "val_loss": 1.1759642362594604, "epoch_seconds": 0.1990797519683838}
+Epoch 207/300 [############################] 1/1 batch_loss=0.0264 lr=0.000403374
+{"event": "epoch_complete", "epoch": 207, "train_loss": 0.0264138113707304, "val_loss": 1.1711890697479248, "epoch_seconds": 0.19986319541931152}
+Epoch 208/300 [############################] 1/1 batch_loss=0.0267 lr=0.000396047
+{"event": "epoch_complete", "epoch": 208, "train_loss": 0.02671288512647152, "val_loss": 1.1679579019546509, "epoch_seconds": 0.1997969150543213}
+Epoch 209/300 [############################] 1/1 batch_loss=0.0274 lr=0.000388742
+{"event": "epoch_complete", "epoch": 209, "train_loss": 0.02743828110396862, "val_loss": 1.1696633100509644, "epoch_seconds": 0.2063581943511963}
+Epoch 210/300 [############################] 1/1 batch_loss=0.0276 lr=0.000381462
+{"event": "epoch_complete", "epoch": 210, "train_loss": 0.027584906667470932, "val_loss": 1.1647605895996094, "epoch_seconds": 0.19906044006347656}
+Epoch 211/300 [############################] 1/1 batch_loss=0.0246 lr=0.000374209
+{"event": "epoch_complete", "epoch": 211, "train_loss": 0.02461964264512062, "val_loss": 1.1653610467910767, "epoch_seconds": 0.19898247718811035}
+Epoch 212/300 [############################] 1/1 batch_loss=0.0263 lr=0.000366984
+{"event": "epoch_complete", "epoch": 212, "train_loss": 0.02634543925523758, "val_loss": 1.1702228784561157, "epoch_seconds": 0.20173311233520508}
+Epoch 213/300 [############################] 1/1 batch_loss=0.0235 lr=0.000359789
+{"event": "epoch_complete", "epoch": 213, "train_loss": 0.023522797971963882, "val_loss": 1.1799700260162354, "epoch_seconds": 0.2029705047607422}
+Epoch 214/300 [############################] 1/1 batch_loss=0.0172 lr=0.000352625
+{"event": "epoch_complete", "epoch": 214, "train_loss": 0.017223922535777092, "val_loss": 1.1898343563079834, "epoch_seconds": 0.20625829696655273}
+Epoch 215/300 [############################] 1/1 batch_loss=0.0257 lr=0.000345494
+{"event": "epoch_complete", "epoch": 215, "train_loss": 0.02571002207696438, "val_loss": 1.1917740106582642, "epoch_seconds": 0.2019801139831543}
+Epoch 216/300 [############################] 1/1 batch_loss=0.0193 lr=0.000338398
+{"event": "epoch_complete", "epoch": 216, "train_loss": 0.019319400191307068, "val_loss": 1.1900837421417236, "epoch_seconds": 0.20073318481445312}
+Epoch 217/300 [############################] 1/1 batch_loss=0.0214 lr=0.000331338
+{"event": "epoch_complete", "epoch": 217, "train_loss": 0.02135203406214714, "val_loss": 1.1859391927719116, "epoch_seconds": 0.2046680450439453}
+Epoch 218/300 [############################] 1/1 batch_loss=0.0237 lr=0.000324315
+{"event": "epoch_complete", "epoch": 218, "train_loss": 0.02367989532649517, "val_loss": 1.1790428161621094, "epoch_seconds": 0.20445561408996582}
+Epoch 219/300 [############################] 1/1 batch_loss=0.0195 lr=0.000317332
+{"event": "epoch_complete", "epoch": 219, "train_loss": 0.01950412057340145, "val_loss": 1.1753253936767578, "epoch_seconds": 0.20670080184936523}
+Epoch 220/300 [############################] 1/1 batch_loss=0.0178 lr=0.00031039
+{"event": "epoch_complete", "epoch": 220, "train_loss": 0.01779327355325222, "val_loss": 1.180246353149414, "epoch_seconds": 0.20796871185302734}
+Epoch 221/300 [############################] 1/1 batch_loss=0.0200 lr=0.00030349
+{"event": "epoch_complete", "epoch": 221, "train_loss": 0.020010704174637794, "val_loss": 1.182167887687683, "epoch_seconds": 0.34642529487609863}
+Epoch 222/300 [############################] 1/1 batch_loss=0.0219 lr=0.000296634
+{"event": "epoch_complete", "epoch": 222, "train_loss": 0.021875444799661636, "val_loss": 1.1831583976745605, "epoch_seconds": 0.2013695240020752}
+Epoch 223/300 [############################] 1/1 batch_loss=0.0191 lr=0.000289824
+{"event": "epoch_complete", "epoch": 223, "train_loss": 0.01913171075284481, "val_loss": 1.187441349029541, "epoch_seconds": 0.20218825340270996}
+Epoch 224/300 [############################] 1/1 batch_loss=0.0176 lr=0.000283061
+{"event": "epoch_complete", "epoch": 224, "train_loss": 0.017606934532523155, "val_loss": 1.189976692199707, "epoch_seconds": 0.20882391929626465}
+Epoch 225/300 [############################] 1/1 batch_loss=0.0145 lr=0.000276346
+{"event": "epoch_complete", "epoch": 225, "train_loss": 0.014461327344179153, "val_loss": 1.1942983865737915, "epoch_seconds": 0.20412921905517578}
+Epoch 226/300 [############################] 1/1 batch_loss=0.0191 lr=0.000269682
+{"event": "epoch_complete", "epoch": 226, "train_loss": 0.019132262095808983, "val_loss": 1.1890367269515991, "epoch_seconds": 0.20621562004089355}
+Epoch 227/300 [############################] 1/1 batch_loss=0.0199 lr=0.000263069
+{"event": "epoch_complete", "epoch": 227, "train_loss": 0.01993245631456375, "val_loss": 1.1788517236709595, "epoch_seconds": 0.20225739479064941}
+Epoch 228/300 [############################] 1/1 batch_loss=0.0201 lr=0.000256509
+{"event": "epoch_complete", "epoch": 228, "train_loss": 0.02006690762937069, "val_loss": 1.1744331121444702, "epoch_seconds": 0.2029552459716797}
+Epoch 229/300 [############################] 1/1 batch_loss=0.0199 lr=0.000250003
+{"event": "epoch_complete", "epoch": 229, "train_loss": 0.01986633986234665, "val_loss": 1.1718038320541382, "epoch_seconds": 0.20186853408813477}
+Epoch 230/300 [############################] 1/1 batch_loss=0.0202 lr=0.000243553
+{"event": "epoch_complete", "epoch": 230, "train_loss": 0.02021249756217003, "val_loss": 1.1716681718826294, "epoch_seconds": 0.20087265968322754}
+Epoch 231/300 [############################] 1/1 batch_loss=0.0173 lr=0.000237161
+{"event": "epoch_complete", "epoch": 231, "train_loss": 0.017336394637823105, "val_loss": 1.1767646074295044, "epoch_seconds": 0.2018277645111084}
+Epoch 232/300 [############################] 1/1 batch_loss=0.0158 lr=0.000230828
+{"event": "epoch_complete", "epoch": 232, "train_loss": 0.015805279836058617, "val_loss": 1.1790624856948853, "epoch_seconds": 0.20107412338256836}
+Epoch 233/300 [############################] 1/1 batch_loss=0.0153 lr=0.000224555
+{"event": "epoch_complete", "epoch": 233, "train_loss": 0.015300078317523003, "val_loss": 1.1784089803695679, "epoch_seconds": 0.20113015174865723}
+Epoch 234/300 [############################] 1/1 batch_loss=0.0155 lr=0.000218343
+{"event": "epoch_complete", "epoch": 234, "train_loss": 0.015487105585634708, "val_loss": 1.1750566959381104, "epoch_seconds": 0.20088934898376465}
+Epoch 235/300 [############################] 1/1 batch_loss=0.0152 lr=0.000212195
+{"event": "epoch_complete", "epoch": 235, "train_loss": 0.015237653627991676, "val_loss": 1.1720465421676636, "epoch_seconds": 0.20085716247558594}
+Epoch 236/300 [############################] 1/1 batch_loss=0.0156 lr=0.000206111
+{"event": "epoch_complete", "epoch": 236, "train_loss": 0.015589136630296707, "val_loss": 1.1740187406539917, "epoch_seconds": 0.20399093627929688}
+Epoch 237/300 [############################] 1/1 batch_loss=0.0121 lr=0.000200092
+{"event": "epoch_complete", "epoch": 237, "train_loss": 0.012078236788511276, "val_loss": 1.1793628931045532, "epoch_seconds": 0.2020726203918457}
+Epoch 238/300 [############################] 1/1 batch_loss=0.0142 lr=0.000194141
+{"event": "epoch_complete", "epoch": 238, "train_loss": 0.014161666855216026, "val_loss": 1.182101845741272, "epoch_seconds": 0.20402741432189941}
+Epoch 239/300 [############################] 1/1 batch_loss=0.0148 lr=0.000188258
+{"event": "epoch_complete", "epoch": 239, "train_loss": 0.014750777743756771, "val_loss": 1.181343913078308, "epoch_seconds": 0.20285654067993164}
+Epoch 240/300 [############################] 1/1 batch_loss=0.0142 lr=0.000182445
+{"event": "epoch_complete", "epoch": 240, "train_loss": 0.014212616719305515, "val_loss": 1.1801789999008179, "epoch_seconds": 0.20975160598754883}
+Epoch 241/300 [############################] 1/1 batch_loss=0.0136 lr=0.000176703
+{"event": "epoch_complete", "epoch": 241, "train_loss": 0.013647940941154957, "val_loss": 1.179411768913269, "epoch_seconds": 0.2026510238647461}
+Epoch 242/300 [############################] 1/1 batch_loss=0.0116 lr=0.000171034
+{"event": "epoch_complete", "epoch": 242, "train_loss": 0.0116401556879282, "val_loss": 1.1767516136169434, "epoch_seconds": 0.20144319534301758}
+Epoch 243/300 [############################] 1/1 batch_loss=0.0135 lr=0.000165438
+{"event": "epoch_complete", "epoch": 243, "train_loss": 0.01347288303077221, "val_loss": 1.1734631061553955, "epoch_seconds": 0.20269560813903809}
+Epoch 244/300 [############################] 1/1 batch_loss=0.0159 lr=0.000159917
+{"event": "epoch_complete", "epoch": 244, "train_loss": 0.015869686380028725, "val_loss": 1.1702371835708618, "epoch_seconds": 0.20041632652282715}
+Epoch 245/300 [############################] 1/1 batch_loss=0.0151 lr=0.000154472
+{"event": "epoch_complete", "epoch": 245, "train_loss": 0.015069750137627125, "val_loss": 1.1665493249893188, "epoch_seconds": 0.2048482894897461}
+Epoch 246/300 [############################] 1/1 batch_loss=0.0110 lr=0.000149104
+{"event": "epoch_complete", "epoch": 246, "train_loss": 0.010989314876496792, "val_loss": 1.164369821548462, "epoch_seconds": 0.20187616348266602}
+Epoch 247/300 [############################] 1/1 batch_loss=0.0130 lr=0.000143815
+{"event": "epoch_complete", "epoch": 247, "train_loss": 0.013046132400631905, "val_loss": 1.165247917175293, "epoch_seconds": 0.20734953880310059}
+Epoch 248/300 [############################] 1/1 batch_loss=0.0159 lr=0.000138606
+{"event": "epoch_complete", "epoch": 248, "train_loss": 0.01585579663515091, "val_loss": 1.1689574718475342, "epoch_seconds": 0.20182180404663086}
+Epoch 249/300 [############################] 1/1 batch_loss=0.0143 lr=0.000133478
+{"event": "epoch_complete", "epoch": 249, "train_loss": 0.014272669330239296, "val_loss": 1.1748555898666382, "epoch_seconds": 0.20197558403015137}
+Epoch 250/300 [############################] 1/1 batch_loss=0.0110 lr=0.000128431
+{"event": "epoch_complete", "epoch": 250, "train_loss": 0.010985653847455978, "val_loss": 1.1777163743972778, "epoch_seconds": 0.2025918960571289}
+Epoch 251/300 [############################] 1/1 batch_loss=0.0111 lr=0.000123468
+{"event": "epoch_complete", "epoch": 251, "train_loss": 0.011091820895671844, "val_loss": 1.1787359714508057, "epoch_seconds": 0.20270609855651855}
+Epoch 252/300 [############################] 1/1 batch_loss=0.0109 lr=0.000118589
+{"event": "epoch_complete", "epoch": 252, "train_loss": 0.010910466313362122, "val_loss": 1.1782053709030151, "epoch_seconds": 0.20149588584899902}
+Epoch 253/300 [############################] 1/1 batch_loss=0.0095 lr=0.000113795
+{"event": "epoch_complete", "epoch": 253, "train_loss": 0.009489964693784714, "val_loss": 1.1768063306808472, "epoch_seconds": 0.34339475631713867}
+Epoch 254/300 [############################] 1/1 batch_loss=0.0095 lr=0.000109088
+{"event": "epoch_complete", "epoch": 254, "train_loss": 0.009486937895417213, "val_loss": 1.1765884160995483, "epoch_seconds": 0.20763325691223145}
+Epoch 255/300 [############################] 1/1 batch_loss=0.0097 lr=0.000104468
+{"event": "epoch_complete", "epoch": 255, "train_loss": 0.00969706941395998, "val_loss": 1.1780760288238525, "epoch_seconds": 0.20202207565307617}
+Epoch 256/300 [############################] 1/1 batch_loss=0.0107 lr=9.99368e-05
+{"event": "epoch_complete", "epoch": 256, "train_loss": 0.010739704594016075, "val_loss": 1.1795843839645386, "epoch_seconds": 0.20182561874389648}
+Epoch 257/300 [############################] 1/1 batch_loss=0.0086 lr=9.54951e-05
+{"event": "epoch_complete", "epoch": 257, "train_loss": 0.008552229963243008, "val_loss": 1.1809598207473755, "epoch_seconds": 0.20196032524108887}
+Epoch 258/300 [############################] 1/1 batch_loss=0.0085 lr=9.11439e-05
+{"event": "epoch_complete", "epoch": 258, "train_loss": 0.008509374223649502, "val_loss": 1.1809309720993042, "epoch_seconds": 0.2002243995666504}
+Epoch 259/300 [############################] 1/1 batch_loss=0.0089 lr=8.68843e-05
+{"event": "epoch_complete", "epoch": 259, "train_loss": 0.00888245552778244, "val_loss": 1.1801851987838745, "epoch_seconds": 0.20087981224060059}
+Epoch 260/300 [############################] 1/1 batch_loss=0.0071 lr=8.2717e-05
+{"event": "epoch_complete", "epoch": 260, "train_loss": 0.0070920223370194435, "val_loss": 1.1798523664474487, "epoch_seconds": 0.20178627967834473}
+Epoch 261/300 [############################] 1/1 batch_loss=0.0067 lr=7.86432e-05
+{"event": "epoch_complete", "epoch": 261, "train_loss": 0.006746137514710426, "val_loss": 1.1795246601104736, "epoch_seconds": 0.2009437084197998}
+Epoch 262/300 [############################] 1/1 batch_loss=0.0086 lr=7.46637e-05
+{"event": "epoch_complete", "epoch": 262, "train_loss": 0.008637902326881886, "val_loss": 1.1792852878570557, "epoch_seconds": 0.20114803314208984}
+Epoch 263/300 [############################] 1/1 batch_loss=0.0094 lr=7.07793e-05
+{"event": "epoch_complete", "epoch": 263, "train_loss": 0.009367899969220161, "val_loss": 1.1793503761291504, "epoch_seconds": 0.20059871673583984}
+Epoch 264/300 [############################] 1/1 batch_loss=0.0083 lr=6.6991e-05
+{"event": "epoch_complete", "epoch": 264, "train_loss": 0.008312605321407318, "val_loss": 1.1799118518829346, "epoch_seconds": 0.2024540901184082}
+Epoch 265/300 [############################] 1/1 batch_loss=0.0061 lr=6.32996e-05
+{"event": "epoch_complete", "epoch": 265, "train_loss": 0.006096414756029844, "val_loss": 1.1806765794754028, "epoch_seconds": 0.20367884635925293}
+Epoch 266/300 [############################] 1/1 batch_loss=0.0055 lr=5.9706e-05
+{"event": "epoch_complete", "epoch": 266, "train_loss": 0.0055092149414122105, "val_loss": 1.1799854040145874, "epoch_seconds": 0.20252752304077148}
+Epoch 267/300 [############################] 1/1 batch_loss=0.0067 lr=5.62109e-05
+{"event": "epoch_complete", "epoch": 267, "train_loss": 0.006651034113019705, "val_loss": 1.1785521507263184, "epoch_seconds": 0.20276713371276855}
+Epoch 268/300 [############################] 1/1 batch_loss=0.0075 lr=5.28151e-05
+{"event": "epoch_complete", "epoch": 268, "train_loss": 0.00745009072124958, "val_loss": 1.1767323017120361, "epoch_seconds": 0.20083856582641602}
+Epoch 269/300 [############################] 1/1 batch_loss=0.0067 lr=4.95194e-05
+{"event": "epoch_complete", "epoch": 269, "train_loss": 0.006716323085129261, "val_loss": 1.174892783164978, "epoch_seconds": 0.20694208145141602}
+Epoch 270/300 [############################] 1/1 batch_loss=0.0057 lr=4.63245e-05
+{"event": "epoch_complete", "epoch": 270, "train_loss": 0.0057070693001151085, "val_loss": 1.1740448474884033, "epoch_seconds": 0.20353317260742188}
+Epoch 271/300 [############################] 1/1 batch_loss=0.0048 lr=4.32311e-05
+{"event": "epoch_complete", "epoch": 271, "train_loss": 0.004764793906360865, "val_loss": 1.1741431951522827, "epoch_seconds": 0.2043905258178711}
+Epoch 272/300 [############################] 1/1 batch_loss=0.0051 lr=4.024e-05
+{"event": "epoch_complete", "epoch": 272, "train_loss": 0.00507593248039484, "val_loss": 1.174773931503296, "epoch_seconds": 0.20130491256713867}
+Epoch 273/300 [############################] 1/1 batch_loss=0.0056 lr=3.73517e-05
+{"event": "epoch_complete", "epoch": 273, "train_loss": 0.0056007904931902885, "val_loss": 1.1758042573928833, "epoch_seconds": 0.20204520225524902}
+Epoch 274/300 [############################] 1/1 batch_loss=0.0049 lr=3.4567e-05
+{"event": "epoch_complete", "epoch": 274, "train_loss": 0.004885773174464703, "val_loss": 1.176939606666565, "epoch_seconds": 0.20248174667358398}
+Epoch 275/300 [############################] 1/1 batch_loss=0.0043 lr=3.18864e-05
+{"event": "epoch_complete", "epoch": 275, "train_loss": 0.004336485173553228, "val_loss": 1.1775970458984375, "epoch_seconds": 0.2048358917236328}
+Epoch 276/300 [############################] 1/1 batch_loss=0.0046 lr=2.93106e-05
+{"event": "epoch_complete", "epoch": 276, "train_loss": 0.004550529178231955, "val_loss": 1.1781662702560425, "epoch_seconds": 0.21627235412597656}
+Epoch 277/300 [############################] 1/1 batch_loss=0.0047 lr=2.68402e-05
+{"event": "epoch_complete", "epoch": 277, "train_loss": 0.00470323022454977, "val_loss": 1.1783535480499268, "epoch_seconds": 0.21120119094848633}
+Epoch 278/300 [############################] 1/1 batch_loss=0.0048 lr=2.44756e-05
+{"event": "epoch_complete", "epoch": 278, "train_loss": 0.0047783078625798225, "val_loss": 1.178017020225525, "epoch_seconds": 0.2063603401184082}
+Epoch 279/300 [############################] 1/1 batch_loss=0.0043 lr=2.22175e-05
+{"event": "epoch_complete", "epoch": 279, "train_loss": 0.004340573213994503, "val_loss": 1.1770778894424438, "epoch_seconds": 0.20548176765441895}
+Epoch 280/300 [############################] 1/1 batch_loss=0.0041 lr=2.00663e-05
+{"event": "epoch_complete", "epoch": 280, "train_loss": 0.004082154482603073, "val_loss": 1.1759610176086426, "epoch_seconds": 0.20616769790649414}
+Epoch 281/300 [############################] 1/1 batch_loss=0.0035 lr=1.80225e-05
+{"event": "epoch_complete", "epoch": 281, "train_loss": 0.0035236875992268324, "val_loss": 1.175026774406433, "epoch_seconds": 0.21979904174804688}
+Epoch 282/300 [############################] 1/1 batch_loss=0.0034 lr=1.60866e-05
+{"event": "epoch_complete", "epoch": 282, "train_loss": 0.003378125838935375, "val_loss": 1.174391746520996, "epoch_seconds": 0.2079164981842041}
+Epoch 283/300 [############################] 1/1 batch_loss=0.0035 lr=1.42589e-05
+{"event": "epoch_complete", "epoch": 283, "train_loss": 0.003460104577243328, "val_loss": 1.174173355102539, "epoch_seconds": 0.20663118362426758}
+Epoch 284/300 [############################] 1/1 batch_loss=0.0035 lr=1.254e-05
+{"event": "epoch_complete", "epoch": 284, "train_loss": 0.003501674858853221, "val_loss": 1.174309253692627, "epoch_seconds": 0.20614886283874512}
+Epoch 285/300 [############################] 1/1 batch_loss=0.0034 lr=1.09302e-05
+{"event": "epoch_complete", "epoch": 285, "train_loss": 0.0034162269439548254, "val_loss": 1.1746920347213745, "epoch_seconds": 0.35349035263061523}
+Epoch 286/300 [############################] 1/1 batch_loss=0.0032 lr=9.42977e-06
+{"event": "epoch_complete", "epoch": 286, "train_loss": 0.0031977398321032524, "val_loss": 1.1752537488937378, "epoch_seconds": 0.2037065029144287}
+Epoch 287/300 [############################] 1/1 batch_loss=0.0027 lr=8.03917e-06
+{"event": "epoch_complete", "epoch": 287, "train_loss": 0.0027389335446059704, "val_loss": 1.1759060621261597, "epoch_seconds": 0.20069122314453125}
+Epoch 288/300 [############################] 1/1 batch_loss=0.0023 lr=6.75868e-06
+{"event": "epoch_complete", "epoch": 288, "train_loss": 0.002291324082762003, "val_loss": 1.1765762567520142, "epoch_seconds": 0.20837926864624023}
+Epoch 289/300 [############################] 1/1 batch_loss=0.0019 lr=5.58856e-06
+{"event": "epoch_complete", "epoch": 289, "train_loss": 0.0019132212037220597, "val_loss": 1.1772125959396362, "epoch_seconds": 0.2018587589263916}
+Epoch 290/300 [############################] 1/1 batch_loss=0.0017 lr=4.5291e-06
+{"event": "epoch_complete", "epoch": 290, "train_loss": 0.0016757553676143289, "val_loss": 1.1777582168579102, "epoch_seconds": 0.20324969291687012}
+Epoch 291/300 [############################] 1/1 batch_loss=0.0015 lr=3.58052e-06
+{"event": "epoch_complete", "epoch": 291, "train_loss": 0.0015452291117981076, "val_loss": 1.178187370300293, "epoch_seconds": 0.20229530334472656}
+Epoch 292/300 [############################] 1/1 batch_loss=0.0015 lr=2.74304e-06
+{"event": "epoch_complete", "epoch": 292, "train_loss": 0.0015480280853807926, "val_loss": 1.178470253944397, "epoch_seconds": 0.20185279846191406}
+Epoch 293/300 [############################] 1/1 batch_loss=0.0016 lr=2.01684e-06
+{"event": "epoch_complete", "epoch": 293, "train_loss": 0.0015787817537784576, "val_loss": 1.1786216497421265, "epoch_seconds": 0.20250201225280762}
+Epoch 294/300 [############################] 1/1 batch_loss=0.0016 lr=1.4021e-06
+{"event": "epoch_complete", "epoch": 294, "train_loss": 0.0015905172331258655, "val_loss": 1.1786900758743286, "epoch_seconds": 0.2012772560119629}
+Epoch 295/300 [############################] 1/1 batch_loss=0.0015 lr=8.98932e-07
+{"event": "epoch_complete", "epoch": 295, "train_loss": 0.0015494651161134243, "val_loss": 1.1787079572677612, "epoch_seconds": 0.2026212215423584}
+Epoch 296/300 [############################] 1/1 batch_loss=0.0015 lr=5.07465e-07
+{"event": "epoch_complete", "epoch": 296, "train_loss": 0.0014801648212596774, "val_loss": 1.1786988973617554, "epoch_seconds": 0.203812837600708}
+Epoch 297/300 [############################] 1/1 batch_loss=0.0014 lr=2.27783e-07
+{"event": "epoch_complete", "epoch": 297, "train_loss": 0.001417574007064104, "val_loss": 1.1786819696426392, "epoch_seconds": 0.2080066204071045}
+Epoch 298/300 [############################] 1/1 batch_loss=0.0014 lr=5.99489e-08
+{"event": "epoch_complete", "epoch": 298, "train_loss": 0.0013811952667310834, "val_loss": 1.178666353225708, "epoch_seconds": 0.20308995246887207}
+Epoch 299/300 [############################] 1/1 batch_loss=0.0014 lr=4e-09
+{"event": "epoch_complete", "epoch": 299, "train_loss": 0.0013602947583422065, "val_loss": 1.178656816482544, "epoch_seconds": 0.20559954643249512}
+Epoch 300/300 [############################] 1/1 batch_loss=0.0014 lr=5.99489e-08
+{"event": "epoch_complete", "epoch": 300, "train_loss": 0.00135354686062783, "val_loss": 1.1786510944366455, "epoch_seconds": 0.20374727249145508}
+{
+  "dataset_root": "/content/res201-alignn-domain-shift/results/nitride/N50_seed1/dataset_root",
+  "output_dir": "/content/res201-alignn-domain-shift/results/nitride/N50_seed1/train_alignn_fromscratch_alignn_recommended",
+  "device": "cuda",
+  "n_train": 45,
+  "n_val": 5,
+  "n_test": 242,
+  "epochs": 300,
+  "batch_size": 64,
+  "learning_rate": 0.001,
+  "train_protocol": "from_scratch",
+  "train_mae_eV_per_atom": 0.21475985373059908,
+  "val_best_l1": 1.0984783172607422,
+  "test_l1": 0.617485523223877,
+  "test_mae_eV_per_atom": 0.6093852881511505,
+  "prediction_csv": "/content/res201-alignn-domain-shift/results/nitride/N50_seed1/train_alignn_fromscratch_alignn_recommended/prediction_results_test_set.csv",
+  "elapsed_seconds": 70.55580711364746
+}
