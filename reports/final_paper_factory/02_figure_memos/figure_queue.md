@@ -2,10 +2,8 @@
 
 **Purpose:** Human-readable companion to `figure_queue.csv`. Lists all figures assigned to the three report streams, their source paths, placement (main text vs appendix), linked evidence tables, and copy status.
 
-**Three figures require manual creation before prose drafting can be finalized:**
+**One figure still requires manual creation before prose drafting can be finalized:**
 - `FIG_SCHEMATIC` — study design schematic
-- `FIG_ZS_COMPARISON` — zero-shot side-by-side bar chart
-- `FIG_TRANSFER_BENEFIT` — transfer-benefit grouped bar chart (N=50 and N=500 only)
 
 ---
 
@@ -27,22 +25,27 @@ These figures are copied to `core_figures/`.
 - **Copied to:** n/a
 
 #### FIG_ZS_COMPARISON
-- **Status:** to_be_created
+- **Status:** exists
 - **Report membership:** nitride | combined | oxide (optional)
 - **Placement:** main text
 - **Purpose:** Side-by-side bar or paired comparison of oxide vs nitride zero-shot MAE; establishes the domain-shift baseline gap
 - **Linked table:** `reports/zero_shot/zero_shot_summary.csv`
-- **Source path:** to_be_created
-- **Copied to:** n/a
+- **Source path:** `reports/final_paper_factory/02_figure_memos/core_figures/FIG_ZS_COMPARISON.png`
+- **Vector source path:** `reports/final_paper_factory/02_figure_memos/core_figures/FIG_ZS_COMPARISON.svg`
+- **Copied to:** `core_figures/FIG_ZS_COMPARISON.png`
 
 #### FIG_TRANSFER_BENEFIT
-- **Status:** to_be_created
+- **Status:** exists
 - **Report membership:** combined
 - **Placement:** main text
 - **Purpose:** Side-by-side grouped bar: oxide and nitride transfer benefit (from_scratch_minus_finetune_mae) at N=50 and N=500 ONLY; scope strictly limited to these two N values
 - **Linked table:** `reports/Hyperparameter Set 1/Summaries/From Scratch/fromscratch_summary.csv`
-- **Source path:** to_be_created
-- **Copied to:** n/a
+- **Additional linked table:** `reports/Hyperparameter Set 1/Summaries/Finetuning/finetune_summary_by_N.csv`
+- **Source path:** `reports/final_paper_factory/02_figure_memos/core_figures/FIG_TRANSFER_BENEFIT.png`
+- **Vector source path:** `reports/final_paper_factory/02_figure_memos/core_figures/FIG_TRANSFER_BENEFIT.svg`
+- **PDF source path:** `reports/final_paper_factory/02_figure_memos/core_figures/FIG_TRANSFER_BENEFIT.pdf`
+- **Copied to:** `core_figures/FIG_TRANSFER_BENEFIT.png`
+- **Note:** Scope is strictly `N=50` and `N=500`; nitride `N=50` is flagged as pretrained initialization advantage, not strong fine-tuning adaptation.
 
 ---
 
@@ -285,18 +288,16 @@ These figures are copied to `appendix_figures/`.
 
 | Category | Count |
 |---|---|
-| Core main-text figures (exists) | 13 |
-| Core main-text figures (to_be_created) | 3 |
+| Core main-text figures (exists) | 15 |
+| Core main-text figures (to_be_created) | 1 |
 | Appendix figures | 20 |
 | **Total** | **36** |
 
 ### Figures to be created
 
-These three figures do not yet have source files and must be generated before final paper assembly:
+This figure does not yet have a source file and must be generated before final paper assembly:
 
 1. **FIG_SCHEMATIC** — study design diagram (oxide control vs nitride OOD test, three protocol arms)
-2. **FIG_ZS_COMPARISON** — paired bar chart of oxide vs nitride zero-shot MAE; source data in `reports/zero_shot/zero_shot_summary.csv`
-3. **FIG_TRANSFER_BENEFIT** — grouped bar chart of transfer benefit at N=50 and N=500 for both families; source data in `reports/Hyperparameter Set 1/Summaries/From Scratch/fromscratch_summary.csv`; scope is strictly N=50 and N=500
 
 ### Canonical embedding layer reminder
 
