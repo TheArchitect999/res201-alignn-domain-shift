@@ -1,0 +1,1522 @@
+Use this as the **operating document** for the report phase.
+
+---
+
+# Grand Plan v2: A→Z pipeline for two high-grade RES201 reports
+
+## 1. Non-negotiable operating rules
+
+1. **Evidence first, prose second.**
+   No section gets drafted before the source files, canonical numbers, and main figures are frozen.
+
+2. **One primary repo agent per stage.**
+   Use **Codex** as the main repo operator. Use **Claude Code** as the auditor/refiner after Codex, not in parallel on the same raw stage.
+
+3. **Every major figure gets a Figure Memo before it enters the paper.**
+   This is the main upgrade to the previous plan.
+
+4. **Every section must separate three layers clearly:**
+
+   * literature-grounded claims
+   * our implementation details
+   * our experimental findings
+
+5. **Use the project-brief hyperparameter setting as the main narrative basis.**
+   The project brief fixes the main experimental condition at **epochs = 50, lr = 1e-4, batch size = 16**, so the repo namespace matching that setting should become the canonical main-results namespace during Phase 1. 
+
+6. **Keep oxide and nitride aligned but not cloned.**
+   Shared methods backbone: yes.
+   Same full paragraphs and same report emphasis: no.
+
+7. **Treat embedding plots carefully.**
+   Week 2 already warns that t-SNE and UMAP are useful but must be interpreted cautiously; t-SNE especially preserves local neighborhoods but not global inter-cluster distances in a physically meaningful way. 
+
+8. **Move into the JURI template late.**
+   The JURI template is the formatting shell, not the drafting environment. The abstract must be a single paragraph and should stay under 250 words. 
+
+---
+
+## 2. Tool stack and exact roles
+
+## Codex
+
+Use for:
+
+* scanning the repo
+* identifying canonical files
+* creating manifests and ledgers
+* extracting numbers
+* building section packets
+* assembling template-ready files
+* final repo-grounded QA
+
+## Claude Code
+
+Use for:
+
+* auditing Codex outputs
+* checking missing paths / broken references
+* refining generated markdown files
+* applying fix lists inside the repo
+
+## Claude Pro
+
+Use for:
+
+* polished long-form prose
+* results and discussion drafting
+* abstract, conclusion, and transitions
+* second-opinion figure interpretation
+
+## ChatGPT
+
+Use for:
+
+* scientific strategy
+* figure interpretation
+* claim discipline
+* structure review
+* cross-report consistency checking
+* catching overclaiming and weak logic
+
+## GitHub Copilot
+
+Use only for:
+
+* local sentence cleanup
+* tiny formatting edits
+* inline code/doc edits
+
+Do **not** let Copilot define the scientific story.
+
+---
+
+## 3. What the final outputs should be
+
+By the end, you should have **three complete products**:
+
+1. **Oxide standalone report**
+2. **Nitride standalone report**
+3. **Combined joint paper draft**
+
+The project brief explicitly wants:
+
+* written oxide analysis
+* written nitride analysis
+* oxide results draft
+* nitride results draft
+* and a full combined paper with **Introduction, Methods, Results I oxide, Results II nitride, Results III direct comparison, Results IV embedding analysis, Discussion, Conclusion, References**. 
+
+The JURI template then determines the final presentation format. 
+
+---
+
+## 4. Paper-factory folder structure
+
+Create this workspace inside the repo:
+
+```text
+reports/final_paper_factory/
+  00_source_of_truth/
+  01_blueprints/
+  02_figure_memos/
+  03_section_inputs/
+  04_drafts/
+  05_reviewed_drafts/
+  06_template_ready/
+  07_final_qc/
+paper_sources/
+  RES201_Project.pdf
+  JURI_Template.docx
+  ALIGNN_Tutorial.pdf
+  ALIGNN_Paper.pdf
+  CGCNN_Paper.pdf
+  week1_assignment.docx
+  week2_assignment.pdf
+```
+
+**Manual step:** place the PDFs/docs above into `paper_sources/` before you begin.
+
+---
+
+## 5. Reusable prompt library
+
+These are the reusable prompts you will use across phases.
+
+## Prompt T1 — Figure Memo prompt
+
+Use with **ChatGPT** or **Claude Pro**.
+
+```text
+Analyze this figure for use in a research report on pretrained ALIGNN domain shift.
+
+Context:
+- Report focus: [oxide / nitride / shared comparison]
+- Figure type: [learning curve / comparison plot / parity plot / PCA / t-SNE / UMAP / distance-vs-error]
+- Hyperparameter setting: [main narrative set / robustness set]
+- Main text or appendix: [main / appendix]
+- Supporting numeric table is attached if available.
+- Project context: oxides are the in-distribution control; nitrides are the out-of-distribution test.
+
+I need the output in this exact structure:
+
+1. What the figure shows
+2. Main visible trends
+3. Scientifically justified interpretation
+4. What cannot be claimed safely from this figure alone
+5. Best role of this figure in the report
+6. Caption draft
+7. Results-section paragraph draft
+8. Discussion-section paragraph draft
+9. Whether this figure strengthens or weakens the domain-shift story
+10. Any comparison to oxide vs nitride / fine-tuning vs scratch / hyperparameter settings that is justified
+
+Be precise and conservative. Do not invent numeric claims if they are not visible or not provided.
+```
+
+## Prompt T2 — Draft a section from evidence
+
+Use with **Claude Pro**.
+
+```text
+You are writing a research-report section from a frozen evidence pack.
+
+Inputs:
+- section blueprint
+- canonical numbers
+- figure memos
+- table list
+- source-of-truth memo
+- project brief context
+
+Task:
+Write a polished section draft.
+
+Constraints:
+1. Separate clearly:
+   - literature-grounded claims
+   - our implementation details
+   - our findings
+2. Do not invent results.
+3. Do not overstate conclusions.
+4. Use the evidence pack as the single source of truth.
+5. Keep the tone formal, precise, and publication-like.
+6. Leave citation placeholders where needed: [CITE: ...]
+7. If something is unclear, keep a TODO marker instead of guessing.
+
+Output:
+- section draft
+- 3–5 sentence “author note” explaining the strongest claims and the main caveats
+```
+
+## Prompt T3 — Scientific review prompt
+
+Use with **ChatGPT**.
+
+```text
+Review this draft as a strict scientific supervisor.
+
+Check:
+1. Unsupported claims
+2. Overclaiming
+3. Missing distinctions between literature / implementation / findings
+4. Weak logic
+5. Repetition
+6. Missing figure or table linkage
+7. Places where the section could earn more marks if sharpened
+8. Whether the conclusions are justified by the evidence
+
+Return:
+- Critical issues
+- Important issues
+- Polish issues
+- Exact revision advice
+- A one-paragraph verdict on scientific quality
+```
+
+## Prompt T4 — Apply review fixes
+
+Use with **Codex** or **Claude Code**.
+
+```text
+Use the attached draft and the attached review memo.
+
+Task:
+Apply the accepted fixes only.
+
+Requirements:
+- Preserve grounded numbers and figure references.
+- Do not invent any new results.
+- Keep citation placeholders intact.
+- Add a short changelog at the end listing what changed.
+- Save the revised version as a new file, do not overwrite the old draft.
+```
+
+---
+
+# 6. The full execution pipeline
+
+---
+
+## Phase 0 — Workspace setup and branch discipline
+
+### Objective
+
+Create a clean writing workspace before touching the paper.
+
+### Owners
+
+* Primary: **Codex**
+* Audit: **Claude Code**
+
+### Manual steps
+
+1. Create a new branch, e.g. `paper-factory`.
+2. Create `paper_sources/` and place the project PDF, JURI template, ALIGNN tutorial, ALIGNN paper, CGCNN paper, and Week 1/2 docs inside it.
+3. Decide ownership:
+
+   * Person A = oxide lead
+   * Person B = nitride lead
+
+### Codex prompt — Phase 0
+
+```text
+Work inside the current repository and set up a clean paper-writing workspace.
+
+Tasks:
+1. Create the following directories if they do not exist:
+   - reports/final_paper_factory/00_source_of_truth/
+   - reports/final_paper_factory/01_blueprints/
+   - reports/final_paper_factory/02_figure_memos/
+   - reports/final_paper_factory/03_section_inputs/
+   - reports/final_paper_factory/04_drafts/
+   - reports/final_paper_factory/05_reviewed_drafts/
+   - reports/final_paper_factory/06_template_ready/
+   - reports/final_paper_factory/07_final_qc/
+2. Create a file:
+   - reports/final_paper_factory/README.md
+3. In that README, describe the purpose of each folder and the rule that no results are to be modified during the paper phase.
+4. Create:
+   - reports/final_paper_factory/00_source_of_truth/OPERATING_RULES.md
+5. In OPERATING_RULES.md, record these rules:
+   - evidence first, prose second
+   - one primary repo agent per stage
+   - every major figure gets a figure memo
+   - separate literature claims / implementation details / findings
+   - do not overwrite result artifacts
+
+Do not scan the repo deeply yet. Only create the paper-factory structure.
+```
+
+### Claude Code audit prompt — Phase 0
+
+```text
+Audit the newly created paper-factory workspace.
+
+Check:
+- whether the folders are correctly created
+- whether README.md is clear
+- whether OPERATING_RULES.md captures the writing-phase rules accurately
+
+If needed, improve clarity but do not add unnecessary complexity.
+```
+
+### Stop/Go checkpoint
+
+Proceed only when the paper-factory directories exist and the README is clean.
+
+---
+
+## Phase 1 — Freeze the source of truth
+
+### Objective
+
+Identify the exact canonical result files that will support the papers.
+
+### Owners
+
+* Primary: **Codex**
+* Audit: **Claude Code**
+* Review: **ChatGPT**
+
+### Why this phase matters
+
+This is where you stop the repo from becoming a moving target.
+
+### Codex prompt — Phase 1
+
+```text
+Analyze the current repository and build a source-of-truth evidence pack for the RES201 report phase.
+
+Context:
+- Experiments are complete.
+- Embedding analysis is complete.
+- We are now writing two separate reports plus one combined paper.
+- Do not modify result artifacts.
+
+Tasks:
+1. Inventory all report-relevant artifacts for:
+   - zero-shot evaluation
+   - fine-tuning
+   - from-scratch baselines
+   - learning curves
+   - comparison plots
+   - parity plots
+   - embedding analysis
+2. Identify which experiment namespace best matches the project-brief main setting:
+   - epochs = 50
+   - learning rate = 1e-4
+   - batch size = 16
+3. Mark that namespace as the canonical main-results namespace.
+4. Treat other hyperparameter namespaces as robustness/comparison namespaces.
+5. Create:
+   - reports/final_paper_factory/00_source_of_truth/master_evidence_manifest.csv
+   - reports/final_paper_factory/00_source_of_truth/master_evidence_manifest.md
+   - reports/final_paper_factory/00_source_of_truth/figure_inventory.csv
+   - reports/final_paper_factory/00_source_of_truth/table_inventory.csv
+   - reports/final_paper_factory/00_source_of_truth/claim_support_map.csv
+   - reports/final_paper_factory/00_source_of_truth/source_of_truth_memo.md
+6. The memo must explain:
+   - which namespace is canonical
+   - which artifacts are main-text candidates
+   - which artifacts are appendix/robustness only
+   - any ambiguities or risks
+
+Do not draft prose yet. Only freeze the evidence pack.
+```
+
+### Claude Code audit prompt — Phase 1
+
+```text
+Audit the source-of-truth pack created by Codex.
+
+Check:
+1. Whether the canonical namespace selection is justified
+2. Whether any important figure/table is missing
+3. Whether main-text vs appendix classification is sensible
+4. Whether any file paths are broken or ambiguous
+
+Create:
+- reports/final_paper_factory/00_source_of_truth/source_of_truth_audit.md
+```
+
+### ChatGPT review prompt — Phase 1
+
+Use **Prompt T3** on:
+
+* `master_evidence_manifest.md`
+* `source_of_truth_memo.md`
+* `source_of_truth_audit.md`
+
+### Stop/Go checkpoint
+
+Proceed only when:
+
+* one canonical main-results namespace is selected
+* main-text vs appendix artifacts are clearly marked
+* no major result category is missing
+
+---
+
+## Phase 2 — Canonical numbers and claim ledger
+
+### Objective
+
+Create one file containing every important number the paper may cite.
+
+### Owners
+
+* Primary: **Codex**
+* Audit: **Claude Code**
+* Review: **ChatGPT**
+
+### Codex prompt — Phase 2
+
+```text
+Build the canonical numeric backbone for the RES201 papers using the frozen source-of-truth pack.
+
+Tasks:
+1. Extract all key numbers for:
+   - oxide zero-shot
+   - nitride zero-shot
+   - oxide fine-tuning across N
+   - nitride fine-tuning across N
+   - oxide from-scratch at selected N
+   - nitride from-scratch at selected N
+   - direct transfer-benefit comparisons
+   - embedding-analysis summary metrics
+2. For each number record:
+   - value
+   - source file path
+   - family (oxide / nitride / shared)
+   - experiment type
+   - whether it is main-text or appendix
+   - short interpretation label
+3. Create:
+   - reports/final_paper_factory/00_source_of_truth/canonical_numbers.csv
+   - reports/final_paper_factory/00_source_of_truth/canonical_numbers.md
+   - reports/final_paper_factory/00_source_of_truth/claim_to_number_source_map.csv
+   - reports/final_paper_factory/00_source_of_truth/robustness_numbers_appendix.csv
+4. Flag ambiguous or conflicting numbers rather than guessing.
+
+Do not interpret beyond short labels. Focus on accuracy and traceability.
+```
+
+### Claude Code audit prompt — Phase 2
+
+```text
+Audit the canonical number pack.
+
+Check:
+- whether any important numbers are missing
+- whether any number appears duplicated under different names
+- whether any ambiguity remains unresolved
+- whether appendix-only values are separated clearly from main-text values
+
+Create:
+- reports/final_paper_factory/00_source_of_truth/canonical_numbers_audit.md
+```
+
+### ChatGPT review prompt — Phase 2
+
+Use **Prompt T3** on:
+
+* `canonical_numbers.md`
+* `canonical_numbers_audit.md`
+
+Add this request:
+
+```text
+Also tell me:
+- which 10–15 numbers are the strongest anchors for the oxide report
+- which 10–15 numbers are the strongest anchors for the nitride report
+- which numbers should stay out of the main narrative because they would dilute the story
+```
+
+### Stop/Go checkpoint
+
+Proceed only when every major claim category has real numbers behind it.
+
+---
+
+## Phase 3 — Build the report architecture
+
+### Objective
+
+Create blueprints for:
+
+* oxide standalone report
+* nitride standalone report
+* combined paper
+
+### Owners
+
+* Primary: **Codex**
+* Flow refinement: **Claude Pro**
+* Review: **ChatGPT**
+
+### Codex prompt — Phase 3
+
+```text
+Create report blueprints for:
+1. oxide standalone report
+2. nitride standalone report
+3. combined joint paper
+
+Context:
+- The project brief defines oxide as the in-distribution control and nitride as the out-of-distribution test.
+- The combined paper must include oxide results, nitride results, direct comparison, and embedding analysis.
+
+Create:
+- reports/final_paper_factory/01_blueprints/oxide_report_blueprint.md
+- reports/final_paper_factory/01_blueprints/nitride_report_blueprint.md
+- reports/final_paper_factory/01_blueprints/combined_paper_blueprint.md
+- reports/final_paper_factory/01_blueprints/shared_vs_unique_content_map.md
+
+For each blueprint include:
+- section heading
+- subsection heading
+- purpose
+- figure(s)
+- table(s)
+- canonical numbers used
+- main claim
+- whether the subsection is descriptive, comparative, or interpretive
+
+Important:
+- oxide report should emphasize in-distribution control and smoother adaptation
+- nitride report should emphasize domain-shift penalty and embedding-based interpretation
+- combined paper should follow the project brief logic:
+  Results I oxide
+  Results II nitride
+  Results III direct comparison
+  Results IV embedding analysis
+```
+
+### Claude Pro prompt — Phase 3
+
+```text
+I am giving you three report blueprints:
+- oxide standalone
+- nitride standalone
+- combined paper
+
+Do not write full prose yet.
+
+Task:
+Improve the logical flow and subsection ordering of each blueprint.
+
+Goals:
+- oxide should feel like a strong control-arm paper
+- nitride should feel like the richer domain-shift paper
+- combined paper should read like one coherent comparative study
+
+Constraints:
+- do not invent results
+- do not add citations
+- do not blur the differences between oxide and nitride
+- keep the structure practical and executable
+```
+
+### ChatGPT review prompt — Phase 3
+
+Use **Prompt T3** on the three blueprints plus `shared_vs_unique_content_map.md`.
+
+### Stop/Go checkpoint
+
+Proceed only when:
+
+* the three blueprints are coherent
+* oxide/nitride are clearly differentiated
+* the shared-vs-unique map is acceptable
+
+---
+
+## Phase 4 — Figure Memo Factory
+
+### Objective
+
+Turn figures into structured scientific memos before drafting text.
+
+### Owners
+
+* Figure shortlist: **Codex**
+* Figure interpretation: **ChatGPT + Claude Pro**
+* Memo consolidation: **Codex**
+* Audit: **Claude Code**
+
+### Core figure list
+
+This should include, at minimum:
+
+1. Study design schematic
+2. Oxide learning curve
+3. Nitride learning curve
+4. Zero-shot oxide vs nitride comparison
+5. Transfer-benefit comparison across families
+6. Oxide low-N parity plot
+7. Oxide high-N parity plot
+8. Nitride low-N parity plot
+9. Nitride high-N parity plot
+10. PCA family figure
+11. t-SNE family figure
+12. UMAP family figure
+13. Nitride error vs oxide-distance figure
+
+This matches the project brief’s intended figure logic. 
+
+### Codex prompt — Phase 4A
+
+```text
+Create the figure queue for the paper phase.
+
+Tasks:
+1. Identify the canonical source file for each core figure needed in:
+   - oxide standalone report
+   - nitride standalone report
+   - combined paper
+2. Create:
+   - reports/final_paper_factory/02_figure_memos/figure_queue.csv
+   - reports/final_paper_factory/02_figure_memos/figure_queue.md
+3. For each figure record:
+   - recommended figure label
+   - source path
+   - report(s) it belongs to
+   - main text vs appendix
+   - linked source table path if available
+   - short note on purpose
+4. Copy or symlink the canonical main-text figures into:
+   - reports/final_paper_factory/02_figure_memos/core_figures/
+5. Copy or symlink appendix candidates into:
+   - reports/final_paper_factory/02_figure_memos/appendix_figures/
+
+Do not analyze the figures yet. Just create the queue and source list.
+```
+
+### Manual loop — Phase 4B
+
+For **each core figure**:
+
+1. Upload the figure and supporting table to **ChatGPT** using **Prompt T1**
+2. Upload the same figure and supporting table to **Claude Pro** using **Prompt T1**
+3. Compare both figure analyses
+4. Resolve differences conservatively
+
+### Codex prompt — Phase 4C
+
+```text
+For each analyzed figure, create a consolidated figure memo in the repo.
+
+Inputs:
+- figure_queue
+- ChatGPT figure memo
+- Claude figure memo
+
+Tasks:
+1. Create one markdown file per figure under:
+   - reports/final_paper_factory/02_figure_memos/
+2. Name them consistently, e.g.:
+   - fig02_oxide_learning_curve_memo.md
+   - fig06_embedding_pca_memo.md
+3. Each memo must include:
+   - what the figure shows
+   - justified interpretation
+   - non-claims / cautions
+   - caption draft
+   - results paragraph draft
+   - discussion paragraph draft
+   - role in report
+4. Also create:
+   - reports/final_paper_factory/02_figure_memos/figure_memo_index.md
+
+Do not invent numerical values not present in the source material.
+```
+
+### Claude Code audit prompt — Phase 4
+
+```text
+Audit the figure memo set.
+
+Check:
+- whether each core figure has a memo
+- whether the memos are scientifically cautious
+- whether any main-text figure should be downgraded to appendix
+- whether any appendix figure should be upgraded to main text
+
+Create:
+- reports/final_paper_factory/02_figure_memos/figure_memo_audit.md
+```
+
+### Stop/Go checkpoint
+
+Proceed only when every core figure has:
+
+* a memo
+* a caption draft
+* a results paragraph draft
+* a discussion paragraph draft
+
+---
+
+## Phase 5 — Literature map and citation plan
+
+### Objective
+
+Build the literature-backed intellectual frame before writing the intro and methods.
+
+### Owners
+
+* Primary: **Codex**
+* Drafting: **Claude Pro**
+* Review: **ChatGPT**
+* Manual citation management: **Zotero**
+
+### Important note
+
+Use:
+
+* **CGCNN** and **ALIGNN** as core scholarly anchors
+* **ALIGNN tutorial** as practical implementation guidance, not as the main scholarly citation
+* **Week 1/2 docs** as internal conceptual scaffolding, not necessarily manuscript references unless explicitly allowed by your advisor.     
+
+### Manual step
+
+Create a Zotero collection with at least:
+
+* CGCNN paper
+* ALIGNN paper
+* JARVIS dataset / infrastructure paper
+* transfer learning in materials papers
+* domain shift / OOD papers relevant to scientific ML
+* any extra materials-property prediction references needed to reach and exceed 10 sources
+
+### Codex prompt — Phase 5
+
+```text
+Use the local paper_sources materials and the report blueprints to create a literature-and-citation map.
+
+Create:
+- reports/final_paper_factory/03_section_inputs/literature_claim_map.md
+- reports/final_paper_factory/03_section_inputs/citation_needed_list.md
+- reports/final_paper_factory/03_section_inputs/introduction_paragraph_plan.md
+
+Requirements:
+1. Separate:
+   - literature-grounded claims
+   - project-specific motivation
+   - our specific research questions
+2. Identify which paragraphs need:
+   - CGCNN citation
+   - ALIGNN citation
+   - JARVIS / dataset citation
+   - transfer learning / domain shift citation
+3. Add placeholders only; do not fabricate references.
+4. Include a note on which sources are scholarly anchors vs internal course/project scaffolding.
+```
+
+### Claude Pro prompt — Phase 5
+
+```text
+Using the literature claim map and introduction paragraph plan, improve the introduction blueprint.
+
+Do not write the final introduction yet.
+
+Task:
+- sharpen the research motivation
+- make oxide and nitride framings distinct
+- make the combined-paper framing coherent
+- identify where citations are essential vs optional
+
+Do not invent references.
+```
+
+### ChatGPT review prompt — Phase 5
+
+Use **Prompt T3** on:
+
+* `literature_claim_map.md`
+* `introduction_paragraph_plan.md`
+
+### Stop/Go checkpoint
+
+Proceed only when the citation plan is clear and the literature framing is stable.
+
+---
+
+## Phase 6 — Methods pack
+
+### Objective
+
+Write the methods first, because they are the most objective and easiest to ground.
+
+### Owners
+
+* Skeleton: **Codex**
+* Polishing: **Claude Pro**
+* Review: **ChatGPT**
+
+### Codex prompt — Phase 6
+
+```text
+Write the methods skeleton pack for:
+1. oxide standalone report
+2. nitride standalone report
+3. combined paper
+
+Requirements:
+- separate clearly:
+  1. literature-grounded context placeholders
+  2. our implementation details
+  3. our experimental setup
+- if something is unclear, leave a TODO instead of guessing
+
+Create:
+- reports/final_paper_factory/03_section_inputs/shared_methods_skeleton.md
+- reports/final_paper_factory/03_section_inputs/oxide_methods_notes.md
+- reports/final_paper_factory/03_section_inputs/nitride_methods_notes.md
+- reports/final_paper_factory/03_section_inputs/combined_methods_notes.md
+
+Cover:
+- dataset source
+- family definitions
+- split protocol
+- oxide/nitride filtering
+- zero-shot evaluation
+- fine-tuning protocol
+- from-scratch protocol
+- hyperparameter setting used for the main narrative
+- evaluation metric
+- embedding-analysis protocol
+```
+
+### Claude Pro prompt — Phase 6
+
+Use **Prompt T2** with:
+
+* `shared_methods_skeleton.md`
+* report-specific methods notes
+* project brief context
+
+### ChatGPT review prompt — Phase 6
+
+Use **Prompt T3** on the polished methods drafts.
+
+### Stop/Go checkpoint
+
+Proceed only when the methods are accurate, non-speculative, and clearly separated into literature / implementation / findings layers.
+
+---
+
+## Phase 7 — Oxide report track
+
+### Objective
+
+Produce:
+
+* Week 4-style written oxide analysis
+* Week 5 oxide results draft
+* oxide standalone report body sections
+
+The project brief explicitly says the oxide track must cover **saturation point, zero-shot usefulness, effect of pretraining, and oxide embeddings extracted/visualized**, then the **oxide results draft**. 
+
+### Owners
+
+* Evidence assembly: **Codex**
+* Drafting: **Claude Pro**
+* Review: **ChatGPT**
+* Apply fixes: **Codex**
+
+### Codex prompt — Phase 7A
+
+```text
+Assemble the oxide section-input packet for report writing.
+
+Create:
+- reports/final_paper_factory/03_section_inputs/oxide_analysis_packet.md
+- reports/final_paper_factory/03_section_inputs/oxide_results_packet.md
+
+The packet must include:
+- oxide zero-shot evidence
+- oxide fine-tuning evidence across N
+- oxide from-scratch comparison evidence
+- oxide parity plot notes
+- oxide figure memo references
+- oxide embedding-analysis notes
+- strongest canonical numbers for oxide
+- recommended main figures and tables for oxide
+- recommended appendix figures for oxide
+
+Also include a short section:
+- “What the oxide report is actually trying to prove”
+```
+
+### Claude Pro prompt — Phase 7B
+
+```text
+Use the oxide analysis packet and oxide results packet to produce:
+
+1. a written oxide analysis document
+2. an oxide Results-section draft for the standalone oxide report
+
+The oxide report should emphasize:
+- oxide as the in-distribution control
+- strong zero-shot usefulness
+- smoother fine-tuning behavior
+- where learning-curve saturation seems to appear
+- what the from-scratch comparison says about best-case transfer learning
+- how the oxide embedding results support or limit the interpretation
+
+Constraints:
+- separate literature / implementation / findings
+- do not invent numbers
+- do not overstate saturation if the evidence is only suggestive
+- use citation placeholders
+```
+
+### ChatGPT review prompt — Phase 7C
+
+Use **Prompt T3** on the oxide drafts.
+
+Add this:
+
+```text
+Also tell me whether the oxide report feels substantial enough on its own and how to make it stronger without forcing artificial drama.
+```
+
+### Codex prompt — Phase 7D
+
+Use **Prompt T4** to apply the oxide fix list.
+
+### Stop/Go checkpoint
+
+Proceed only when:
+
+* the oxide written analysis is solid
+* the oxide results section is evidence-grounded
+* the oxide report has a clear control-arm identity
+
+---
+
+## Phase 8 — Nitride report track
+
+### Objective
+
+Produce:
+
+* Week 4-style written nitride analysis
+* Week 5 nitride results draft
+* nitride standalone report body sections
+
+The project brief explicitly says the nitride track must cover **domain-shift penalty, effect of pretraining, nitride embeddings extracted/visualized**, then the **nitride results draft**. 
+
+### Owners
+
+* Evidence assembly: **Codex**
+* Drafting: **Claude Pro**
+* Review: **ChatGPT**
+* Apply fixes: **Codex**
+
+### Codex prompt — Phase 8A
+
+```text
+Assemble the nitride section-input packet for report writing.
+
+Create:
+- reports/final_paper_factory/03_section_inputs/nitride_analysis_packet.md
+- reports/final_paper_factory/03_section_inputs/nitride_results_packet.md
+
+The packet must include:
+- nitride zero-shot evidence
+- nitride fine-tuning evidence across N
+- nitride from-scratch comparison evidence
+- nitride parity plot notes
+- nitride figure memo references
+- nitride embedding-analysis notes
+- strongest canonical numbers for nitride
+- recommended main figures and tables for nitride
+- recommended appendix figures for nitride
+
+Also include a short section:
+- “What the nitride report is actually trying to prove”
+```
+
+### Claude Pro prompt — Phase 8B
+
+```text
+Use the nitride analysis packet and nitride results packet to produce:
+
+1. a written nitride analysis document
+2. a nitride Results-section draft for the standalone nitride report
+
+The nitride report should emphasize:
+- nitride as the out-of-distribution test
+- weaker zero-shot
+- harder adaptation
+- stronger data requirement
+- the domain-shift penalty
+- the from-scratch comparison as a test of transfer-learning value
+- the embedding analysis as a mechanistic interpretation layer
+
+Constraints:
+- separate literature / implementation / findings
+- do not invent numbers
+- do not claim causality from embeddings
+- use citation placeholders
+```
+
+### ChatGPT review prompt — Phase 8C
+
+Use **Prompt T3** on the nitride drafts.
+
+Add this:
+
+```text
+Also tell me whether the nitride report is making full use of the domain-shift story and where it can become analytically stronger.
+```
+
+### Codex prompt — Phase 8D
+
+Use **Prompt T4** to apply the nitride fix list.
+
+### Stop/Go checkpoint
+
+Proceed only when:
+
+* the nitride written analysis is strong
+* the nitride results section has clear domain-shift logic
+* the embedding analysis is being used carefully and effectively
+
+---
+
+## Phase 9 — Joint comparison and embedding-analysis sections
+
+### Objective
+
+Write the parts that belong specifically to the **combined paper**:
+
+* Results III: direct oxide–nitride comparison
+* Results IV: embedding analysis and interpretation of domain shift
+
+These are explicitly required by the project brief. 
+
+### Owners
+
+* Evidence assembly: **Codex**
+* Drafting: **Claude Pro**
+* Review: **ChatGPT**
+* Apply fixes: **Codex**
+
+### Codex prompt — Phase 9A
+
+```text
+Assemble the combined-paper comparison packet.
+
+Create:
+- reports/final_paper_factory/03_section_inputs/joint_comparison_packet.md
+- reports/final_paper_factory/03_section_inputs/embedding_interpretation_packet.md
+
+Include:
+- direct oxide vs nitride zero-shot comparison
+- direct oxide vs nitride fine-tuning comparison
+- transfer-benefit comparison across families
+- most informative parity comparisons
+- embedding figure memo set
+- raw embedding summary metrics
+- strongest evidence for the domain-shift interpretation
+- strongest caveats against overclaiming
+
+Also include:
+- recommended figures for Results III
+- recommended figures for Results IV
+```
+
+### Claude Pro prompt — Phase 9B
+
+```text
+Use the joint comparison packet and embedding interpretation packet to draft:
+
+1. Combined-paper Results III: Direct oxide–nitride comparison
+2. Combined-paper Results IV: Embedding analysis and interpretation of domain shift
+
+Constraints:
+- keep the writing comparative and evidence-based
+- explain what the embedding analysis adds beyond MAE tables and learning curves
+- do not claim that representation-space distance proves causality
+- make clear which claims come from raw-space metrics vs 2D visualizations
+- use citation placeholders
+```
+
+### ChatGPT review prompt — Phase 9C
+
+Use **Prompt T3** on the combined-paper comparison/embedding sections.
+
+Add this:
+
+```text
+Be especially strict about overclaiming from PCA, t-SNE, and UMAP.
+```
+
+### Codex prompt — Phase 9D
+
+Use **Prompt T4** to apply fixes.
+
+### Stop/Go checkpoint
+
+Proceed only when the combined-paper comparison and embedding sections are sharp and cautious.
+
+---
+
+## Phase 10 — Discussion and conclusions
+
+### Objective
+
+Turn the evidence into insight.
+
+### Owners
+
+* Drafting: **Claude Pro**
+* Review: **ChatGPT**
+* Apply fixes: **Codex**
+
+### Claude Pro prompt — Phase 10A
+
+```text
+Write the Discussion and Conclusion sections for:
+1. oxide standalone report
+2. nitride standalone report
+3. combined paper
+
+Use:
+- reviewed results drafts
+- figure memos
+- canonical numbers
+- blueprints
+- project brief framing
+
+The Discussion must answer:
+- What does pretraining help with?
+- What does chemical-family mismatch hurt?
+- Why is oxide easier?
+- Why is nitride harder?
+- What does the embedding analysis add beyond performance curves?
+- What are the practical implications for small-data materials discovery?
+
+Constraints:
+- do not overclaim causality from embeddings
+- separate literature context from our actual findings
+- make oxide feel meaningful, not like a weaker clone
+- make nitride the richer domain-shift argument
+```
+
+### ChatGPT review prompt — Phase 10B
+
+Use **Prompt T3** on the discussion/conclusion drafts.
+
+Add this:
+
+```text
+Tell me exactly what would move these discussions from good to excellent.
+```
+
+### Codex prompt — Phase 10C
+
+Use **Prompt T4** to apply fixes.
+
+### Stop/Go checkpoint
+
+Proceed only when the discussion sections feel insightful rather than descriptive.
+
+---
+
+## Phase 11 — Introduction, titles, abstracts, keywords
+
+### Objective
+
+Write these only after the results and discussion logic are fixed.
+
+### Owners
+
+* Drafting: **Claude Pro**
+* Review: **ChatGPT**
+* Apply fixes: **Codex**
+
+### JURI constraint
+
+The abstract must be a **single paragraph** and should stay **under 250 words**. Keywords must follow the abstract. 
+
+### Claude Pro prompt — Phase 11A
+
+```text
+Write:
+1. Introduction drafts for the oxide standalone report, nitride standalone report, and combined paper
+2. Title candidates for each
+3. Abstract candidates for each
+4. Keyword lists for each
+
+Use:
+- reviewed blueprints
+- literature claim map
+- reviewed methods/results/discussion sections
+
+Introduction requirements:
+- broader context: materials-property prediction with crystal GNNs
+- why transfer learning matters
+- why domain shift matters
+- why oxide vs nitride is a useful comparative setup
+- what this project specifically asks
+- brief map of the paper
+
+Abstract requirements:
+- one paragraph
+- <= 250 words
+- no citations
+- objective, method, main findings, significance
+
+Constraints:
+- do not invent references
+- use citation placeholders in the introduction only
+- keep the oxide and nitride intros aligned but distinct
+```
+
+### ChatGPT review prompt — Phase 11B
+
+Use **Prompt T3** on the intros and abstracts.
+
+Add this:
+
+```text
+Also check whether the title, abstract, and introduction genuinely match the actual results rather than the hoped-for story.
+```
+
+### Codex prompt — Phase 11C
+
+Use **Prompt T4** to apply fixes.
+
+### Stop/Go checkpoint
+
+Proceed only when titles, abstracts, intros, and keywords match the actual evidence.
+
+---
+
+## Phase 12 — Full-draft assembly and JURI-template-ready packaging
+
+### Objective
+
+Assemble the final drafts and package them for insertion into the JURI template.
+
+### Owners
+
+* Assembly: **Codex**
+* Polish: **Claude Pro**
+* Review: **ChatGPT**
+
+### Codex prompt — Phase 12A
+
+```text
+Assemble the final report packages.
+
+Create:
+1. Standalone report drafts:
+   - reports/final_paper_factory/04_drafts/oxide_full_draft_v1.md
+   - reports/final_paper_factory/04_drafts/nitride_full_draft_v1.md
+2. Combined paper draft:
+   - reports/final_paper_factory/04_drafts/combined_paper_full_draft_v1.md
+3. Template-ready files:
+   - reports/final_paper_factory/06_template_ready/oxide_template_ready.md
+   - reports/final_paper_factory/06_template_ready/nitride_template_ready.md
+   - reports/final_paper_factory/06_template_ready/combined_template_ready.md
+
+Requirements:
+- preserve the final approved structure
+- insert clear markers like:
+  [INSERT FIGURE X HERE]
+  [INSERT TABLE Y HERE]
+- keep citation placeholders visible
+- include acknowledgements placeholder
+- include references placeholder
+- align the structure with the JURI template style
+```
+
+### Claude Pro prompt — Phase 12B
+
+```text
+Do a final prose-polish pass on the assembled drafts.
+
+Focus on:
+- transitions
+- paragraph flow
+- sentence-level clarity
+- concise but strong abstract language
+- concise but strong conclusion language
+
+Constraints:
+- do not change numbers
+- do not change figure/table references
+- do not change the scientific meaning
+```
+
+### ChatGPT review prompt — Phase 12C
+
+Use **Prompt T3** on the full drafts and template-ready packages.
+
+### Stop/Go checkpoint
+
+Proceed only when the full drafts are stable and template-ready.
+
+---
+
+## Phase 13 — Final QC, overlap control, and submission lock
+
+### Objective
+
+Catch everything that could cost marks.
+
+### Owners
+
+* Primary QC: **Codex**
+* Audit: **Claude Code**
+* Final scientific verdict: **ChatGPT**
+
+### Codex prompt — Phase 13A
+
+```text
+Run a final QC audit on:
+- oxide standalone report
+- nitride standalone report
+- combined paper
+
+Create:
+- reports/final_paper_factory/07_final_qc/final_qc_report.md
+- reports/final_paper_factory/07_final_qc/oxide_fix_list.md
+- reports/final_paper_factory/07_final_qc/nitride_fix_list.md
+- reports/final_paper_factory/07_final_qc/combined_fix_list.md
+- reports/final_paper_factory/07_final_qc/cross_report_overlap_audit.md
+
+Check for:
+- unsupported numeric claims
+- missing figure references
+- missing table references
+- weak or vague wording
+- accidental dependence on non-canonical robustness results
+- overclaiming from embedding analysis
+- contradictions across oxide/nitride/combined drafts
+- excessive text overlap between the oxide and nitride standalone reports
+- unresolved TODO markers
+- missing citation placeholders where clearly needed
+
+Rank issues:
+- critical
+- important
+- minor
+```
+
+### Claude Code audit prompt — Phase 13B
+
+```text
+Audit the final QC report and the three drafts.
+
+Focus on:
+- path integrity
+- internal consistency
+- whether the fix lists are practical
+- whether the overlap audit catches problematic shared wording
+
+Refine the QC report if necessary, but do not rewrite the full drafts in this step.
+```
+
+### ChatGPT review prompt — Phase 13C
+
+Use **Prompt T3** on:
+
+* `final_qc_report.md`
+* the fix lists
+* `cross_report_overlap_audit.md`
+
+Add this:
+
+```text
+Give me a final go / no-go verdict for submission and tell me which remaining fixes would yield the biggest grade improvement.
+```
+
+### Final stop/go rule
+
+Do not move into final formatting until:
+
+* no critical issues remain
+* oxide and nitride feel distinct
+* combined paper is coherent
+* all core figures are placed
+* the JURI structure is respected
+
+---
+
+# 7. Exactly how to execute this in practice
+
+Use this rhythm for every phase:
+
+1. **Run the Codex prompt first** inside VS Code.
+2. **Let Codex write files into `reports/final_paper_factory/`**
+3. **Audit with Claude Code** only after Codex finishes.
+4. **Paste the generated text files here to ChatGPT** for scientific review.
+5. **Send the evidence pack to Claude Pro** only after the evidence is frozen.
+6. **Use Prompt T4** to let Codex or Claude Code apply approved fixes.
+7. **Move to the next phase only after the stop/go checkpoint is satisfied.**
+
+For image-heavy phases:
+
+1. Codex identifies the figure path and supporting table
+2. You upload figure + table to ChatGPT with **Prompt T1**
+3. You upload figure + table to Claude Pro with **Prompt T1**
+4. Compare outputs
+5. Codex consolidates the memo
+
+That is the cleanest premium pipeline that uses vision without making the workflow chaotic.
+
+---
+
+# 8. Common vs unique content map for the two standalone reports
+
+## Common backbone
+
+These may share conceptual structure:
+
+* problem context
+* methods backbone
+* split protocol
+* metric definition
+* model description
+* embedding-analysis protocol
+
+## Must differ clearly
+
+These must diverge:
+
+* title
+* abstract
+* figure ordering
+* main result emphasis
+* discussion emphasis
+* conclusion framing
+
+## Oxide report identity
+
+It should read like:
+
+> **What does pretrained ALIGNN look like when the chemistry is relatively familiar?**
+
+## Nitride report identity
+
+It should read like:
+
+> **What does chemical-family mismatch do to transfer learning, and can embeddings explain the penalty?**
+
+That distinction comes directly from the project brief’s oxide/nitride roles. 
+
+---
+
+# 9. How the literature should be framed in the reports
+
+The intro and methods should use the literature like this:
+
+* **CGCNN**: crystal graph baseline and interpretable crystal-property GNN framing 
+* **ALIGNN paper**: angle-aware extension using bond graph + line graph, stronger geometry encoding, message passing on both graphs 
+* **ALIGNN tutorial**: practical training/evaluation conventions, pretrained models, parity plots, history files, and implementation notes 
+* **Week 1**: graph/Laplacian foundations for internal conceptual grounding 
+* **Week 2**: message passing, embeddings, and visualization cautions for internal grounding and figure interpretation discipline 
+
+---
+
+# 10. What this plan improves over the previous one
+
+This upgraded version adds five important things:
+
+1. **A proper Figure Memo Factory**
+2. **Explicit ChatGPT + Claude Pro image-analysis loop**
+3. **A cleaner separation of repo tasks vs writing tasks**
+4. **A three-product output model**
+   oxide report, nitride report, combined paper
+5. **Cross-report overlap control**
+   so the two standalone reports are aligned but not clones
+
+---
+
+# 11. The exact order to execute
+
+Run the phases in this order:
+
+1. Phase 0 — workspace setup
+2. Phase 1 — source of truth
+3. Phase 2 — canonical numbers
+4. Phase 3 — report architecture
+5. Phase 4 — figure memos
+6. Phase 5 — literature map
+7. Phase 6 — methods
+8. Phase 7 — oxide track
+9. Phase 8 — nitride track
+10. Phase 9 — joint comparison + embedding sections
+11. Phase 10 — discussion and conclusions
+12. Phase 11 — intro + abstract + titles
+13. Phase 12 — full assembly + template-ready files
+14. Phase 13 — final QC
+
+That is the correct sequence.
