@@ -6,6 +6,7 @@ Memo numbering follows the Phase 4 core-figure order in `REPORT_PLAN.txt`. This 
 
 | Memo No. | Memo File | Figure Label | Source Figure | Linked Table | Reports | Placement | Status |
 |---|---|---|---|---|---|---|---|
+| 01 | `fig01_study_design_schematic_memo.md` | `FIG_SCHEMATIC` | `reports/final_paper_factory/02_figure_memos/core_figures/FIG_SCHEMATIC.png` | `none` | `all` | `main_text` | complete |
 | 02 | `fig02_oxide_learning_curve_memo.md` | `FIG_S1_LC_OXIDE` | `reports/final_paper_factory/02_figure_memos/core_figures/FIG_S1_LC_OXIDE.png` | `reports/Hyperparameter Set 1/Summaries/Finetuning/finetune_summary_by_N.csv` | `oxide | combined` | `main_text` | complete |
 | 03 | `fig03_nitride_learning_curve_memo.md` | `FIG_S1_LC_NITRIDE` | `reports/final_paper_factory/02_figure_memos/core_figures/FIG_S1_LC_NITRIDE.png` | `reports/Hyperparameter Set 1/Summaries/Finetuning/finetune_summary_by_N.csv` | `nitride | combined` | `main_text` | complete |
 | 05a | `fig05a_oxide_comparison_plot_memo.md` | `FIG_S1_COMP_OXIDE` | `reports/final_paper_factory/02_figure_memos/core_figures/FIG_S1_COMP_OXIDE.png` | `reports/Hyperparameter Set 1/Summaries/From Scratch/fromscratch_summary.csv` | `oxide | combined` | `main_text` | complete |
