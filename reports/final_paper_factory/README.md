@@ -2,6 +2,10 @@
 
 This workspace is for turning completed repository evidence into paper-ready material without changing the underlying results. During the paper phase, result artifacts are read-only: do not edit, regenerate, overwrite, or "clean up" outputs that support the paper.
 
+Source PDFs (ALIGNN paper, CGCNN paper, template, assignment briefs) live in `paper_sources/` at the repo root.
+
+Work flows forward through the numbered stages: `00` → `07`. Do not draft before blueprinting, and do not move material backward.
+
 ## Folder Map
 
 ### `00_source_of_truth/`
