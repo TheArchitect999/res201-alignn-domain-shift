@@ -9,7 +9,6 @@
 - Report membership: `all`
 - Placement: `main_text`
 - External analysis inputs:
-  - `c:\Users\lenovo\Desktop\ChatGPT Figure Memo.txt`
   - `c:\Users\lenovo\Desktop\Claude Figure Memo.txt`
 
 ## What The Figure Shows

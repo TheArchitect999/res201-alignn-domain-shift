@@ -2,8 +2,7 @@
 
 **Purpose:** Human-readable companion to `figure_queue.csv`. Lists all figures assigned to the three report streams, their source paths, placement (main text vs appendix), linked evidence tables, and copy status.
 
-**One figure still requires manual creation before prose drafting can be finalized:**
-- `FIG_SCHEMATIC` — study design schematic
+All currently listed core main-text figures exist in the repo.
 
 ---
 
@@ -16,13 +15,13 @@ These figures are copied to `core_figures/`.
 ### Shared / Multi-report Figures
 
 #### FIG_SCHEMATIC
-- **Status:** to_be_created
+- **Status:** exists
 - **Report membership:** all three reports
 - **Placement:** main text
 - **Purpose:** Study design schematic showing oxide as in-distribution control and nitride as out-of-distribution test with zero-shot / fine-tune / scratch protocol
 - **Linked table:** none
-- **Source path:** to_be_created
-- **Copied to:** n/a
+- **Source path:** `reports/final_paper_factory/02_figure_memos/core_figures/FIG_SCHEMATIC.png`
+- **Copied to:** `core_figures/FIG_SCHEMATIC.png`
 
 #### FIG_ZS_COMPARISON
 - **Status:** exists
@@ -144,7 +143,7 @@ These figures are copied to `core_figures/`.
 - **Source path:** `reports/week4_embedding_analysis/figures/pca/last_alignn_pool_fixed_test_family.png`
 - **Copied to:** `core_figures/FIG_EA_6A_PCA.png`
 
-#### FIG_EA_6B_TSNE_P30
+#### FIG_EA_6B_TSNE
 - **Status:** exists
 - **Report membership:** nitride | combined | oxide (optional)
 - **Placement:** main text
@@ -154,7 +153,7 @@ These figures are copied to `core_figures/`.
 - **Copied to:** `core_figures/FIG_EA_6B_TSNE_P30.png`
 - **Note:** t-SNE preserves local neighborhoods but not global inter-cluster distances; interpret cautiously.
 
-#### FIG_EA_6C_UMAP_N30
+#### FIG_EA_6C_UMAP
 - **Status:** exists
 - **Report membership:** nitride | combined | oxide (optional)
 - **Placement:** main text
@@ -163,7 +162,7 @@ These figures are copied to `core_figures/`.
 - **Source path:** `reports/week4_embedding_analysis/figures/umap/last_alignn_pool_fixed_test_family_n30.png`
 - **Copied to:** `core_figures/FIG_EA_6C_UMAP_N30.png`
 
-#### FIG_EA_6D_KNN5_BOXPLOT
+#### FIG_EA_6D_BOXPLOT
 - **Status:** exists
 - **Report membership:** nitride | combined
 - **Placement:** main text
@@ -172,7 +171,7 @@ These figures are copied to `core_figures/`.
 - **Source path:** `reports/week4_embedding_analysis/figures/distance_vs_error/last_alignn_pool_oxide_knn5_mean_distance_hard_easy_boxplot.png`
 - **Copied to:** `core_figures/FIG_EA_6D_KNN5_BOXPLOT.png`
 
-#### FIG_EA_6D_KNN5_SCATTER
+#### FIG_EA_6D_SCATTER
 - **Status:** exists
 - **Report membership:** nitride | combined
 - **Placement:** main text
@@ -288,16 +287,14 @@ These figures are copied to `appendix_figures/`.
 
 | Category | Count |
 |---|---|
-| Core main-text figures (exists) | 15 |
-| Core main-text figures (to_be_created) | 1 |
+| Core main-text figures (exists) | 16 |
+| Core main-text figures (to_be_created) | 0 |
 | Appendix figures | 20 |
 | **Total** | **36** |
 
 ### Figures to be created
 
-This figure does not yet have a source file and must be generated before final paper assembly:
-
-1. **FIG_SCHEMATIC** — study design diagram (oxide control vs nitride OOD test, three protocol arms)
+No figures are currently marked `to_be_created`.
 
 ### Canonical embedding layer reminder
 
