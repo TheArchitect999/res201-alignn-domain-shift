@@ -12,7 +12,8 @@ Purpose: repo-grounded methods backbone for the oxide standalone report, nitride
 - If the repo does not support a precise statement, leave `TODO` instead of filling the gap with plausible wording.
 - Anchor the main narrative to Hyperparameter Set 1: `epochs = 50`, `learning_rate = 1e-4`, `batch_size = 16`.
 - Keep from-scratch scope honest: only `N = 50` and `N = 500` exist.
-- In main-text embedding discussion, prefer `last_alignn_pool`. Treat `pre_head` and `last_gcn_pool` as robustness or appendix unless explicitly needed.
+- In main-text embedding discussion, prefer `last_alignn_pool`. Treat `pre_head` and `last_gcn_pool` as robustness or appendix unless explicitly needed. In the current embedding outputs, `pre_head` and `last_gcn_pool` are numerical near-duplicates, so Methods should never phrase the three sources as three independent pieces of evidence.
+- Methods can describe the **protocol** that produces `mean_best_epoch`, `test_mae_eV_per_atom`, and the summary CSVs. Methods must not describe **what values** those quantities took in any run. The phrase "effectively the zero-shot checkpoint" is a Results/Discussion interpretation, not a Methods sentence.
 
 ## Recommended subsection order
 
@@ -220,8 +221,9 @@ The run-local train/validation split is built from the family pool with `n_val =
 ### Our experimental setup
 
 - Fine-tuning is run for both families at `N = 10, 50, 100, 200, 500, 1000`.
-- Each condition uses five seeds.
+- Each condition uses five seeds (seed `0` through seed `4`).
 - Total Set 1 fine-tuning coverage is `60` runs across both families, or `30` runs per family.
+- Every run writes `best_epoch` and `test_mae_eV_per_atom` into its `summary.json`. The per-N `mean_best_epoch` recorded in `reports/Hyperparameter Set 1/Summaries/Finetuning/finetune_summary_by_N.csv` is the mean over the five seeds at that `N`. Methods should name this quantity so Results can later interpret it; Methods must not interpret it here.
 
 ### Evidence anchors
 
@@ -390,7 +392,7 @@ The run-local train/validation split is built from the family pool with `n_val =
 ### Our experimental setup
 
 - For main text, prefer `last_alignn_pool` as the primary reported layer.
-- `pre_head` and `last_gcn_pool` can support robustness claims or appendix material.
+- `pre_head` and `last_gcn_pool` can support robustness claims or appendix material. In the current outputs they are numerical near-duplicates of each other on the selected nitride distance-versus-error rows and on three of four fixed-test family-separation metrics, with a small logistic-AUC difference between `pre_head` and `last_gcn_pool`. Treat them as a matched pair of supporting layers, not as two independent probes.
 - Raw-space statistics are the inferential layer; 2D projections are descriptive support only.
 
 ### Evidence anchors
@@ -414,3 +416,58 @@ The run-local train/validation split is built from the family pool with `n_val =
 - `TODO:` decide whether the shared Methods section should contain one short "Model" paragraph or a compact table.
 - `TODO:` decide whether hardware / runtime environment needs to be documented; it was not part of the frozen Phase 6 source-of-truth pack.
 - `TODO:` confirm the exact citation placeholders for JARVIS and pretrained ALIGNN model provenance before prose polishing.
+- `TODO:` decide whether the Methods section should state the seed set explicitly as `{0, 1, 2, 3, 4}` or just "five random seeds".
+- `TODO:` decide whether the `Results_Before_Correction/` namespace should be named in Methods (zero-shot baseline namespace) or only referenced in an evidence footnote.
+
+## Methods-table anchors
+
+The blueprints name two manuscript-facing Methods table labels. Neither has a standalone frozen CSV yet; both must be assembled from the sources below (per `STAGE6_METHODS_HANDOFF.md` §D).
+
+### `TAB_METHODS_DATASET_SPLITS`
+
+Build from:
+
+- `data_shared/oxide/summaries/summary.json`
+- `data_shared/nitride/summaries/summary.json`
+
+Cover: family totals, train / val / test / pool counts, split provenance (`provided:manifests/dft_3d_formation_energy_peratom_splits.csv`), and the oxynitride inclusion / exclusion rule (`499` retained in oxide; `0` in nitride).
+
+### `TAB_METHODS_EXPERIMENT_SCOPE`
+
+Build from:
+
+- `reports/Hyperparameter Set 1/Summaries/Finetuning/finetune_runs.csv`
+- `reports/Hyperparameter Set 1/Summaries/From Scratch/fromscratch_runs.csv`
+- `reports/final_paper_factory/00_source_of_truth/canonical_numbers_v2.md`
+
+Cover: fine-tuning run counts (`60` total; `30` per family), from-scratch run counts (`20` total; `10` per family), `N` coverage (`10, 50, 100, 200, 500, 1000` for fine-tuning and `50, 500` for from-scratch), seed coverage (`5` seeds per condition), and an explicit statement that from-scratch exists only at `N = 50` and `N = 500`.
+
+## Cross-check against required Methods coverage
+
+Every one of the ten Stage 6 required topics is covered above:
+
+| required topic | subsection |
+|---|---|
+| dataset source | §1 |
+| family definitions | §2 |
+| split protocol | §3 |
+| oxide/nitride filtering | §2 |
+| zero-shot evaluation | §4 |
+| fine-tuning protocol | §5 |
+| from-scratch protocol | §6 |
+| hyperparameter setting used for the main narrative | §7 |
+| evaluation metric | §8 |
+| embedding-analysis protocol | §9 |
+
+## Stage 6 handoff provenance
+
+This skeleton is aligned with the active Phase 6 authority files listed in `STAGE6_METHODS_HANDOFF.md`:
+
+- Blueprints: `oxide_report_blueprint_v3.md`, `nitride_report_blueprint_v3.md`, `combined_paper_blueprint_v3.md`, `shared_vs_unique_content_map_v3.md`
+- Canonical numbers: `canonical_numbers_v2.md`, `canonical_numbers_v2.csv`, `claim_to_number_source_map_v2.csv`
+- Source-of-truth memo: `source_of_truth_memo_v2.md`
+- Table inventory: `table_inventory_v2.csv`
+- Figure memos: `figure_memo_index.md` plus the full current memo set
+- Project brief context: `reports/week1_report.tex`, `reports/week2_report.tex`, plus the brief-restated constraints that fix Set 1 as `epochs = 50`, `learning_rate = 1e-4`, `batch_size = 16`
+
+Superseded files (`canonical_numbers.*`, `source_of_truth_memo.md`, `table_inventory.csv`, `*_blueprint.md` without `_v3`, `literature_claim_map.md`, `literature_claim_map_v2.md`, `citation_needed_list.md`, `introduction_paragraph_plan.md`, `introduction_paragraph_plan_v3.md`) were **not** used.

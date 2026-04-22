@@ -1,0 +1,3 @@
+family,total,train,val,test,pool,oxynitrides,oxynitride_treatment,split_source,dataset_key,target_key
+oxide,14991,11960,1547,1484,13507,499,retained_in_oxide_arm,provided:manifests/dft_3d_formation_energy_peratom_splits.csv,dft_3d_2021,formation_energy_peratom
+nitride,2288,1837,209,242,2046,0,excluded_from_nitride_arm,provided:manifests/dft_3d_formation_energy_peratom_splits.csv,dft_3d_2021,formation_energy_peratom

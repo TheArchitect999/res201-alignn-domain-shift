@@ -7,6 +7,8 @@ Use this with `shared_methods_skeleton.md`. The combined paper needs the most co
 - The combined Methods section should define one shared protocol applied to two family-specific evaluation arms.
 - It should not preview the oxide-nitride performance gap or nitride inertness; those are Results claims.
 - It should fully specify the frozen-embedding workflow because Results IV depends on it.
+- The combined paper structure is **fixed by the project brief**: Introduction, Methods, Results I (oxide), Results II (nitride), Results III (direct comparison), Results IV (embedding analysis), Discussion, Conclusion, References. Methods must terminate cleanly before Results I — no Results I wording should appear inside Methods.
+- Use "pretrained formation-energy ALIGNN model" or "pretrained ALIGNN model". "Oxide-reference region" is only acceptable inside the embedding-distance subsection.
 
 ## Recommended subsection order
 
@@ -120,27 +122,35 @@ Use this with `shared_methods_skeleton.md`. The combined paper needs the most co
 - Model source:
   - checkpoint: `jv_formation_energy_peratom_alignn/checkpoint_300.pt`
   - config: `jv_formation_energy_peratom_alignn/config.json`
-- Embedding sources:
-  - `pre_head`
-  - `last_alignn_pool`
-  - `last_gcn_pool`
+- Embedding sources (all three extracted; `last_alignn_pool` is the primary main-text layer):
+  - `pre_head`: pooled output of `model.readout` immediately before `model.fc`
+  - `last_alignn_pool`: pooled node tensor returned by the last `ALIGNNConv` block (`alignn_layers[3]`), before the gated GCN stack
+  - `last_gcn_pool`: pooled node tensor returned by the last gated GCN block (`gcn_layers[3]`); in this model it is a near-duplicate of `pre_head`
 - Named subsets:
   - `fixed_test_set`
   - `balanced_pool_set`
   - `oxide_reference_pool`
-- Quantitative family-separation metrics on raw embeddings:
+- Quantitative family-separation metrics on raw 256D embeddings:
   - silhouette score
   - Davies-Bouldin index
   - `k = 15` nearest-neighbor family purity
   - logistic-regression AUC with `5`-fold cross-validation and `StandardScaler`
 - Quantitative nitride distance-versus-error metrics:
-  - oxide centroid distance
-  - mean distance to the `5` nearest oxide-reference embeddings
+  - oxide centroid Euclidean distance
+  - mean Euclidean distance to the `5` nearest oxide-reference embeddings
   - supplemental Ledoit-Wolf Mahalanobis distance if covariance screening passes
 - Visualization workflow:
-  - PCA fit on standardized `balanced_pool_set`
-  - direct standardized t-SNE with main perplexity `30` and sensitivity `15`, `50`
-  - direct standardized UMAP with main `n_neighbors = 30`, `min_dist = 0.1`, and sensitivity `n_neighbors = 15`, `50`
+  - PCA: standardize first, fit PCA on `balanced_pool_set`, project other subsets into that basis
+  - t-SNE: standardize first, no PCA pre-reduction, main perplexity `30`, sensitivity `15` and `50`
+  - UMAP: standardize first, no PCA pre-reduction, main `n_neighbors = 30`, `min_dist = 0.1`, sensitivity `n_neighbors = 15` and `50`
+- Overlay policy:
+  - t-SNE hard/easy overlay is refit directly on `balanced_pool_set + fixed-test nitride`
+  - UMAP hard/easy overlay is fit on standardized `balanced_pool_set`, then fixed-test nitrides are transformed onto that manifold
+- Statistical defaults:
+  - family-separation bootstraps: `1000`
+  - distance-error bootstraps: `5000`
+  - distance-error permutations: `10 000`
+  - within-statistic Benjamini-Hochberg FDR adjustment
 - Hard/easy nitride groups use the top and bottom `20%` of fixed-test nitride absolute zero-shot error.
 - Raw-space statistics are inferential; 2D projections are descriptive support.
 
@@ -193,3 +203,22 @@ Use this with `shared_methods_skeleton.md`. The combined paper needs the most co
 - `TODO:` confirm whether repeated-run summaries will be reported as `mean +/- SD`, `mean +/- SEM`, or another fixed convention.
 - `TODO:` confirm the exact citation wording for JARVIS split provenance and pretrained ALIGNN model provenance before prose polishing.
 - `TODO:` decide how much of the PCA, t-SNE, and UMAP parameter detail stays in main text versus figure notes or appendix.
+- `TODO:` decide whether Methods should name the seed set explicitly as `{0, 1, 2, 3, 4}` or just describe it as "five random seeds".
+- `TODO:` decide whether the Methods section should cross-reference the Results IV subsection order (family separation → nitride distance versus error) or stay purely procedural.
+
+## Cross-check against required Methods coverage
+
+Every one of the ten Stage 6 required topics is covered in this notes file plus the shared skeleton:
+
+| required topic | combined-paper coverage |
+|---|---|
+| dataset source | Dataset source and target subsection |
+| family definitions | Family definitions and filtering subsection |
+| split protocol | Split protocol subsection |
+| oxide/nitride filtering | Family definitions and filtering subsection |
+| zero-shot evaluation | Zero-shot baseline subsection |
+| fine-tuning protocol | Fine-tuning protocol subsection |
+| from-scratch protocol | From-scratch protocol subsection |
+| hyperparameter setting used for the main narrative | Hyperparameter setting subsection |
+| evaluation metric | Evaluation metric subsection |
+| embedding-analysis protocol | Embedding-analysis protocol subsection |

@@ -7,6 +7,8 @@ Use this with `shared_methods_skeleton.md`. The oxide report should keep the sha
 - Report identity: control-arm paper, not the domain-shift paper.
 - Methods should be shared where possible, but the oxide version can compress nitride-specific embedding machinery.
 - Do not present nitride behavior as evidence inside oxide Methods; only define the shared family-construction pipeline once.
+- Oxide Methods must match the structural ordering implied by `oxide_report_blueprint_v3.md` row 2 (the "Canonical dataset and experiment scope" Methods row). That row pins the report to Set 1, the oxide test-set size, and the canonical run counts, and calls out the from-scratch coverage limitation.
+- Do not call the pretrained checkpoint "oxide-pretrained" anywhere in oxide Methods. Use "pretrained formation-energy ALIGNN model" or "pretrained ALIGNN model".
 
 ## Recommended subsection order
 
@@ -91,10 +93,11 @@ Use this with `shared_methods_skeleton.md`. The oxide report should keep the sha
 
 - Keep this short in the oxide standalone report.
 - Safe methods-level wording:
-  - embeddings were extracted from the frozen pretrained ALIGNN model
+  - embeddings were extracted from the frozen pretrained ALIGNN model, not from fine-tuned or from-scratch checkpoints
   - the main text, if it mentions an embedding layer, should prefer `last_alignn_pool`
   - quantitative raw-space analysis and nonlinear visualization details are part of the shared embedding workflow and can be forward-referenced to the combined paper or appendix
 - Avoid reproducing the full nitride distance-to-oxide workflow here unless the final oxide blueprint expands that section.
+- The oxide blueprint (row 7) permits a brief 1–2 paragraph embedding bridge in Results that confirms family separation. Methods should be consistent with that bridge: name the extraction protocol and the `last_alignn_pool` preference, then forward-reference the combined paper for the rest.
 
 ## Our Experimental Setup
 
@@ -128,3 +131,46 @@ Use this with `shared_methods_skeleton.md`. The oxide report should keep the sha
 - `TODO:` decide whether the oxide standalone Methods needs a one-sentence embedding bridge in the main text or only an appendix note.
 - `TODO:` confirm whether the oxide Methods will include the oxide counts inline or push them entirely into `TAB_METHODS_DATASET_SPLITS`.
 - `TODO:` if the final prose mentions the official split provenance explicitly, attach the confirmed citation placeholder rather than a bare "official split" claim.
+- `TODO:` decide whether oxide Methods should explicitly define the term "oxynitride" once (because oxide retains 499 of them) or leave the term as a parenthetical.
+
+## Cross-check against required Methods coverage
+
+Every one of the ten Stage 6 required topics is covered in this notes file plus the shared skeleton:
+
+| required topic | oxide-facing coverage |
+|---|---|
+| dataset source | Dataset source subsection |
+| family definitions | Family definitions and filtering subsection |
+| split protocol | Split protocol subsection |
+| oxide/nitride filtering | Family definitions and filtering subsection |
+| zero-shot evaluation | Zero-shot evaluation subsection |
+| fine-tuning protocol | Fine-tuning protocol subsection |
+| from-scratch protocol | From-scratch protocol subsection |
+| hyperparameter setting used for the main narrative | Hyperparameter setting subsection |
+| evaluation metric | Evaluation metric subsection |
+| embedding-analysis protocol | Embedding-analysis protocol subsection |
+
+## Stage 6 handoff provenance (oxide bundle)
+
+This notes file was assembled from the oxide standalone methods bundle in `STAGE6_METHODS_HANDOFF.md` §E:
+
+Required inputs used:
+
+- `reports/final_paper_factory/03_section_inputs/shared_methods_skeleton.md`
+- `reports/final_paper_factory/01_blueprints/oxide_report_blueprint_v3.md`
+- `reports/final_paper_factory/00_source_of_truth/canonical_numbers_v2.md`, `canonical_numbers_v2.csv`
+- `reports/final_paper_factory/00_source_of_truth/table_inventory_v2.csv`
+- `reports/final_paper_factory/00_source_of_truth/source_of_truth_memo_v2.md`
+- `reports/final_paper_factory/02_figure_memos/figure_memo_index.md`
+- `reports/final_paper_factory/02_figure_memos/fig01_study_design_schematic_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig02_oxide_learning_curve_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig05a_oxide_comparison_plot_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig06_oxide_lowN_parity_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig07_oxide_highN_parity_memo.md`
+
+Recommended support used:
+
+- `reports/final_paper_factory/01_blueprints/shared_vs_unique_content_map_v3.md`
+- `reports/week1_report.tex`, `reports/week2_report.tex`
+
+Brief-fixed constraints applied: Set 1 (`epochs = 50`, `learning_rate = 1e-4`, `batch_size = 16`); oxide = structures containing `O` (oxynitrides retained); from-scratch only at `N = 50` and `N = 500`.

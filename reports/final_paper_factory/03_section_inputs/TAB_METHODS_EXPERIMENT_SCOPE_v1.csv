@@ -1,0 +1,4 @@
+protocol,families,N_values,seeds_per_condition,runs_per_family,total_runs,from_scratch_N_restriction,hyperparameter_set,epochs,batch_size,learning_rate,notes
+zero-shot,"oxide,nitride",fixed_test_sets,1,1,2,n/a,n/a,n/a,n/a,n/a,pretrained baseline; no training; not seed-varied
+fine-tuning,"oxide,nitride","10,50,100,200,500,1000",5,30,60,n/a,Set1,50,16,0.0001,partial weight update (gcn_layers.3 and fc unfrozen)
+from-scratch,"oxide,nitride","50,500",5,10,20,"only N=50 and N=500",Set1,50,16,0.0001,full random initialization; no pretrained weights

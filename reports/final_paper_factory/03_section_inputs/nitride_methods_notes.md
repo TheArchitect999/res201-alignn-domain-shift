@@ -7,6 +7,8 @@ Use this with `shared_methods_skeleton.md`. The nitride report should preserve t
 - Report identity: out-of-distribution or cross-family transfer test paper.
 - Methods should define the common data/model protocol without smuggling in nitride outcome claims.
 - Keep the detailed nitride interpretation for Results and Discussion; Methods should explain only what was evaluated and how.
+- Nitride Methods must match the structural ordering implied by `nitride_report_blueprint_v3.md` row 2 (the "Canonical scope and caveat policy" Methods row). That row pins the report to Set 1, the nitride test-set size, the canonical run counts, and the low-`N` interpretation rules. Methods should state the interpretation rules as protocol-level definitions (what `mean_best_epoch` means, how checkpoint selection works); the substantive caveat ("checkpoint is effectively the pretrained state at low `N`") belongs in Results.
+- Do not call the pretrained checkpoint "oxide-pretrained" anywhere in nitride Methods. Use "pretrained formation-energy ALIGNN model" or "pretrained ALIGNN model". "Oxide-reference region" is acceptable only inside the embedding-distance subsection.
 
 ## Recommended subsection order
 
@@ -91,15 +93,16 @@ Use this with `shared_methods_skeleton.md`. The nitride report should preserve t
 
 - This report should include more of the shared embedding workflow than the oxide report.
 - Key implementation details worth keeping in the nitride Methods section:
-  - embeddings are extracted from the frozen pretrained ALIGNN model, not from fine-tuned checkpoints
-  - the main text should prioritize `last_alignn_pool`
+  - embeddings are extracted from the frozen pretrained ALIGNN model, not from fine-tuned or from-scratch checkpoints
+  - the main text should prioritize `last_alignn_pool`; `pre_head` and `last_gcn_pool` are numerical near-duplicates in the current outputs and are reserved for appendix/robustness use only
   - the fixed comparison subsets are `fixed_test_set`, `balanced_pool_set`, and `oxide_reference_pool`
-  - family separation is quantified in raw embedding space
-  - nitride difficulty is analyzed against distance from the oxide reference pool in raw embedding space
+  - family separation is quantified in raw embedding space (silhouette, Davies-Bouldin, kNN `k=15` purity, logistic-regression AUC with `5`-fold CV and `StandardScaler`)
+  - nitride difficulty is analyzed against distance from the oxide reference pool in raw embedding space (oxide centroid distance; mean Euclidean distance to the `5` nearest oxide-reference embeddings; supplemental Ledoit-Wolf Mahalanobis after covariance screening)
   - PCA, t-SNE, and UMAP are descriptive views; raw-space statistics are the inferential layer
+  - statistical defaults: `1000` bootstraps for family-separation, `5000` bootstraps and `10 000` permutations for distance-error, within-statistic Benjamini-Hochberg FDR adjustment
 - Include the hard/easy nitride definition because it is part of the nitride-specific embedding workflow:
   - hard nitrides: top `20%` of fixed-test nitrides by absolute zero-shot error
-  - easy nitrides: bottom `20%`
+  - easy nitrides: bottom `20%` of fixed-test nitrides by absolute zero-shot error
 
 ## Our Experimental Setup
 
@@ -141,3 +144,52 @@ Use this with `shared_methods_skeleton.md`. The nitride report should preserve t
 - `TODO:` decide how much of the PCA, t-SNE, and UMAP parameter detail stays in the nitride main-text Methods versus figure notes or appendix.
 - `TODO:` decide whether `oxide_reference_pool` needs an explicit rationale sentence in Methods or whether the rationale should wait for Results IV / Discussion.
 - `TODO:` if the nitride standalone report uses a longer domain-shift framing sentence in Methods, attach a confirmed citation instead of a generic placeholder.
+- `TODO:` decide whether the hard/easy nitride definition belongs in the shared Methods (applies to both families) or as a nitride-only Methods sentence.
+
+## Cross-check against required Methods coverage
+
+Every one of the ten Stage 6 required topics is covered in this notes file plus the shared skeleton:
+
+| required topic | nitride-facing coverage |
+|---|---|
+| dataset source | Dataset source subsection |
+| family definitions | Family definitions and filtering subsection |
+| split protocol | Split protocol subsection |
+| oxide/nitride filtering | Family definitions and filtering subsection |
+| zero-shot evaluation | Zero-shot evaluation subsection |
+| fine-tuning protocol | Fine-tuning protocol subsection |
+| from-scratch protocol | From-scratch protocol subsection |
+| hyperparameter setting used for the main narrative | Hyperparameter setting subsection |
+| evaluation metric | Evaluation metric subsection |
+| embedding-analysis protocol | Embedding-analysis protocol subsection |
+
+## Stage 6 handoff provenance (nitride bundle)
+
+This notes file was assembled from the nitride standalone methods bundle in `STAGE6_METHODS_HANDOFF.md` §E:
+
+Required inputs used:
+
+- `reports/final_paper_factory/03_section_inputs/shared_methods_skeleton.md`
+- `reports/final_paper_factory/01_blueprints/nitride_report_blueprint_v3.md`
+- `reports/final_paper_factory/00_source_of_truth/canonical_numbers_v2.md`, `canonical_numbers_v2.csv`
+- `reports/final_paper_factory/00_source_of_truth/table_inventory_v2.csv`
+- `reports/final_paper_factory/00_source_of_truth/source_of_truth_memo_v2.md`
+- `reports/final_paper_factory/02_figure_memos/figure_memo_index.md`
+- `reports/final_paper_factory/02_figure_memos/fig01_study_design_schematic_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig03_nitride_learning_curve_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig04_zero_shot_family_comparison_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig05b_nitride_comparison_plot_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig08_nitride_lowN_parity_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig09_nitride_highN_parity_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig10_embedding_pca_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig11_embedding_tsne_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig12_embedding_umap_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig13_nitride_distance_error_memo.md`
+- `reports/final_paper_factory/02_figure_memos/fig13b_nitride_distance_error_scatter_memo.md`
+
+Recommended support used:
+
+- `reports/final_paper_factory/01_blueprints/shared_vs_unique_content_map_v3.md`
+- `reports/week1_report.tex`, `reports/week2_report.tex`
+
+Brief-fixed constraints applied: Set 1 (`epochs = 50`, `learning_rate = 1e-4`, `batch_size = 16`); nitride = structures containing `N` and not containing `O` (oxynitrides excluded, `0` retained); from-scratch only at `N = 50` and `N = 500`; `last_alignn_pool` as the main-text embedding layer.
