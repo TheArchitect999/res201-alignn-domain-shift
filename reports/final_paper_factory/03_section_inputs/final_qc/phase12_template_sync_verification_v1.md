@@ -46,7 +46,7 @@ All `[CITE: …]` tokens present and unaltered throughout Introduction, Methods,
 
 ### Internal review artifacts removed
 
-No internal artifacts were present in the v1 oxide template_ready. Confirmed clean. ✓
+1. **Assembly note** header block at the top of the polished v2 source — removed ✓
 
 ### Wording synchronized to polished v2 source
 
@@ -104,7 +104,8 @@ All `[CITE: …]` tokens present and unaltered (Introduction, Methods, Results d
 
 ### Internal review artifacts removed
 
-1. **"Citation placeholders used in Results" block** at end of §3.7 — removed ✓
+1. **Assembly note** header block at the top of the polished v2 source — removed ✓
+2. **"Citation placeholders used in Results" block** at end of §3.7 — removed ✓
 
 ### Wording synchronized to polished v2 source
 
@@ -208,7 +209,7 @@ All other items listed in `phase12_style_polish_notes_v1.md` §5 (workflow artef
 | Citation placeholders preserved | ✓ | ✓ | ✓ |
 | Acknowledgements placeholder | ✓ | ✓ | ✓ |
 | References placeholder | ✓ | ✓ | ✓ |
-| Internal review artifacts removed | ✓ (none present) | ✓ (1 removed) | ✓ (4 removed) |
+| Internal review artifacts removed | ✓ (1 removed) | ✓ (2 removed) | ✓ (4 removed) |
 | Wording synchronized to polished v2 | ✓ | ✓ | ✓ |
 | Unresolved ambiguities | none | none | 1 (see above) |
 
