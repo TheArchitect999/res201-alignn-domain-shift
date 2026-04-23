@@ -115,6 +115,20 @@ Primary source-of-truth files checked:
 - The combined abstract's "smooth adaptation" wording for oxide is a little smoother than the actual curve shape, which includes the `N = 50` penalty before monotonic recovery.
 - The oxide and nitride papers keep legitimately shared Introduction/Methods language. That is not currently an identity problem, but a journal copy-editor could still ask for modest differentiation in the background paragraphs.
 
+## Phase 13B Claude Code audit additions
+
+The following items were added or clarified by the Phase 13B audit (`phase13b_claude_code_audit.md`).
+
+**Path integrity:** All 13 source-of-truth paths cited in this report were verified as present. No broken paths.
+
+**Figure namespace fix direction (Important issue 3):** Update `figure_inventory_v2.csv` rows for `FIG_EA_6A/6B/6C/6D` to the suffixed scheme (`FIG_EA_6A_PCA`, `FIG_EA_6B_TSNE`, `FIG_EA_6C_UMAP`, `FIG_EA_6D_BOXPLOT`/`FIG_EA_6D_SCATTER`). No manuscript changes required; the manuscripts and `figure_queue.csv` already use the suffixed labels.
+
+**New minor issue — combined paper subsection numbering inconsistency:** Results I (§III) and Results II (§IV) use Arabic subsection numbers (`3.1`, `4.2`, etc.), while Results III (§V), Results IV (§VI), and Discussion (§VII) use Roman+alpha (`III.A`, `VII.B`, etc.). This must be harmonized to one scheme before JURI template insertion. The Roman+alpha scheme is more self-consistent with the Roman section numerals already in use.
+
+**Fix list confirmation:** All three fix lists are practical, accurately line-numbered, and complete. One clarification on combined fix list critical item 3: the deletion block runs from the `## Evidence provenance for review` heading through the last line of the "Known draft-stage caveats" block, ending just before the `## VII. Discussion` heading.
+
+---
+
 ## Overall judgment
 
 Final verdict: **needs one more patch**
@@ -122,4 +136,4 @@ Final verdict: **needs one more patch**
 Reason:
 - The numbers are stable.
 - The scientific core is mostly coherent.
-- But the combined draft still contains review-only material, the combined citation namespace is not cleaned up, and the nitride conclusion still makes one comparative claim that the oxide control does not actually support.
+- But the combined draft still contains review-only material, the combined citation namespace is not cleaned up, the nitride conclusion still makes one comparative claim that the oxide control does not actually support, and the combined paper has a subsection numbering inconsistency to resolve before JURI template packaging.
