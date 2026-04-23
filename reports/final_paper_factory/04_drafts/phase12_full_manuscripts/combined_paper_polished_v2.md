@@ -6,8 +6,6 @@ First Author Name*, Second Author Name
 
 [Corresponding author email placeholder]
 
-**Assembly note.** Built from the approved component drafts on 2026-04-23. Figure and table insertion markers are preserved for manuscript assembly.
-
 ## Abstract
 
 Transfer learning from pretrained crystal-graph neural networks is a standard strategy for reducing labelled-data requirements in materials-property prediction, but its benefit is conditional on source–target relatedness, and the behaviour of a single widely used checkpoint under a clean chemistry-family shift is not yet a standard reference point. We evaluate the pretrained formation-energy ALIGNN model distributed through the JARVIS infrastructure on two target families drawn from the JARVIS `dft_3d` benchmark: an in-distribution oxide control arm and an out-of-distribution nitride test arm. Both arms share an identical protocol: zero-shot evaluation of the pretrained checkpoint, fine-tuning across six labelled-data sizes with five random seeds per size, and matched from-scratch baselines at two of those sizes. We additionally extract frozen 256-dimensional `last_alignn_pool` embeddings and analyse family structure together with a within-family distance–error correlate. Under the canonical Hyperparameter Set 1 protocol, the pretrained checkpoint reproduces the standard chemistry-aligned picture on oxides — strong zero-shot, smooth adaptation, a large pretrained-versus-scratch advantage — and departs from it on nitrides: an approximately two-fold zero-shot penalty, a fine-tuning loop that does not leave the pretrained initialization at labelled-data sizes up to two hundred structures, and a residual gap above nitride zero-shot that persists at five hundred and one thousand structures. In the frozen representation, family labels are near-perfectly recoverable, and nitride prediction error co-varies with distance from the oxide-reference region. Scoped to the tested regime, the evidence supports a quantifiable, geometrically legible domain-shift account of when transfer remains efficient across chemistries and when a family-level penalty appears under the tested protocol.
@@ -200,7 +198,7 @@ Unlike oxide, which begins genuine optimization by `N = 50` (`mean_best_epoch = 
 
 At `N = 500`, `mean_best_epoch` jumps to 40.5 and mean test MAE is 0.0977 ± 0.0178 eV/atom; at `N = 1 000`, `mean_best_epoch = 45.0` and mean test MAE is 0.0907 ± 0.0135 eV/atom (Table `TAB_S1_FT_SUMMARY_BY_N`; high-`N` portion of `FIG_S1_LC_NITRIDE`; parity pair `FIG_S1_PARITY_NITRIDE_N10` / `FIG_S1_PARITY_NITRIDE_N1000`). Both rows remain above zero-shot — by 0.0281 and 0.0211 eV/atom respectively — but seed-to-seed variance tightens between the low-`N` band and the `N = 1 000` row. The paired parity figures report on-figure MAE / RMSE / R² of 0.0828 / 0.1203 / 0.9841 at `N = 10` and 0.0829 / 0.1220 / 0.9837 at `N = 1 000`, computed on seed-averaged predictions.
 
-The jump in mean best epoch from 1.0 (at `N ≤ 200`) to 40.5 (at `N = 500`) to 45.0 (at `N = 1 000`) indicates a discrete transition: only at `N ≥ 500` does the training loop traverse a non-trivial portion of the 50-epoch budget before validation loss stops improving. Both genuinely-adapted rows sit at broadly similar mean test MAE, and the dominant high-`N` improvement is in across-seed stability, not in headline parity error. Under the canonical protocol, then, nitride fine-tuning transitions from operationally inert to operationally adapted between `N = 200` and `N = 500`. Despite this transition, no tested fine-tuning budget — including `N = 1 000` — produces a mean test MAE below the zero-shot baseline on this split. The best genuinely-adapted nitride configuration is `N = 1 000`, which pays a smaller but still positive domain-shift penalty relative to zero-shot. This is Step 3 of the arc: adaptation is real but partial.
+The jump in mean best epoch from 1.0 (at `N ≤ 200`) to 40.5 (at `N = 500`) to 45.0 (at `N = 1 000`) indicates a sharp transition: only at `N ≥ 500` does the training loop traverse a non-trivial portion of the 50-epoch budget before validation loss stops improving. Both genuinely-adapted rows sit at broadly similar mean test MAE, and the dominant high-`N` improvement is in across-seed stability, not in headline parity error. Under the canonical protocol, then, nitride fine-tuning transitions from operationally inert to operationally adapted between `N = 200` and `N = 500`. Despite this transition, no tested fine-tuning budget — including `N = 1 000` — produces a mean test MAE below the zero-shot baseline on this split. The best genuinely-adapted nitride configuration is `N = 1 000`, which pays a smaller but still positive domain-shift penalty relative to zero-shot. This is Step 3 of the arc: adaptation is real but partial.
 
 ### 4.4 Step 4a — family structure in the frozen pretrained representation
 
@@ -259,9 +257,7 @@ Taken together, the nitride evidence produces a single, internally consistent fo
 
 **Supporting layer (§4.6).** Pretrained initialization outperforms random initialization by a wide margin at `N = 50` and `N = 500` (under the `N = 50` initialization-advantage caveat **C3**); this confirms pretraining's operational value but does not revise the headline finding that the domain-shift penalty survives genuine adaptation.
 
-The main tables anchoring these results are `TAB_ZS_SUMMARY`, `TAB_S1_FT_SUMMARY_BY_N`, `TAB_S1_FS_SUMMARY`, `TAB_EA_FAMILY_SEPARATION`, and `TAB_EA_DISTANCE_ERROR_STATS`. The main figures are `FIG_ZS_COMPARISON`, `FIG_S1_LC_NITRIDE`, the parity pair `FIG_S1_PARITY_NITRIDE_N10` / `FIG_S1_PARITY_NITRIDE_N1000`, `FIG_S1_COMP_NITRIDE`, and the `FIG_EA_6A/6B/6C/6D` embedding panels.
-
-**Citation placeholders used in Results:** `[CITE: vanderMaaten2008_tSNE]`, `[CITE: McInnes2018_UMAP]`, `[CITE: Lee2021_TransferCGCNN]`, `[CITE: Hu2024_DomainAdaptation]`. Literature-heavier citation is deferred to the Introduction and Discussion, per the convention of keeping Results references minimal.
+The main tables anchoring these results are `TAB_ZS_SUMMARY`, `TAB_S1_FT_SUMMARY_BY_N`, `TAB_S1_FS_SUMMARY`, `TAB_EA_FAMILY_SEPARATION`, and `TAB_EA_DISTANCE_ERROR_STATS`. The main figures are `FIG_ZS_COMPARISON`, `FIG_S1_LC_NITRIDE`, the parity pair `FIG_S1_PARITY_NITRIDE_N10` / `FIG_S1_PARITY_NITRIDE_N1000`, `FIG_S1_COMP_NITRIDE`, and the `FIG_EA_6A_PCA`, `FIG_EA_6B_TSNE`, `FIG_EA_6C_UMAP`, `FIG_EA_6D_BOXPLOT`, and `FIG_EA_6D_SCATTER` embedding panels.
 
 ## V. Results III — Direct oxide–nitride comparison
 
@@ -368,26 +364,6 @@ None of these additions replaces the behavioural evidence, and none demonstrates
 Taken together, §§III and IV describe a consistent picture under the canonical protocol. The pretrained formation-energy ALIGNN checkpoint starts from a meaningfully higher zero-shot MAE on nitrides than on oxides, adapts slowly on nitrides relative to oxides across `N`, and does not close the family gap even at `N = 1 000`. In the frozen representation from which those outputs are computed, oxides and nitrides occupy family-distinguishable regions in raw 256-D space; the nitride region is less cohesive than the oxide region by every per-family raw-space metric considered; and within nitrides, zero-shot error co-varies with distance from the oxide-reference region. The behavioural penalty and the representation-space geometry are consistent, but the consistency is correlational rather than causal: the frozen representation is the setting in which the penalty is measured, not a proven source of it. The Discussion develops the practical implications of this combined picture for small-data transfer in materials property prediction.
 
 ---
-
-## Evidence provenance for review
-
-| Section | Figure / table anchor | Source packet | Primary numbers cited in text |
-|---|---|---|---|
-| III.A | `FIG_ZS_COMPARISON` | joint | 0.0342, 0.0695, 0.0354, 2.03× |
-| III.B | `FIG_S1_LC_OXIDE`, `FIG_S1_LC_NITRIDE`, `TAB_S1_FT_SUMMARY_BY_N` | joint | all `N`-level oxide/nitride mean MAE and mean best-epoch values |
-| III.C | `FIG_TRANSFER_BENEFIT` | joint | 0.5561, 0.0523, 0.5038, 0.6914, 0.1173, 0.5741, 0.2643, 0.0430, 0.2214, 0.3683, 0.0977, 0.2706 |
-| III.D | `FIG_S1_PARITY_OXIDE_N1000`, `FIG_S1_PARITY_NITRIDE_N1000` | joint | on-figure MAE 0.0383, 0.0829; mean best epoch 35.5, 45.0 |
-| IV.A | PCA variance header, analysis-set sizes | embedding | 18.13 %, 9.47 %, 27.60 %; 4 092; 1 726 (1 484 + 242); 13 507 |
-| IV.B | `TAB_EA_FAMILY_SEPARATION`; `FIG_EA_6A_PCA`, `FIG_EA_6B_TSNE`, `FIG_EA_6C_UMAP` as descriptive support | embedding | silhouette 0.2392, 0.2546, 0.1453; DB 1.8290; 15-NN purity 0.9655, 0.9872, 0.8331; AUC 0.9994 |
-| IV.C | `FIG_EA_6D_BOXPLOT`, `FIG_EA_6D_SCATTER`, `TAB_EA_DISTANCE_ERROR_STATS` | embedding | hard/easy means 4.5988, 3.7821; mean gap 0.8168 (`q = 0.000180`); median gap 0.8729 (`q = 0.000300`); Spearman 0.3428 (`q = 0.000129`); Pearson 0.2770 (`q = 0.000129`) |
-
-## Known draft-stage caveats to resolve before assembly
-
-1. All citation placeholders (`[CITE: ...]`) must be replaced from the project reference list during Phase 11 and Phase 12.
-2. §III.D is written as a short endpoint diagnostic. If space is tight, III.D can be demoted to a single paragraph within III.B, with the parity figures moved to an appendix; the core III.A, III.B, III.C, III.E narrative does not depend on it.
-3. §IV.B currently treats the PCA, t-SNE, and UMAP panels as a descriptive triptych. If the compact Results IV package is preferred (`FIG_EA_6A_PCA` + `FIG_EA_6D_BOXPLOT` + `FIG_EA_6D_SCATTER`), the t-SNE and UMAP sentences can be demoted to a single descriptive reference and the panels moved to the appendix without changing any quantitative anchor, because those anchors are already raw-space only.
-4. §IV.D is the single most important paragraph for answering the project-brief requirement that Results IV go beyond performance curves. Review against the final combined Discussion to avoid redundancy.
-5. Every number in the evidence-provenance table should be cross-checked against `canonical_numbers_v2.csv` before Phase 12 assembly.
 
 ## VII. Discussion
 
