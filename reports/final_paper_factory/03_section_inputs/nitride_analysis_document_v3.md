@@ -4,12 +4,12 @@
 
 **Scientific thesis.** On the nitride arm, a **domain-shift penalty** is visible at four separable stages under the canonical protocol:
 
-1. **Step 1 — zero-shot family penalty.** Zero-shot evaluation places nitrides at roughly twice the oxide-comparator MAE before any target-family training.
+1. **Step 1 — zero-shot domain-shift penalty.** Zero-shot evaluation places nitrides at roughly twice the oxide-comparator MAE before any target-family training.
 2. **Step 2 — low-`N` fine-tuning inertness.** At `N ∈ {10, 50, 100, 200}` the fine-tuning loop is operationally inert; every selected checkpoint is the epoch-1 state. Oxide, by contrast, has already begun genuine optimization by `N = 50`.
 3. **Step 3 — genuine but incomplete high-`N` adaptation.** Fine-tuning becomes operationally adapted at `N = 500` and stabilizes at `N = 1000`, but no tested budget closes the gap to the nitride zero-shot baseline.
-4. **Step 4 — embedding-space geometry consistent with the penalty.** In frozen pretrained space, nitrides occupy a distinguishable but less cohesive region than the oxide control, and within the nitride family, distance from the oxide-reference region co-varies with zero-shot error.
+4. **Step 4 — embedding-space geometry consistent with the domain-shift penalty.** In frozen pretrained space, nitrides occupy a distinguishable but less cohesive region than the oxide control, and within the nitride family, distance from the oxide-reference region co-varies with zero-shot error.
 
-These four steps are the spine of the nitride report. Supporting evidence from pretrained-vs-from-scratch comparisons confirms that pretraining remains operationally valuable on nitrides, but the headline OOD result is not merely "pretraining helps"; it is that the penalty survives even after genuine high-`N` adaptation begins.
+These four steps are the spine of the nitride report. Supporting evidence from pretrained-vs-from-scratch comparisons confirms that pretraining remains operationally valuable on nitrides, but the headline OOD result is not merely "pretraining helps"; it is that the domain-shift penalty survives even after genuine high-`N` adaptation begins.
 
 ---
 
@@ -36,7 +36,7 @@ A further scope rule: from-scratch nitride baselines exist only at `N = 50` and 
 
 ---
 
-## 2. Step 1 — zero-shot family penalty
+## 2. Step 1 — zero-shot domain-shift penalty
 
 **Evidence.** From `reports/zero_shot/zero_shot_summary.csv`: nitride zero-shot MAE = 0.0695 eV/atom on n = 242; oxide zero-shot MAE = 0.0342 eV/atom on n = 1484. Both come from the same pretrained checkpoint (**C1**), with no target-family training, on disjoint fixed test splits.
 
