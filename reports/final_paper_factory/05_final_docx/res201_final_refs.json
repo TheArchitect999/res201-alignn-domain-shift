@@ -1,0 +1,268 @@
+[
+	{
+		"id": "http://zotero.org/users/20329270/items/VNA4JJ3A",
+		"type": "article-journal",
+		"container-title": "npj Computational Materials",
+		"DOI": "10.1038/s41524-024-01316-4",
+		"ISSN": "2057-3960",
+		"issue": "1",
+		"journalAbbreviation": "npj Comput. Mater.",
+		"page": "144",
+		"title": "Structure-based out-of-distribution (OOD) materials property prediction: a benchmark study",
+		"volume": "10",
+		"author": [
+			{"family": "Omee","given": "Sadman Sadeed"},
+			{"family": "Fu","given": "Nihang"},
+			{"family": "Dong","given": "Rongzhi"},
+			{"family": "Hu","given": "Ming"},
+			{"family": "Hu","given": "Jianjun"}
+		],
+		"issued": {"date-parts": [["2024",7,4]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/NLBNY4TV",
+		"type": "article-journal",
+		"container-title": "Digital Discovery",
+		"DOI": "10.1039/D3DD00162H",
+		"ISSN": "2635-098X",
+		"issue": "2",
+		"journalAbbreviation": "Digital Discovery",
+		"page": "300-312",
+		"title": "Realistic material property prediction using domain adaptation based machine learning",
+		"volume": "3",
+		"author": [
+			{"family": "Hu","given": "Jeffrey"},
+			{"family": "Liu","given": "David"},
+			{"family": "Fu","given": "Nihang"},
+			{"family": "Dong","given": "Rongzhi"}
+		],
+		"issued": {"date-parts": [["2024"]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/E9PT9HW4",
+		"type": "article-journal",
+		"container-title": "Computational Materials Science",
+		"DOI": "10.1016/j.commatsci.2024.112783",
+		"ISSN": "09270256",
+		"journalAbbreviation": "Comput. Mater. Sci.",
+		"page": "112783",
+		"title": "Predicting melting temperature of inorganic crystals via crystal graph neural network enhanced by transfer learning",
+		"volume": "234",
+		"author": [
+			{"family": "Kim","given": "Jaesun"},
+			{"family": "Jung","given": "Jisu"},
+			{"family": "Kim","given": "Sookyung"},
+			{"family": "Han","given": "Seungwu"}
+		],
+		"issued": {"date-parts": [["2024",2]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/EIITR8T3",
+		"type": "article-journal",
+		"container-title": "Computational Materials Science",
+		"DOI": "10.1016/j.commatsci.2021.110314",
+		"ISSN": "09270256",
+		"journalAbbreviation": "Comput. Mater. Sci.",
+		"page": "110314",
+		"title": "Transfer learning for materials informatics using crystal graph convolutional neural network",
+		"volume": "190",
+		"author": [
+			{"family": "Lee","given": "Joohwi"},
+			{"family": "Asahi","given": "Ryoji"}
+		],
+		"issued": {"date-parts": [["2021",4]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/4K3VGEUE",
+		"type": "article-journal",
+		"container-title": "Physical Review Letters",
+		"DOI": "10.1103/PhysRevLett.120.145301",
+		"ISSN": "0031-9007",
+		"issue": "14",
+		"journalAbbreviation": "Phys. Rev. Lett.",
+		"note": "arXiv:1710.10324 [cond-mat]",
+		"page": "145301",
+		"title": "Crystal Graph Convolutional Neural Networks for an Accurate and Interpretable Prediction of Material Properties",
+		"volume": "120",
+		"author": [
+			{"family": "Xie","given": "Tian"},
+			{"family": "Grossman","given": "Jeffrey C."}
+		],
+		"issued": {"date-parts": [["2018",4,6]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/DKG62IFQ",
+		"type": "article-journal",
+		"container-title": "Chemistry of Materials",
+		"DOI": "10.1021/acs.chemmater.9b01294",
+		"ISSN": "0897-4756",
+		"issue": "9",
+		"journalAbbreviation": "Chem. Mater.",
+		"page": "3564-3572",
+		"title": "Graph Networks as a Universal Machine Learning Framework for Molecules and Crystals",
+		"volume": "31",
+		"author": [
+			{"family": "Chen","given": "Chi"},
+			{"family": "Ye","given": "Weike"},
+			{"family": "Zuo","given": "Yunxing"},
+			{"family": "Zheng","given": "Chen"},
+			{"family": "Ong","given": "Shyue Ping"}
+		],
+		"issued": {"date-parts": [["2019",5,14]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/WD6C24D9",
+		"type": "article-journal",
+		"container-title": "Computational Materials Science",
+		"DOI": "10.1016/j.commatsci.2025.114063",
+		"ISSN": "09270256",
+		"journalAbbreviation": "Comput. Mater. Sci.",
+		"note": "arXiv:2503.04133 [cond-mat]",
+		"page": "114063",
+		"title": "The JARVIS Infrastructure is All You Need for Materials Design",
+		"volume": "259",
+		"author": [
+			{"family": "Choudhary","given": "Kamal"}
+		],
+		"issued": {"date-parts": [["2025",9]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/ZNSBRAGX",
+		"type": "article-journal",
+		"container-title": "npj Computational Materials",
+		"DOI": "10.1038/s41524-024-01259-w",
+		"ISSN": "2057-3960",
+		"issue": "1",
+		"journalAbbreviation": "npj Comput. Mater.",
+		"page": "93",
+		"title": "JARVIS-Leaderboard: a large scale benchmark of materials design methods",
+		"volume": "10",
+		"author": [
+			{"family": "Choudhary","given": "Kamal"},
+			{"family": "Wines","given": "Daniel"},
+			{"family": "Li","given": "Kangming"},
+			{"family": "Garrity","given": "Kevin F."},
+			{"family": "Gupta","given": "Vishu"},
+			{"family": "Romero","given": "Aldo H."},
+			{"family": "Krogel","given": "Jaron T."},
+			{"family": "Saritas","given": "Kayahan"},
+			{"family": "Fuhr","given": "Addis"},
+			{"family": "Ganesh","given": "Panchapakesan"}
+		],
+		"issued": {"date-parts": [["2024",5,7]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/TR6CHAD2",
+		"type": "article-journal",
+		"container-title": "npj Computational Materials",
+		"DOI": "10.1038/s41524-020-00440-1",
+		"ISSN": "2057-3960",
+		"issue": "1",
+		"journalAbbreviation": "npj Comput. Mater.",
+		"page": "173",
+		"title": "The joint automated repository for various integrated simulations (JARVIS) for data-driven materials design",
+		"volume": "6",
+		"author": [
+			{"family": "Choudhary","given": "Kamal"},
+			{"family": "Garrity","given": "Kevin F."},
+			{"family": "Reid","given": "Andrew C. E."},
+			{"family": "DeCost","given": "Brian"},
+			{"family": "Biacchi","given": "Adam J."},
+			{"family": "Hight Walker","given": "Angela R."},
+			{"family": "Trautt","given": "Zachary"},
+			{"family": "Hattrick-Simpers","given": "Jason"},
+			{"family": "Kusne","given": "A. Gilad"},
+			{"family": "Centrone","given": "Andrea"}
+		],
+		"issued": {"date-parts": [["2020",11,12]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/U9NHTD8R",
+		"type": "article-journal",
+		"container-title": "npj Computational Materials",
+		"DOI": "10.1038/s41524-021-00650-1",
+		"ISSN": "2057-3960",
+		"issue": "1",
+		"journalAbbreviation": "npj Comput. Mater.",
+		"page": "185",
+		"title": "Atomistic Line Graph Neural Network for improved materials property predictions",
+		"volume": "7",
+		"author": [
+			{"family": "Choudhary","given": "Kamal"},
+			{"family": "DeCost","given": "Brian"}
+		],
+		"issued": {"date-parts": [["2021",11,15]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/7STQCC9U",
+		"type": "article-journal",
+		"container-title": "The Journal of Physical Chemistry C",
+		"DOI": "10.1021/acs.jpcc.4c07481",
+		"ISSN": "1932-7447",
+		"issue": "13",
+		"journalAbbreviation": "J. Phys. Chem. C",
+		"page": "6372-6385",
+		"title": "Out-of-Distribution Material Property Prediction Using Adversarial Learning",
+		"volume": "129",
+		"author": [
+			{"family": "Li","given": "Qinyang"},
+			{"family": "Miklaucic","given": "Nicholas"},
+			{"family": "Hu","given": "Jianjun"}
+		],
+		"issued": {"date-parts": [["2025",4,3]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/QGDLHVAF",
+		"type": "article-journal",
+		"container-title": "Communications Materials",
+		"DOI": "10.1038/s43246-024-00731-w",
+		"ISSN": "2662-4443",
+		"issue": "1",
+		"journalAbbreviation": "Commun. Mater.",
+		"page": "9",
+		"title": "Probing out-of-distribution generalization in machine learning for materials",
+		"volume": "6",
+		"author": [
+			{"family": "Li","given": "Kangming"},
+			{"family": "Rubungo","given": "Andre Niyongabo"},
+			{"family": "Lei","given": "Xiangyun"},
+			{"family": "Persaud","given": "Daniel"},
+			{"family": "Choudhary","given": "Kamal"},
+			{"family": "DeCost","given": "Brian"},
+			{"family": "Dieng","given": "Adji Bousso"},
+			{"family": "Hattrick-Simpers","given": "Jason"}
+		],
+		"issued": {"date-parts": [["2025",1,11]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/N7UREDXA",
+		"type": "article",
+		"DOI": "10.48550/arXiv.1802.03426",
+		"note": "arXiv:1802.03426 [stat]",
+		"number": "arXiv:1802.03426",
+		"publisher": "arXiv",
+		"title": "UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction",
+		"URL": "http://arxiv.org/abs/1802.03426",
+		"author": [
+			{"family": "McInnes","given": "Leland"},
+			{"family": "Healy","given": "John"},
+			{"family": "Melville","given": "James"}
+		],
+		"issued": {"date-parts": [["2018"]]}
+	},
+	{
+		"id": "http://zotero.org/users/20329270/items/TVLLPSQ9",
+		"type": "article-journal",
+		"container-title": "Journal of Machine Learning Research",
+		"ISSN": "1532-4435",
+		"journalAbbreviation": "J. Mach. Learn. Res.",
+		"page": "2579-2605",
+		"title": "Visualizing Data using t-SNE",
+		"volume": "9",
+		"author": [
+			{"family": "Maaten","given": "Laurens","non-dropping-particle": "van der"},
+			{"family": "Hinton","given": "Geoffrey"}
+		],
+		"issued": {"date-parts": [["2008"]]}
+	}
+]
