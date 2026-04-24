@@ -1,18 +1,18 @@
-# RES201 Citation Map Review — v2
+# RES201 Citation Map Review — Final
 **Generated:** 2026-04-24  
 **Source manuscripts:** oxide_polished_v3.md, nitride_polished_v3.md, combined_paper_polished_v4.md  
-**Zotero export:** res201_final_refs.json (updated — 14 items, HQBXJ4GH replaced by TVLLPSQ9)  
-**Changes from v1:** Four author decisions applied; t-SNE metadata blocker resolved; internal citation handles normalized.
+**Zotero export:** res201_final_refs.json (14 items; UMAP issued field corrected to 2018)  
+**Changes from v2:** Li et al. 2025 disambiguation applied throughout CSV; UMAP year confirmed in Zotero. No further pre-build actions required.
 
 ---
 
 ## Blocker Status
 
-**No blockers remain.** All 64 citation slots across all three manuscripts are fully resolved to Zotero items with complete metadata. The map is ready for the citation-insertion build stage.
+**No blockers remain.** All 64 citation slots across all three manuscripts are fully resolved to Zotero items with complete metadata. The Li et al. 2025 pair is disambiguated throughout the map. The UMAP year is confirmed as 2018 in the Zotero library. The map is ready for the citation-insertion build stage.
 
 ---
 
-## Zotero Library Index (v2)
+## Zotero Library Index (Final)
 
 | Short ID | Authors | Year | Title (abbreviated) | Journal |
 |----------|---------|------|---------------------|---------|
@@ -31,11 +31,11 @@
 | N7UREDXA | McInnes et al. | 2018 | UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction | arXiv:1802.03426 |
 | TVLLPSQ9 | van der Maaten & Hinton | 2008 | Visualizing Data using t-SNE | J Mach Learn Res 9:2579–2605 |
 
-**Note:** DKG62IFQ (MEGNet, Chen et al. 2019) is in the library but is not used by any placeholder in these manuscripts. It was the candidate considered for `[CITE: crystal graph baseline]` in v1 but was superseded by the author decision to use CGCNN + ALIGNN.
+**Note:** DKG62IFQ (MEGNet, Chen et al. 2019) is in the library but is not used by any placeholder in these manuscripts. It was the candidate considered for `[CITE: crystal graph baseline]` in v1 but superseded by the author decision to use CGCNN + ALIGNN.
 
 ---
 
-## 1. Changes Applied from v1 to v2
+## 1. Changes Applied from v1 to v2 (Unchanged in Final)
 
 ### 1A. `[CITE: crystal graph baseline for materials property prediction]` — resolved
 
@@ -69,9 +69,9 @@
 
 ### 1D. `[CITE: van der Maaten & Hinton 2008; McInnes et al. 2018]` — blocker resolved
 
-**Resolution:** Zotero item HQBXJ4GH (title-only, no metadata) has been replaced by TVLLPSQ9 with full metadata: van der Maaten, Laurens & Hinton, Geoffrey (2008). *Visualizing Data using t-SNE*. *Journal of Machine Learning Research*, 9, 2579–2605. ISSN 1532-4435.
+**Resolution:** Zotero item HQBXJ4GH (title-only, no metadata) was replaced by TVLLPSQ9 with full metadata: van der Maaten, Laurens & Hinton, Geoffrey (2008). *Visualizing Data using t-SNE*. *Journal of Machine Learning Research*, 9, 2579–2605. ISSN 1532-4435.
 
-**UMAP year note:** The manuscripts cite "McInnes et al. 2018." The Zotero item N7UREDXA records an `issued` date of 2020-09-18 (an arXiv update) but the arXiv identifier is 1802.03426, corresponding to February 2018. The correct citation year is **2018** (original submission). Build scripts should use 2018, not 2020, for this item.
+**UMAP year:** The Zotero item N7UREDXA `issued` field has been corrected to 2018, matching the arXiv identifier 1802.03426 (February 2018) and the placeholder text "McInnes et al. 2018" in all three manuscripts. No year override is required at the build stage.
 
 **Affects:** oxide §4.4, nitride §4.4, combined §VI.A, combined §VII.6 — 4 rows. Status changed from NEEDS_REVIEW → RESOLVED_MULTI.
 
@@ -79,7 +79,7 @@
 
 ### 1E. `[CITE: Lee2021_TransferCGCNN; Hu2024_DomainAdaptation]` — internal handles normalized
 
-These internal citation key handles appear in nitride §3.6 and combined §IV.4.6. They are already mapped to the correct Zotero items (EIITR8T3 and NLBNY4TV). No manuscript text needs to change, but the placeholder strings should produce the formatted citations for Lee & Asahi 2021 and Hu et al. 2024, not the literal handle strings. The `notes` column in the CSV records this for the build stage.
+These internal citation key handles appear in nitride §3.6 and combined §IV.4.6. They are already mapped to the correct Zotero items (EIITR8T3 and NLBNY4TV). The `notes` column in the CSV records this for the build stage.
 
 **Affects:** 2 rows. Status was already RESOLVED_MULTI; notes column updated.
 
@@ -87,7 +87,7 @@ These internal citation key handles appear in nitride §3.6 and combined §IV.4.
 
 ## 2. Placeholders Resolved in Both v1 and v2 (Unchanged)
 
-These were already cleanly mapped in v1 and are unchanged in v2.
+These were already cleanly mapped in v1 and are unchanged in the final map.
 
 | Placeholder | Zotero IDs | Status |
 |-------------|-----------|--------|
@@ -140,9 +140,9 @@ All `zotero_authors` cells in the CSV now use `Li K. et al.` and `Li Q. et al.` 
 
 ---
 
-## 5. UMAP Year Discrepancy — Build Stage Note
+## 5. UMAP Year Discrepancy — Resolved
 
-The Zotero item N7UREDXA records `issued: 2020-09-18` (an arXiv updated-version date). The correct citation year is **2018**, matching both the arXiv identifier (1802.03426 = February 2018) and the placeholder text "McInnes et al. 2018" in all three manuscripts. Correct the Zotero `issued` field to 2018 before generating formatted references, or override the year in the citation template.
+The Zotero item N7UREDXA `issued` field has been corrected to 2018 in the re-exported library, matching both the arXiv identifier (1802.03426 = February 2018) and the placeholder text "McInnes et al. 2018" in all three manuscripts. No year override is required at the build stage; the library is authoritative.
 
 ---
 
@@ -154,11 +154,11 @@ DKG62IFQ (Chen et al. 2019, MEGNet) is present in the Zotero library but is not 
 
 ## Summary
 
-| Metric | v1 | v2 |
-|--------|----|----|
-| Total placeholder occurrences (rows) | 64 | 64 |
-| RESOLVED | 28 | 28 |
-| RESOLVED_MULTI | 36 | 36 |
-| NEEDS_REVIEW | 13 | 0 |
-| Hard blockers | 1 (HQBXJ4GH missing metadata) | 0 |
-| Remaining pre-build actions | — | UMAP year correction in Zotero (N7UREDXA `issued` → 2018) |
+| Metric | v1 | v2 | Final |
+|--------|----|----|-------|
+| Total placeholder occurrences (rows) | 64 | 64 | 64 |
+| RESOLVED | 26 | 26 | 26 |
+| RESOLVED_MULTI | 25 | 38 | 38 |
+| NEEDS_REVIEW | 13 | 0 | 0 |
+| Hard blockers | 1 (HQBXJ4GH missing metadata) | 0 | 0 |
+| Remaining pre-build actions | — | UMAP year correction in Zotero | **None** |
